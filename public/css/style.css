@@ -48,34 +48,62 @@ input:focus {
 	outline: none;
 }
 
-.addFormButton, .closeFormButton {
+.actionButtonContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: fixed;
+	top: 72px;
+	right: 10px;
+}
+
+.actionButton {
 	border: 0;
 	border-radius: 20px;
 	width: 40px;
 	height: 40px;
 	font-size: 20px;
-	margin: 10px;
-	background-color: #00c400;
-	color: white;
+	/* margin: 10px; */
 	transition: 200ms;
-	position: fixed;
-	left: 0;
-	top: 0;
 	box-shadow: 0 0 30px 5px #00000030;
+	color: white;
 }
 
-.addFormButton:hover, .closeFormButton:hover {
-	background-color: #01df01;
+.actionButton:hover {
 	transition: 200ms;
 	cursor: pointer;
+}
+
+.addFormButton {
+	background-color: #00c400;
+}
+
+.addFormButton:hover {
+	background-color: #01df01;
+}
+
+.closeFormButton:hover {
+	background-color: #df0000;
 }
 
 .closeFormButton {
 	background-color: #c20000;
 }
 
-.closeFormButton:hover {
-	background-color: #df0000;
+.exportButton:hover {
+	background-color: #ffc13b;
+}
+
+.exportButton {
+	background-color: #ffae00;
+}
+
+.importButton:hover {
+	background-color: #389fff;
+}
+
+.importButton {
+	background-color: #0084ff;
 }
 
 .listContainer {
@@ -84,7 +112,7 @@ input:focus {
 	justify-content: center;
 	align-items: center;
 	gap: 20px;
-	margin-top: 20px;
+	margin: 20px 60px 20px 140px;
 }
 
 .item {
@@ -111,7 +139,7 @@ input:focus {
 }
 
 .search {
-	width: 500px;
+	width: 400px;
 	z-index: 1;
 	box-shadow: 0 0 30px 5px #00000030;
 	padding-left: 16px;
@@ -120,26 +148,37 @@ input:focus {
 
 @media only screen and (max-width: 580px) {
 	.search {
-		width: 90%;
+		width: 70%;
+		margin: 0px 60px 0px 60px;
 	}
 }
 
-.badgeList {
+.filterContainer {
 	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 72px;
+	left: 15px;
+	gap: 20px;
+}
+
+.badgeList, .languageList {
+	display: flex;
+	flex-direction: column;
 	gap: 10px;
 	flex-wrap: wrap;
 	justify-content: center;
 }
 
-.badgeList .badge {
+.badgeList .badge, .languageList .language {
 	opacity: 50%;
 }
 
-.badgeList .badge:hover {
+.badgeList .badge:hover, .languageList .language:hover {
 	cursor: pointer;
 }
 
-.badgeList .focus {
+.badgeList .focus, .languageList .focus {
 	opacity: 100%;
 }
 
@@ -193,6 +232,12 @@ input:focus {
 .badge {
 	padding: 2px 12px 2px 12px;
 	background: linear-gradient(45deg, #b30000, #ff0000);
+	border-radius: 6px;
+}
+
+.language {
+	padding: 2px 12px 2px 12px;
+	background: linear-gradient(45deg, #0054b3, #0f7fff);
 	border-radius: 6px;
 }
 
