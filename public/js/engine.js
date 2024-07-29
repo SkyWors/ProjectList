@@ -21,12 +21,14 @@ function updateURL() {
 
 document.getElementById("addFormButton").addEventListener("click", () => {
 	document.getElementById("addForm").style.display = "flex";
-	document.getElementById("mainScreen").style.display = "none";
+	document.getElementById("addFormButton").style.display = "none";
+	document.getElementById("closeFormButton").style.display = "block";
 })
 
 document.getElementById("closeFormButton").addEventListener("click", () => {
 	document.getElementById("addForm").style.display = "none";
-	document.getElementById("mainScreen").style.display = "flex";
+	document.getElementById("addFormButton").style.display = "block";
+	document.getElementById("closeFormButton").style.display = "none";
 })
 
 var language = document.querySelectorAll('#language');
@@ -63,9 +65,9 @@ document.getElementById("search").addEventListener("input", function (event) {
 		var itemText = item.textContent.toLowerCase();
 
 		if (itemText.includes(searchTerm)) {
-			item.parentElement.style.display = "block";
+			item.parentElement.parentElement.style.display = "flex";
 		} else {
-			item.parentElement.style.display = "none";
+			item.parentElement.parentElement.style.display = "none";
 		}
 	});
 });
@@ -80,8 +82,8 @@ document.getElementById("exportButton").addEventListener("click", function() {
 	document.body.removeChild(link);
 });
 
-function confirmForm(msg) {
-	if (confirm(msg)) {
+function confirmForm() {
+	if (confirm("Es-tu sûr de vouloir supprimer ce projet de la liste ?")) {
 		return true;
 	}
 	return false;

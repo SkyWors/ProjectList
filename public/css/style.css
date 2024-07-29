@@ -1,8 +1,8 @@
 :root {
 	--button-color: #ffffff;
 
-	--trash-color: #a00000;
-	--trash-hover-color: #ff0000;
+	--delete-hover-color: #c70000;
+	--edit-hover-color: #ffae00;
 
 	--badge-color: linear-gradient(45deg, #b30000, #ff0000);
 	--language-color: linear-gradient(45deg, #0054b3, #0f7fff);
@@ -44,7 +44,6 @@
 	--input-background-color: #e5e7eb;
 	--input-placeholder-color: #6c6f78;
 
-
 	--theme-color: #0058ca;
 	--theme-hover-color: #0064e7;
 }
@@ -78,7 +77,7 @@ body {
 }
 
 .addFormContainer {
-	justify-content: center;
+	justify-content: left;
 	height: fit-content;
 	width: 100%;
 }
@@ -107,6 +106,7 @@ input {
 	border: 0;
 	border-radius: 9px;
 	font-size: 15px;
+	color: var(--text-color);
 }
 
 input::placeholder {
@@ -176,17 +176,20 @@ input:focus {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: left;
-	align-items: center;
 }
 
 .item {
-	width: 183px;
-	height: 90px;
+	width: 280px;
+	height: 100px;
 }
 
 .item:hover .badgeContainer {
 	opacity: 100%;
 	transition: 200ms;
+}
+
+.actionForm {
+	gap: 0;
 }
 
 .top {
@@ -202,10 +205,47 @@ input:focus {
 	padding-right: 16px;
 }
 
+.stats {
+	text-align: left;
+	margin-top: -4px;
+}
+
+.stats .title {
+	font-size: 16px;
+}
+
+.stats .number {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: -10px;
+	margin-bottom: -10px;
+	user-select: text;
+}
+
 .filterContainer {
 	height: fit-content;
+	min-width: fit-content;
 	position: sticky;
-	top: 20px
+	top: 20px;
+}
+
+input[type=checkbox], input[type="checkbox"] + label {
+	cursor: pointer;
+}
+
+label {
+	margin-left: 10px;
+}
+
+.filterContainer a {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: -8px;
+}
+
+.addForm a {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .badgeList, .languageList {
@@ -213,24 +253,16 @@ input:focus {
 	flex-direction: column;
 	gap: 10px;
 	flex-wrap: wrap;
-	justify-content: center;
-}
-
-.badgeList .badge, .languageList .language {
-	opacity: 50%;
-}
-
-.badgeList .badge:hover, .languageList .language:hover {
+	text-align: left;
+	margin-right: 10px;
 	cursor: pointer;
-}
-
-.badgeList .focus, .languageList .focus {
-	opacity: 100%;
 }
 
 .itemName {
 	font-size: 18px;
 	text-decoration: none;
+	text-align: left;
+	margin-left: 2px;
 	color: var(--text-color);
 	width: 100%;
 	cursor: help;
@@ -241,10 +273,10 @@ input:focus {
 }
 
 .buttonContainer {
-	margin-top: 10px;
 	display: flex;
 	gap: 10px;
-	justify-content: center;
+	justify-content: left;
+	margin-top: -10px;
 }
 
 .button {
@@ -262,10 +294,10 @@ input:focus {
 	width: 20px;
 }
 
-.deleteButton {
+.deleteButton, .editButton {
 	border: 0;
 	background: none;
-	color: var(--trash-color);
+	color: var(--text-color);
 	font-size: 20px;
 	opacity: 100%;
 	transition: 200ms;
@@ -273,15 +305,20 @@ input:focus {
 }
 
 .deleteButton:hover {
-	color: var(--trash-hover-color);
+	color: var(--delete-hover-color);
+	transition: 200ms;
+}
+
+.editButton:hover {
+	color: var(--edit-hover-color);
 	transition: 200ms;
 }
 
 .badgeContainer {
-	margin-top: 15px;
 	display: flex;
 	gap: 6px;
-	justify-content: center;
+	justify-content: left;
+	margin-top: -2px;
 	opacity: 50%;
 	transition: 200ms;
 	font-size: 13px;
@@ -304,11 +341,11 @@ input:focus {
 }
 
 .vscode {
-	background-color: #005b98;
+	background-color: #00497a;
 }
 
 .vscode:hover {
-	background-color: #006ab1;
+	background-color: #005b98;
 }
 
 .path {

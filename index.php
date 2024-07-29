@@ -61,28 +61,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
 	</head>
 	<body>
-		<div class="addFormContainer" id="addForm" style="display: none">
-			<div class="actionButtonContainer">
-				<button class="actionButton closeFormButton" id="closeFormButton" title="Retour"><i class="ri-close-line"></i></button>
-			</div>
-			<form class="box addForm" method="POST">
-				<input class="" type="text" name="name" placeholder="Nom*" required>
-				<input class="" type="text" name="path" placeholder="Chemin*" required>
-				<input class="" type="text" name="description" placeholder="Description*" required>
-				<input class="" type="url" name="url" placeholder="URL">
-				<input class="" type="url" name="github" placeholder="GitHub">
-				<input class="" type="url" name="gitlab" placeholder="GitLab">
-				<input class="" type="text" name="language" placeholder="Langages*" required>
-				<input class="" type="text" name="badge" placeholder="Tags*" required>
-				<div>
-					<input type="checkbox" name="edit" id="edit" checked>
-					<label for="edit">Ce projet est-il modifiable ?</label>
-				</div>
-				<button type="input" name="add">Ajouter</button>
-			</form>
-		</div>
-
-		<div id="mainScreen" class="row">
+		<div class="row">
 			<?php
 				if (isset($_GET["filter"])) {
 					$filter = explode(",", $_GET["filter"]);
@@ -117,23 +96,29 @@
 
 				if (!empty($badgeList)) {
 					echo "<div class='box filterContainer column'>";
+						echo "<a>Tags</a>";
 						echo "<div class='badgeList'>";
 						foreach($badgeList as $badge) {
+							echo "<div id='filter'>";
 							if (isset($_GET["filter"]) && in_array($badge, $filter)) {
-								echo "<a id='filter' class='badge focus'>" . $badge . "</a>";
+								echo "<input type='checkbox' checked><label>" . $badge . "</label>";
 							} else {
-								echo "<a id='filter' class='badge'>" . $badge . "</a>";
+								echo "<input type='checkbox'><label>" . $badge . "</label>";
 							}
+							echo "</div>";
 						}
 						echo "</div>";
 
+						echo "<a>Languages</a>";
 						echo "<div class='languageList'>";
 						foreach($languageList as $language) {
+							echo "<div id='language'>";
 							if (isset($_GET["language"]) && in_array($language, $languages)) {
-								echo "<a id='language' class='language focus'>" . $language . "</a>";
+								echo "<input type='checkbox' checked><label>" . $language . "</label>";
 							} else {
-								echo "<a id='language' class='language'>" . $language . "</a>";
+								echo "<input type='checkbox'><label>" . $language . "</label>";
 							}
+							echo "</div>";
 						}
 						echo "</div>";
 					echo "</div>";
@@ -141,13 +126,49 @@
 			?>
 
 			<div class="column">
-				<div class="box top row" id="top">
-					<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
+				<div class="top row">
+					<div class="box row" id="top">
+						<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
+						<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
+						<button class="actionButton closeFormButton" id="closeFormButton" title="Annuler" style="display: none"><i class="ri-close-line"></i></button>
+						<button class="actionButton importButton" id="importButton" title="Importer" style="cursor: not-allowed"><i class="ri-download-2-line"></i></button>
+						<button class="actionButton exportButton" id="exportButton" title="Exporter"><i class="ri-upload-2-line"></i></button>
+						<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
+					</div>
 
-					<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
-					<button class="actionButton importButton" id="importButton" title="Importer" style="cursor: not-allowed"><i class="ri-download-2-line"></i></button>
-					<button class="actionButton exportButton" id="exportButton" title="Exporter"><i class="ri-upload-2-line"></i></button>
-					<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
+					<div class="box">
+						<div class="column stats">
+							<a class="title">Nombre de projet</a>
+							<a class="number"><?= count($file) ?></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="addFormContainer" id="addForm" style="display: none">
+					<form class="box addForm column" method="POST">
+						<a>Ajouter un projet</a>
+						<div class="row">
+							<div class="column">
+								<input class="" type="text" name="name" placeholder="Nom*" required>
+								<input class="" type="text" name="path" placeholder="Chemin*" required>
+								<input class="" type="text" name="description" placeholder="Description*" required>
+								<input class="" type="url" name="url" placeholder="URL">
+							</div>
+							<div class="column">
+								<input class="" type="url" name="github" placeholder="GitHub">
+								<input class="" type="url" name="gitlab" placeholder="GitLab">
+							</div>
+							<div class="column">
+								<input class="" type="text" name="language" placeholder="Langages*" required>
+								<input class="" type="text" name="badge" placeholder="Tags*" required>
+								<div>
+									<input type="checkbox" name="edit" id="edit" checked>
+									<label for="edit">Activer VSCode ?</label>
+								</div>
+							</div>
+						</div>
+						<button type="input" name="add">Ajouter</button>
+					</form>
 				</div>
 
 				<div class="listContainer row" id="listContainer">
@@ -157,13 +178,21 @@
 
 							$filters = array_merge($properties["language"], $properties["badge"]);
 
-							$box = "<div class='box item'>";
+							$box = "<div class='box item column'><div class='row'>";
 
 							if ($properties["url"] != "") {
 								$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "' href='" . $properties["url"] . "' target='_blank'><i class='ri-external-link-line'></i> " . $name . "</a>";
 							} else {
 								$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "'>" . $name . "</a>";
 							}
+
+							$box .= "
+							<form method='POST' class='actionForm row'>
+								<button class='editButton' type='submit' name='editItem' value='$name' title='Modifier'><i class='ri-pencil-line'></i></button>
+								<button class='deleteButton' type='submit' name='deleteItem' value='$name' onclick='return confirmForm()' title='Supprimer'><i class='ri-delete-bin-line'></i></button>
+							</form>";
+							$box .= "</div>";
+
 							$box .= "<div class='buttonContainer'>";
 
 							if ($properties["edit"] == true) {
@@ -189,11 +218,6 @@
 							$box .= "<a class='badge' title='" . $tempBadgeList . "'>Tags</a>";
 							$box .= "<a class='language' title='" . $tempLanguageList . "'>Langages</a>";
 
-							$box .= "
-							<form method='POST'>
-								<input type='hidden' name='deleteItem' value='$name'>
-								<button class='deleteButton' type='submit' onclick='return confirmForm(\"Hum?\")' title='Supprimer'><i class='ri-delete-bin-line'></i></button>
-							</form>";
 
 							$box .= "</div></div>";
 
