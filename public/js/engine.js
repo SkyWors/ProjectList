@@ -79,3 +79,10 @@ document.getElementById("exportButton").addEventListener("click", function() {
 	link.click();
 	document.body.removeChild(link);
 });
+
+function confirmForm(msg) {
+	if (confirm(msg)) {
+		return true;
+	}
+	return false;
+}

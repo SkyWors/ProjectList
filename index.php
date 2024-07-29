@@ -3,9 +3,14 @@
 	ini_set('display_errors',1);
 	error_reporting(-1);
 
+	if (!file_exists("data/")) {
+		mkdir("data/", 0777, true);
+	}
+
 	if (!file_exists("data/project.json")) {
 		fopen("data/project.json", "a");
 		file_put_contents("data/project.json", "{}");
+		chmod("data/project.json", 0777);
 	}
 
 	$file = json_decode(file_get_contents("data/project.json"), true);
@@ -34,11 +39,21 @@
 
 		$file = array_merge($file, $temp);
 		file_put_contents("data/project.json", json_encode($file, JSON_PRETTY_PRINT));
-		header("Refresh:0");
+		header("Refresh: 0");
+	}
+
+	if (isset($_POST["deleteItem"])) {
+		foreach($file as $name => $properties) {
+			if ($name == $_POST["deleteItem"]) {
+				unset($file[$name]);
+			}
+		}
+		file_put_contents("data/project.json", json_encode($file, JSON_PRETTY_PRINT));
+		header("Refresh: 0");
 	}
 ?>
 
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 	<head>
 		<meta charset="UTF-8">
 		<title>Project List</title>
@@ -100,27 +115,29 @@
 				sort($badgeList);
 				sort($languageList);
 
-				echo "<div class='box filterContainer column'>";
-					echo "<div class='badgeList'>";
-					foreach($badgeList as $badge) {
-						if (isset($_GET["filter"]) && in_array($badge, $filter)) {
-							echo "<a id='filter' class='badge focus'>" . $badge . "</a>";
-						} else {
-							echo "<a id='filter' class='badge'>" . $badge . "</a>";
+				if (!empty($badgeList)) {
+					echo "<div class='box filterContainer column'>";
+						echo "<div class='badgeList'>";
+						foreach($badgeList as $badge) {
+							if (isset($_GET["filter"]) && in_array($badge, $filter)) {
+								echo "<a id='filter' class='badge focus'>" . $badge . "</a>";
+							} else {
+								echo "<a id='filter' class='badge'>" . $badge . "</a>";
+							}
 						}
-					}
-					echo "</div>";
+						echo "</div>";
 
-					echo "<div class='languageList'>";
-					foreach($languageList as $language) {
-						if (isset($_GET["language"]) && in_array($language, $languages)) {
-							echo "<a id='language' class='language focus'>" . $language . "</a>";
-						} else {
-							echo "<a id='language' class='language'>" . $language . "</a>";
+						echo "<div class='languageList'>";
+						foreach($languageList as $language) {
+							if (isset($_GET["language"]) && in_array($language, $languages)) {
+								echo "<a id='language' class='language focus'>" . $language . "</a>";
+							} else {
+								echo "<a id='language' class='language'>" . $language . "</a>";
+							}
 						}
-					}
+						echo "</div>";
 					echo "</div>";
-				echo "</div>";
+				}
 			?>
 
 			<div class="column">
@@ -128,8 +145,9 @@
 					<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
 
 					<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
-					<button class="actionButton importButton" id="importButton" title="Importer"><i class="ri-download-2-line"></i></button>
+					<button class="actionButton importButton" id="importButton" title="Importer" style="cursor: not-allowed"><i class="ri-download-2-line"></i></button>
 					<button class="actionButton exportButton" id="exportButton" title="Exporter"><i class="ri-upload-2-line"></i></button>
+					<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
 				</div>
 
 				<div class="listContainer row" id="listContainer">
@@ -171,6 +189,12 @@
 							$box .= "<a class='badge' title='" . $tempBadgeList . "'>Tags</a>";
 							$box .= "<a class='language' title='" . $tempLanguageList . "'>Langages</a>";
 
+							$box .= "
+							<form method='POST'>
+								<input type='hidden' name='deleteItem' value='$name'>
+								<button class='deleteButton' type='submit' onclick='return confirmForm(\"Hum?\")' title='Supprimer'><i class='ri-delete-bin-line'></i></button>
+							</form>";
+
 							$box .= "</div></div>";
 
 							$projectFilters = array_merge($properties["language"], $properties["badge"]);
@@ -189,6 +213,7 @@
 			</div>
 		</div>
 
+		<script src="/public/js/theme.js"></script>
 		<script src="/public/js/engine.js"></script>
 	</body>
 </html>

@@ -1,11 +1,62 @@
+:root {
+	--button-color: #ffffff;
+
+	--trash-color: #a00000;
+	--trash-hover-color: #ff0000;
+
+	--badge-color: linear-gradient(45deg, #b30000, #ff0000);
+	--language-color: linear-gradient(45deg, #0054b3, #0f7fff);
+
+	--badge-text-color: #e4f0f2;
+	--language-text-color: #e4f0f2;
+
+	--add-color: #00c400;
+	--add-hover-color: #01df01;
+	--close-color: #c20000;
+	--close-hover-color: #df0000;
+	--import-color: #0084ff;
+	--import-hover-color: #389fff;
+	--export-color: #ffae00;
+	--export-hover-color: #ffc13b;
+}
+
+[data-theme="dark"] {
+	--text-color: #e4f0f2;
+
+	--background-color: #16181c;
+	--case-background-color: #26292e;
+	--case-border-color: #313030;
+
+	--input-background-color: #434956;
+	--input-placeholder-color: #818a96;
+
+	--theme-color: #e7d000;
+	--theme-hover-color: #ffe600;
+}
+
+[data-theme="light"] {
+	--text-color: #1a202c;
+
+	--background-color: #e5e7eb;
+	--case-background-color: #ffffff;
+	--case-border-color: #ffffff00;
+
+	--input-background-color: #e5e7eb;
+	--input-placeholder-color: #6c6f78;
+
+
+	--theme-color: #0058ca;
+	--theme-hover-color: #0064e7;
+}
+
 * {
 	margin: 0;
 	font-family: Arial;
 }
 
 body {
-	background-color: #16181c;
-	color: white;
+	background-color: var(--background-color);
+	color: var(--text-color);
 	user-select: none;
 	margin: 20px;
 }
@@ -33,14 +84,14 @@ body {
 }
 
 .box {
-	background-color: #26292e;
+	background-color: var(--case-background-color);
 	border-radius: 9px;
 	border-style: solid;
 	border-width: 2px;
-	border-color: #313030;
-	color: #e4f0f2;
+	border-color: var(--case-border-color);
 	padding: 20px;
 	text-align: center;
+	box-shadow: #3232641a 0px 2px 4px 0px;
 }
 
 .addForm {
@@ -51,8 +102,7 @@ body {
 }
 
 input {
-	background-color: #434956;
-	color: #e4f0f2;
+	background-color: var(--input-background-color);
 	padding: 10px;
 	border: 0;
 	border-radius: 9px;
@@ -60,7 +110,7 @@ input {
 }
 
 input::placeholder {
-	color: #818a96;
+	color: var(--input-placeholder-color);
 }
 
 input:focus {
@@ -74,7 +124,7 @@ input:focus {
 	height: 37px;
 	font-size: 20px;
 	transition: 200ms;
-	color: white;
+	color: var(--button-color);
 }
 
 .actionButton:hover {
@@ -83,35 +133,43 @@ input:focus {
 }
 
 .addFormButton {
-	background-color: #00c400;
+	background-color: var(--add-color);
 }
 
 .addFormButton:hover {
-	background-color: #01df01;
-}
-
-.closeFormButton:hover {
-	background-color: #df0000;
+	background-color: var(--add-hover-color);
 }
 
 .closeFormButton {
-	background-color: #c20000;
+	background-color: var(--close-color);
 }
 
-.exportButton:hover {
-	background-color: #ffc13b;
+.closeFormButton:hover {
+	background-color: var(--close-hover-color);
 }
 
 .exportButton {
-	background-color: #ffae00;
+	background-color: var(--export-color);
 }
 
-.importButton:hover {
-	background-color: #389fff;
+.exportButton:hover {
+	background-color: var(--export-hover-color);
 }
 
 .importButton {
-	background-color: #0084ff;
+	background-color: var(--import-color);
+}
+
+.importButton:hover {
+	background-color: var(--import-hover-color);
+}
+
+.themeButton {
+	background-color: var(--theme-color);
+}
+
+.themeButton:hover {
+	background-color: var(--theme-hover-color);
 }
 
 .listContainer {
@@ -124,11 +182,6 @@ input:focus {
 .item {
 	width: 183px;
 	height: 90px;
-	overflow: hidden;
-}
-
-.item:hover {
-	overflow: visible;
 }
 
 .item:hover .badgeContainer {
@@ -178,7 +231,7 @@ input:focus {
 .itemName {
 	font-size: 18px;
 	text-decoration: none;
-	color: #e4f0f2;
+	color: var(--text-color);
 	width: 100%;
 	cursor: help;
 }
@@ -209,6 +262,21 @@ input:focus {
 	width: 20px;
 }
 
+.deleteButton {
+	border: 0;
+	background: none;
+	color: var(--trash-color);
+	font-size: 20px;
+	opacity: 100%;
+	transition: 200ms;
+	cursor: pointer;
+}
+
+.deleteButton:hover {
+	color: var(--trash-hover-color);
+	transition: 200ms;
+}
+
 .badgeContainer {
 	margin-top: 15px;
 	display: flex;
@@ -216,20 +284,22 @@ input:focus {
 	justify-content: center;
 	opacity: 50%;
 	transition: 200ms;
-	color: #fff;
 	font-size: 13px;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .badge {
 	padding: 2px 12px 2px 12px;
-	background: linear-gradient(45deg, #b30000, #ff0000);
+	background: var(--badge-color);
+	color: var(--badge-text-color);
 	border-radius: 6px;
 }
 
 .language {
 	padding: 2px 12px 2px 12px;
-	background: linear-gradient(45deg, #0054b3, #0f7fff);
+	background: var(--language-color);
+	color: var(--language-text-color);
 	border-radius: 6px;
 }
 
