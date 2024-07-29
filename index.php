@@ -67,13 +67,7 @@
 			</form>
 		</div>
 
-		<div class="top" id="top">
-			<div class="actionButtonContainer">
-				<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
-				<button class="actionButton importButton" id="importButton" title="Importer"><i class="ri-download-2-line"></i></button>
-				<button class="actionButton exportButton" id="exportButton" title="Exporter"><i class="ri-upload-2-line"></i></button>
-			</div>
-
+		<div id="mainScreen" class="row">
 			<?php
 				if (isset($_GET["filter"])) {
 					$filter = explode(",", $_GET["filter"]);
@@ -106,7 +100,7 @@
 				sort($badgeList);
 				sort($languageList);
 
-				echo "<div class='filterContainer'>";
+				echo "<div class='box filterContainer column'>";
 					echo "<div class='badgeList'>";
 					foreach($badgeList as $badge) {
 						if (isset($_GET["filter"]) && in_array($badge, $filter)) {
@@ -129,63 +123,70 @@
 				echo "</div>";
 			?>
 
-			<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
-		</div>
+			<div class="column">
+				<div class="box top row" id="top">
+					<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
 
-		<div class="listContainer" id="listContainer">
+					<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
+					<button class="actionButton importButton" id="importButton" title="Importer"><i class="ri-download-2-line"></i></button>
+					<button class="actionButton exportButton" id="exportButton" title="Exporter"><i class="ri-upload-2-line"></i></button>
+				</div>
 
-			<?php
-				foreach($file as $name => $properties) {
+				<div class="listContainer row" id="listContainer">
 
-					$filters = array_merge($properties["language"], $properties["badge"]);
+					<?php
+						foreach($file as $name => $properties) {
 
-					$box = "<div class='box item'>";
+							$filters = array_merge($properties["language"], $properties["badge"]);
 
-					if ($properties["url"] != "") {
-						$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "' href='" . $properties["url"] . "' target='_blank'><i class='ri-external-link-line'></i> " . $name . "</a>";
-					} else {
-						$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "'>" . $name . "</a>";
-					}
-					$box .= "<div class='buttonContainer'>";
+							$box = "<div class='box item'>";
 
-					if ($properties["edit"] == true) {
-						$box .= vscodeButton($properties["path"]);
-					}
-					if ($properties["github"] != "") {
-						$box .= githubButton($properties["github"]);
-					}
-					if ($properties["gitlab"] != "") {
-						$box .= gitlabButton($properties["gitlab"]);
-					}
+							if ($properties["url"] != "") {
+								$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "' href='" . $properties["url"] . "' target='_blank'><i class='ri-external-link-line'></i> " . $name . "</a>";
+							} else {
+								$box .= "<a class='itemName' id='itemName' title='" . $properties["description"] . "'>" . $name . "</a>";
+							}
+							$box .= "<div class='buttonContainer'>";
 
-					$box .= "</div><div class='badgeContainer'>";
+							if ($properties["edit"] == true) {
+								$box .= vscodeButton($properties["path"]);
+							}
+							if ($properties["github"] != "") {
+								$box .= githubButton($properties["github"]);
+							}
+							if ($properties["gitlab"] != "") {
+								$box .= gitlabButton($properties["gitlab"]);
+							}
 
-					$tempBadgeList = "";
-					foreach ($properties["badge"] as $badge) {
-						$tempBadgeList .= $badge . " ";
-					}
-					$tempLanguageList = "";
-					foreach ($properties["language"] as $language) {
-						$tempLanguageList .= $language . " ";
-					}
-					$box .= "<a class='badge' title='" . $tempBadgeList . "'>Tags</a>";
-					$box .= "<a class='language' title='" . $tempLanguageList . "'>Langages</a>";
+							$box .= "</div><div class='badgeContainer'>";
 
-					$box .= "</div></div>";
+							$tempBadgeList = "";
+							foreach ($properties["badge"] as $badge) {
+								$tempBadgeList .= $badge . " ";
+							}
+							$tempLanguageList = "";
+							foreach ($properties["language"] as $language) {
+								$tempLanguageList .= $language . " ";
+							}
+							$box .= "<a class='badge' title='" . $tempBadgeList . "'>Tags</a>";
+							$box .= "<a class='language' title='" . $tempLanguageList . "'>Langages</a>";
 
+							$box .= "</div></div>";
 
-					$projectFilters = array_merge($properties["language"], $properties["badge"]);
-					$getFilters = array_merge($languages, $filter);
+							$projectFilters = array_merge($properties["language"], $properties["badge"]);
+							$getFilters = array_merge($languages, $filter);
 
-					if (array_intersect($getFilters, $projectFilters) == $getFilters) {
-						echo $box;
-					} else {
-						if (empty($_GET["language"]) && empty($_GET["filter"])) {
-							echo $box;
+							if (array_intersect($getFilters, $projectFilters) == $getFilters) {
+								echo $box;
+							} else {
+								if (empty($_GET["language"]) && empty($_GET["filter"])) {
+									echo $box;
+								}
+							}
 						}
-					}
-				}
-			?>
+					?>
+				</div>
+			</div>
 		</div>
 
 		<script src="/public/js/engine.js"></script>

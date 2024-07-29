@@ -21,14 +21,12 @@ function updateURL() {
 
 document.getElementById("addFormButton").addEventListener("click", () => {
 	document.getElementById("addForm").style.display = "flex";
-	document.getElementById("listContainer").style.display = "none";
-	document.getElementById("top").style.display = "none";
+	document.getElementById("mainScreen").style.display = "none";
 })
 
 document.getElementById("closeFormButton").addEventListener("click", () => {
 	document.getElementById("addForm").style.display = "none";
-	document.getElementById("listContainer").style.display = "flex";
-	document.getElementById("top").style.display = "flex";
+	document.getElementById("mainScreen").style.display = "flex";
 })
 
 var language = document.querySelectorAll('#language');
@@ -70,4 +68,14 @@ document.getElementById("search").addEventListener("input", function (event) {
 			item.parentElement.style.display = "none";
 		}
 	});
+});
+
+document.getElementById("exportButton").addEventListener("click", function() {
+	var link = document.createElement("a");
+	link.download = "project.json";
+	link.href = "data/project.json";
+
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 });
