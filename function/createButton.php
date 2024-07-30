@@ -1,0 +1,14 @@
+<?php
+
+function vscodeButton($path, $name) {
+	return '<a class="button vscode" data-id="' . $name . '" href="vscode://file/' . $path . '"><img src="/public/icon/vscode.svg"></a>';
+}
+
+function githubButton($url, $name) {
+	return '<a class="button github" data-id="' . $name . '" href="' . $url . '" target="_blank"><img src="/public/icon/github.svg"></a>';
+}
+
+function gitlabButton($url, $name) {
+	return '<a class="button gitlab" data-id="' . $name . '" href="' . $url . '" target="_blank"><img src="/public/icon/gitlab.svg"></a>';
+}
+

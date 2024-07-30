@@ -3,6 +3,7 @@
 
 	--delete-hover-color: #c70000;
 	--edit-hover-color: #ffae00;
+	--copy-hover-color: #0066ff;
 
 	--badge-color: linear-gradient(45deg, #b30000, #ff0000);
 	--language-color: linear-gradient(45deg, #0054b3, #0f7fff);
@@ -27,6 +28,9 @@
 	--case-background-color: #26292e;
 	--case-border-color: #313030;
 
+	--button-background-hover-color: #434956;
+	--button-background-color: #505661;
+
 	--input-background-color: #434956;
 	--input-placeholder-color: #818a96;
 
@@ -40,6 +44,9 @@
 	--background-color: #e5e7eb;
 	--case-background-color: #ffffff;
 	--case-border-color: #ffffff00;
+
+	--button-background-hover-color: #e5e7eb;
+	--button-background-color: #d8d8d8;
 
 	--input-background-color: #e5e7eb;
 	--input-placeholder-color: #6c6f78;
@@ -58,6 +65,22 @@ body {
 	color: var(--text-color);
 	user-select: none;
 	margin: 20px;
+}
+
+@media only screen and (max-width: 1250px) {
+	.statsBox {
+		display: none;
+		color: red;
+	}
+}
+
+.backgroundTop {
+	width: 100%;
+	height: 120px;
+	background-color: var(--background-color);
+	position: fixed;
+	top: 0;
+	z-index: 1;
 }
 
 ::-webkit-scrollbar {
@@ -118,13 +141,17 @@ input:focus {
 }
 
 .actionButton {
-	border: 0;
-	border-radius: 20px;
-	width: 37px;
-	height: 37px;
-	font-size: 20px;
-	transition: 200ms;
-	color: var(--button-color);
+    display: inline-block;
+    border: 0;
+    border-radius: 20px;
+    width: 37px;
+    height: 37px;
+    font-size: 20px;
+    transition: 200ms;
+    color: var(--text-color);
+    text-align: center;
+    line-height: 37px;
+    cursor: pointer;
 }
 
 .actionButton:hover {
@@ -158,6 +185,7 @@ input:focus {
 
 .importButton {
 	background-color: var(--import-color);
+	margin-left: 0;
 }
 
 .importButton:hover {
@@ -200,7 +228,7 @@ input:focus {
 }
 
 .search {
-	width: 400px;
+	width: 360px;
 	padding-left: 16px;
 	padding-right: 16px;
 }
@@ -227,10 +255,33 @@ input:focus {
 	min-width: fit-content;
 	position: sticky;
 	top: 20px;
+	z-index: 2;
 }
 
 input[type=checkbox], input[type="checkbox"] + label {
 	cursor: pointer;
+}
+
+#add {
+	padding: 10px 20px 10px 20px;
+	background-color: var(--button-background-color);
+	color: var(--text-color);
+	border: 0;
+	border-radius: 10px;
+	margin-top: 12px;
+	transition: 200ms;
+	cursor: pointer;
+}
+
+#add:hover {
+	background-color: var(--button-background-hover-color);
+	transition: 200ms;
+}
+
+#add[disabled] {
+	color: var(--input-placeholder-color);
+	background-color: var(--button-background-hover-color);
+	cursor: not-allowed;
 }
 
 label {
@@ -294,7 +345,7 @@ label {
 	width: 20px;
 }
 
-.deleteButton, .editButton {
+.deleteButton, .editButton, .copyButton {
 	border: 0;
 	background: none;
 	color: var(--text-color);
@@ -302,6 +353,11 @@ label {
 	opacity: 100%;
 	transition: 200ms;
 	cursor: pointer;
+	margin-right: -4px;
+}
+
+.copyButton, .editButton {
+	margin-right: -20px;
 }
 
 .deleteButton:hover {
@@ -311,6 +367,11 @@ label {
 
 .editButton:hover {
 	color: var(--edit-hover-color);
+	transition: 200ms;
+}
+
+.copyButton:hover {
+	color: var(--copy-hover-color);
 	transition: 200ms;
 }
 
