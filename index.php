@@ -50,28 +50,28 @@
 
 					<div class="box statsBox">
 						<div class="column stats">
-							<a class="title">Projets</a>
+							<a class="title"><i class="ri-archive-line"></i> Projets</a>
 							<a class="number"><?= count($file) ?></a>
 						</div>
 					</div>
 
 					<div class="box statsBox">
 						<div class="column stats">
-							<a class="title">Affichés</a>
+							<a class="title"><i class="ri-eye-line"></i> Affichés</a>
 							<a id="statsSelectProject" class="number"></a>
 						</div>
 					</div>
 
 					<div class="box statsBox">
 						<div class="column stats">
-							<a class="title">Languages</a>
+							<a class="title"><i class="ri-global-line"></i> Languages</a>
 							<a id="statsSelectProject" class="number"><?= count($languageList) ?></a>
 						</div>
 					</div>
 
 					<div class="box statsBox">
 						<div class="column stats">
-							<a class="title">Badges</a>
+							<a class="title"><i class="ri-bookmark-line"></i> Badges</a>
 							<a id="statsSelectProject" class="number"><?= count($badgeList) ?></a>
 						</div>
 					</div>
@@ -83,7 +83,7 @@
 						<div class="row">
 							<div class="column">
 								<input id="formName" type="text" name="name" placeholder="Nom*" required>
-								<input id="formPath" type="text" name="path" placeholder="Chemin*" required>
+								<input id="formPath" type="text" name="path" placeholder="Chemin">
 								<input id="formDesc" type="text" name="description" placeholder="Description*" required>
 							</div>
 							<div class="column">
@@ -95,8 +95,12 @@
 								<input id="formLang" type="text" name="language" placeholder="Langages*" required>
 								<input id="formBadge" type="text" name="badge" placeholder="Tags*" required>
 								<div>
-									<input type="checkbox" name="edit" id="edit" checked>
+									<input type="checkbox" name="edit" id="edit" disabled>
 									<label for="edit">Activer VSCode ?</label>
+								</div>
+								<div>
+									<input type="checkbox" name="idea" id="idea" disabled>
+									<label for="idea">Activer Idea ?</label>
 								</div>
 							</div>
 						</div>

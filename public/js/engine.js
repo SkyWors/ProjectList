@@ -96,6 +96,16 @@ document.getElementById("formName").addEventListener("input", function(event) {
 	} catch (e) {}
 })
 
+document.getElementById("formPath").addEventListener("input", function(event) {
+	if (event.target.value == "") {
+		document.getElementById("edit").setAttribute("disabled", "true");
+		document.getElementById("idea").setAttribute("disabled", "true");
+	} else {
+		document.getElementById("edit").removeAttribute("disabled");
+		document.getElementById("idea").removeAttribute("disabled");
+	}
+});
+
 document.getElementById("exportButton").addEventListener("click", function() {
 	var link = document.createElement("a");
 	link.download = "project.json";
@@ -127,20 +137,35 @@ document.querySelectorAll("#copyButton").forEach(function (element) {
 document.querySelectorAll("#editButton").forEach(function (element) {
 	element.addEventListener("click", (event) => {
 		let eventElement = event.target.parentElement.parentElement;
-		let name = eventElement.children[0].textContent;
+		if (event.target.id == "editButton") {
+			eventElement = eventElement.children[0];
+		}
+
+		let name = eventElement.children[0].textContent.replace(" ", "");
 
 		document.getElementById("addFormButton").click();
 
 		document.getElementById("form").children[0].textContent = "Modifier un projet";
 
 		document.getElementById("formName").value = name;
-		document.getElementById("formPath").value = eventElement.children[1].value;
-		document.getElementById("formDesc").value = eventElement.children[0].title;
+		document.getElementById("formPath").value = document.querySelector(`button.copyButton[data-id=${name}]`)?.value ?? null;
+		document.getElementById("formDesc").value = document.querySelector(`div.description[data-id=${name}]`).textContent;
 		document.getElementById("formURL").value = eventElement.children[0].href;
 		document.getElementById("formGitHub").value = document.querySelector(`a.github[data-id=${name}]`)?.href ?? null;
 		document.getElementById("formGitLab").value = document.querySelector(`a.gitlab[data-id=${name}]`)?.href ?? null;
 		document.getElementById("formLang").value = document.querySelector(`a.language[data-id=${name}]`).title;
 		document.getElementById("formBadge").value = document.querySelector(`a.badge[data-id=${name}]`).title;
+
+		if (document.getElementById("formPath").value == "") {
+			document.getElementById("edit").setAttribute("disabled", "true");
+			document.getElementById("idea").setAttribute("disabled", "true");
+		} else {
+			document.getElementById("edit").removeAttribute("disabled");
+			document.getElementById("idea").removeAttribute("disabled");
+
+			!document.querySelector(`a.vscode[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("edit").removeAttribute("checked") : document.getElementById("edit").setAttribute("checked", "true");
+			!document.querySelector(`a.idea[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("idea").removeAttribute("checked") : document.getElementById("idea").setAttribute("checked", "true");
+		}
 
 		document.getElementById("add").textContent = "Modifier";
 		document.getElementById("add").name = "update";

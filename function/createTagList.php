@@ -1,7 +1,7 @@
 <?php
 
 function createTagList($badgeList, $languageList, $filter, $languages) {
-	$list = "<div class='box filterContainer column'><a>Tags</a><div class='badgeList'>";
+	$list = "<div class='box filterContainer column'><a class='tagListTitle'><i class='ri-bookmark-line'></i> Tags</a><div class='badgeList'>";
 
 	foreach($badgeList as $badge) {
 		$list .= "<div id='filter'>";
@@ -16,7 +16,7 @@ function createTagList($badgeList, $languageList, $filter, $languages) {
 	}
 	$list .= "</div>";
 
-	$list .= "<a>Languages</a><div class='languageList'>";
+	$list .= "<a class='tagListTitle'><i class='ri-global-line'></i> Languages</a><div class='languageList'>";
 
 	foreach($languageList as $language) {
 		$list .= "<div id='language'>";
@@ -26,7 +26,7 @@ function createTagList($badgeList, $languageList, $filter, $languages) {
 		} else {
 			$list .= "<input type='checkbox'><label>" . $language . "</label>";
 		}
-		
+
 		$list .= "</div>";
 	}
 	$list .= "</div></div>";

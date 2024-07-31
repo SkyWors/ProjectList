@@ -67,7 +67,7 @@ body {
 	margin: 20px;
 }
 
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1430px) {
 	.statsBox {
 		display: none;
 		color: red;
@@ -211,11 +211,6 @@ input:focus {
 	height: 100px;
 }
 
-.item:hover .badgeContainer {
-	opacity: 100%;
-	transition: 200ms;
-}
-
 .actionForm {
 	gap: 0;
 }
@@ -240,6 +235,11 @@ input:focus {
 
 .stats .title {
 	font-size: 16px;
+}
+
+.tagListTitle {
+	margin-left: -10px;
+	text-align: left;
 }
 
 .stats .number {
@@ -316,7 +316,6 @@ label {
 	margin-left: 2px;
 	color: var(--text-color);
 	width: 100%;
-	cursor: help;
 }
 
 .itemName[href] {
@@ -327,13 +326,15 @@ label {
 	display: flex;
 	gap: 10px;
 	justify-content: left;
-	margin-top: -10px;
+	/* margin-top: -10px; */
+	align-items: center;
 }
 
 .button {
 	padding: 5px 12px 5px 12px;
 	border-radius: 5px;
 	transition: 200ms;
+	height: fit-content;
 }
 
 .button:hover {
@@ -354,6 +355,7 @@ label {
 	transition: 200ms;
 	cursor: pointer;
 	margin-right: -4px;
+	margin-top: -2px;
 }
 
 .copyButton, .editButton {
@@ -378,13 +380,11 @@ label {
 .badgeContainer {
 	display: flex;
 	gap: 6px;
-	justify-content: left;
-	margin-top: -2px;
-	opacity: 50%;
-	transition: 200ms;
+	right: 0;
 	font-size: 13px;
 	flex-wrap: wrap;
 	align-items: center;
+	margin-left: auto;
 }
 
 .badge {
@@ -392,6 +392,17 @@ label {
 	background: var(--badge-color);
 	color: var(--badge-text-color);
 	border-radius: 6px;
+}
+
+.description {
+	opacity: 50%;
+	text-align: left;
+	margin-top: -20px;
+	word-wrap: normal;
+    white-space: nowrap;
+    overflow-x: clip;
+    text-overflow: ellipsis;
+	/* margin-bottom: -10px; */
 }
 
 .language {
@@ -407,6 +418,14 @@ label {
 
 .vscode:hover {
 	background-color: #005b98;
+}
+
+.idea {
+	background-color: #c42a60;
+}
+
+.idea:hover {
+	background-color: #c44b75;
 }
 
 .path {
