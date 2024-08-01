@@ -136,7 +136,7 @@ document.querySelectorAll("#copyButton").forEach(function (element) {
 
 document.querySelectorAll("#editButton").forEach(function (element) {
 	element.addEventListener("click", (event) => {
-		let eventElement = event.target.parentElement.parentElement;
+		let eventElement = event.target.parentElement.parentElement.parentElement;
 		if (event.target.id == "editButton") {
 			eventElement = eventElement.children[0];
 		}
@@ -150,7 +150,7 @@ document.querySelectorAll("#editButton").forEach(function (element) {
 		document.getElementById("formName").value = name;
 		document.getElementById("formPath").value = document.querySelector(`button.copyButton[data-id=${name}]`)?.value ?? null;
 		document.getElementById("formDesc").value = document.querySelector(`div.description[data-id=${name}]`).textContent;
-		document.getElementById("formURL").value = eventElement.children[0].href;
+		document.getElementById("formURL").value = document.querySelector(`a.itemName[data-id=${name}]`)?.href ?? null;
 		document.getElementById("formGitHub").value = document.querySelector(`a.github[data-id=${name}]`)?.href ?? null;
 		document.getElementById("formGitLab").value = document.querySelector(`a.gitlab[data-id=${name}]`)?.href ?? null;
 		document.getElementById("formLang").value = document.querySelector(`a.language[data-id=${name}]`).title;

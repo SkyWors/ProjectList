@@ -65,6 +65,7 @@ body {
 	color: var(--text-color);
 	user-select: none;
 	margin: 20px;
+	transition: 200ms;
 }
 
 @media only screen and (max-width: 1430px) {
@@ -78,6 +79,7 @@ body {
 	width: 100%;
 	height: 120px;
 	background-color: var(--background-color);
+	transition: 200ms;
 	position: fixed;
 	top: 0;
 	z-index: 1;
@@ -107,6 +109,7 @@ body {
 
 .box {
 	background-color: var(--case-background-color);
+	transition: 200ms;
 	border-radius: 9px;
 	border-style: solid;
 	border-width: 2px;
@@ -125,6 +128,7 @@ body {
 
 input {
 	background-color: var(--input-background-color);
+	transition: 200ms;
 	padding: 10px;
 	border: 0;
 	border-radius: 9px;
@@ -141,17 +145,17 @@ input:focus {
 }
 
 .actionButton {
-    display: inline-block;
-    border: 0;
-    border-radius: 20px;
-    width: 37px;
-    height: 37px;
-    font-size: 20px;
-    transition: 200ms;
-    color: var(--text-color);
-    text-align: center;
-    line-height: 37px;
-    cursor: pointer;
+	display: inline-block;
+	border: 0;
+	border-radius: 20px;
+	width: 37px;
+	height: 37px;
+	font-size: 20px;
+	transition: 200ms;
+	color: var(--text-color);
+	text-align: center;
+	line-height: 37px;
+	cursor: pointer;
 }
 
 .actionButton:hover {
@@ -207,7 +211,7 @@ input:focus {
 }
 
 .item {
-	width: 280px;
+	width: 279px;
 	height: 100px;
 }
 
@@ -313,9 +317,14 @@ label {
 	font-size: 18px;
 	text-decoration: none;
 	text-align: left;
-	margin-left: 2px;
 	color: var(--text-color);
+	transition: 200ms;
 	width: 100%;
+
+	word-wrap: normal;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .itemName[href] {
@@ -326,8 +335,15 @@ label {
 	display: flex;
 	gap: 10px;
 	justify-content: left;
-	/* margin-top: -10px; */
+	margin-top: -10px;
 	align-items: center;
+}
+
+.actionButtonContainer {
+	display: flex;
+	margin-top: -10px;
+	margin-right: -6px;
+	justify-content: right;
 }
 
 .button {
@@ -346,7 +362,7 @@ label {
 	width: 20px;
 }
 
-.deleteButton, .editButton, .copyButton {
+.deleteButton, .editButton, .copyButton, .lastUpdateDate {
 	border: 0;
 	background: none;
 	color: var(--text-color);
@@ -358,8 +374,12 @@ label {
 	margin-top: -2px;
 }
 
-.copyButton, .editButton {
+.copyButton, .editButton, .lastUpdateDate {
 	margin-right: -20px;
+}
+
+.lastUpdateDate {
+	cursor: help;
 }
 
 .deleteButton:hover {
@@ -382,9 +402,8 @@ label {
 	gap: 6px;
 	right: 0;
 	font-size: 13px;
-	flex-wrap: wrap;
 	align-items: center;
-	margin-left: auto;
+	margin-top: -5px;
 }
 
 .badge {
@@ -399,10 +418,9 @@ label {
 	text-align: left;
 	margin-top: -20px;
 	word-wrap: normal;
-    white-space: nowrap;
-    overflow-x: clip;
-    text-overflow: ellipsis;
-	/* margin-bottom: -10px; */
+	white-space: nowrap;
+	overflow-x: clip;
+	text-overflow: ellipsis;
 }
 
 .language {
@@ -437,7 +455,7 @@ label {
 }
 
 .github {
-	background-color: #ffffff;
+	background-color: #f0f0f0;
 }
 
 .github:hover {
