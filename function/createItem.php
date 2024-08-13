@@ -6,9 +6,9 @@ function createItem($name, $properties, $languages, $filter) {
 	$box .= "<div class='row'>";
 
 	if ($properties["url"] != "") {
-		$box .= "<a class='itemName' id='itemName' data-id='" . $name . "' href='" . $properties["url"] . "' target='_blank'><i class='ri-external-link-line'></i> " . $name . "</a>";
+		$box .= "<a class='itemName' id='itemName' title='" . $name . "' data-id='" . $name . "' href='" . $properties["url"] . "' target='_blank'><i class='ri-external-link-line'></i> " . $name . "</a>";
 	} else {
-		$box .= "<a class='itemName' id='itemName'>" . $name . "</a>";
+		$box .= "<a class='itemName' title='" . $name . "' id='itemName'>" . $name . "</a>";
 	}
 
 	$box .= "<div class='badgeContainer'>";
@@ -48,19 +48,21 @@ function createItem($name, $properties, $languages, $filter) {
 
 	$box .= "<div class='actionButtonContainer row'>";
 
-	$date = localtime(@filemtime($properties["path"]), true);
-	if ($date["tm_year"] != 70) {
-		$box .= "<button class='lastUpdateDate' title='" . $date["tm_hour"] . "h " . $date["tm_min"] . "m " . $date["tm_sec"] . "s | " . $date["tm_mday"] . " " . date('F', mktime(0, 0, 0, $date["tm_mon"] + 1, 10)) . " " . 1900 + $date["tm_year"] . "'><i class='ri-time-line'></i></button>";
+	if ($properties["path"] != "") {
+		$date = getLastUpdated($properties["path"]);
+		if ($date["tm_year"] != 70) {
+			$box .= "<button class='simpleButton lastUpdateDate' title='" . $date["tm_hour"] . "h " . $date["tm_min"] . "m " . $date["tm_sec"] . "s | " . $date["tm_mday"] . " " . date('F', mktime(0, 0, 0, $date["tm_mon"] + 1, 10)) . " " . 1900 + $date["tm_year"] . "'><i class='ri-time-line'></i></button>";
+		}
 	}
 
 	if ($properties['path']) {
-		$box .= "<button class='copyButton' data-id='" . $name . "' id='copyButton' value='" . $properties['path'] . "' title='Copier le chemin'><i class='ri-link'></i></button>";
+		$box .= "<button class='simpleButton copyButton' data-id='" . $name . "' id='copyButton' value='" . $properties['path'] . "' title='Copier le chemin'><i class='ri-link'></i></button>";
 	}
 
 	$box .= "
-	<button class='editButton' id='editButton' value='$name' title='Modifier'><i class='ri-pencil-line'></i></button>
+	<button class='simpleButton editButton' id='editButton' value='$name' title='Modifier'><i class='ri-pencil-line'></i></button>
 	<form method='POST' class='actionForm row'>
-		<button class='deleteButton' type='submit' name='deleteItem' value='$name' onclick='return confirmForm()' title='Supprimer'><i class='ri-delete-bin-line'></i></button>
+		<button class='simpleButton deleteButton' type='submit' name='deleteItem' value='$name' onclick='return confirmForm()' title='Supprimer'><i class='ri-delete-bin-line'></i></button>
 	</form>";
 
 	$box .= "</div>";

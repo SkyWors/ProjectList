@@ -29,6 +29,6 @@ if (isset($_POST["add"])) {
 			"badge" => explode(" ", $_POST["badge"])
 		));
 
-	addProject($file, $temp);
+	addProject($file, $temp, $selectedFile);
 	header("Refresh: 0");
 }

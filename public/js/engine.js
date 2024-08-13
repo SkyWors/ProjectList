@@ -21,19 +21,81 @@ function updateURL() {
 
 document.getElementById("addFormButton").addEventListener("click", () => {
 	document.getElementById("addForm").style.display = "flex";
-	document.getElementById("addFormButton").style.display = "none";
-	document.getElementById("closeFormButton").style.display = "block";
-	window.scrollTo(0, 0);
 })
 
-document.getElementById("closeFormButton").addEventListener("click", () => {
-	document.getElementById("addForm").style.display = "none";
-	document.getElementById("addFormButton").style.display = "block";
-	document.getElementById("closeFormButton").style.display = "none";
+document.getElementById("profilEditButton").addEventListener("click", () => {
+	document.getElementById("profilForm").style.display = "flex";
+})
+
+document.getElementById("addForm").addEventListener("click", (event) => {
+	if (event.target.id == "addForm") {
+		document.getElementById("addForm").style.display = "none";
+	}
+})
+
+document.getElementById("profilForm").addEventListener("click", (event) => {
+	if (event.target.id == "profilForm") {
+		document.getElementById("profilForm").style.display = "none";
+	}
+})
+
+document.addEventListener("keydown", function (event) {
+	if (event.key === "Escape") {
+		document.getElementById("addForm").style.display = "none";
+		document.getElementById("profilForm").style.display = "none";
+	}
+})
+
+document.getElementById("addProfilField").addEventListener("click", () => {
+	let value = document.getElementById("profilAdd").value;
+	if (value != "") {
+		createForm("profilAddName", value);
+	}
+})
+
+function createForm(name, value, name2 = "", value2 = "") {
+	let form = document.createElement("form");
+	form.style.display = "none";
+	form.method = "POST";
+
+	let input = document.createElement("input");
+	input.name = name;
+	input.value = value;
+
+	let input2 = document.createElement("input");
+	input2.name = name2;
+	input2.value = value2;
+
+	form.appendChild(input);
+	form.appendChild(input2);
+	document.body.appendChild(form);
+	form.submit();
+}
+
+var updateProfil = document.querySelectorAll("#saveProfil");
+updateProfil.forEach((element) => {
+	element.addEventListener("click", (event) => {
+		let element = event.target.value;
+		if (event.target.id != "saveProfil") {
+			element = event.target.parentElement.value;
+		}
+		createForm("profilUpdateNewName", document.querySelector(`input[data-id=${element}]`).value, "profilUpdateName", element);
+	})
+})
+
+var deleteProfil = document.querySelectorAll("#deleteProfil");
+deleteProfil.forEach((element) => {
+	element.addEventListener("click", (event) => {
+		let element = event.target.value;
+		if (event.target.id != "deleteProfil") {
+			element = event.target.parentElement.value;
+		}
+		createForm("profilDeleteName", element);
+	})
 })
 
 var language = document.querySelectorAll('#language');
-language.forEach(function (element) {
+language.forEach((element) => {
 	element.addEventListener("click", () => {
 		let language = element.textContent.toString();
 		if (languages.includes(language)) {
@@ -58,7 +120,17 @@ filter.forEach(function (element) {
 	})
 });
 
-document.getElementById("statsSelectProject").textContent = document.querySelectorAll('#itemName').length;
+var profilSelect = document.getElementById("profilSelect");
+profilSelect.addEventListener("change", () => {
+	url = new URL(window.location.origin);
+	params = url.searchParams;
+
+	params.set("profil", profilSelect.value);
+
+	window.location.href = url;
+})
+
+// document.getElementById("statsSelectProject").textContent = document.querySelectorAll('#itemName').length;
 
 document.getElementById("search").addEventListener("input", function (event) {
 	var searchTerm = event.target.value.toLowerCase();
@@ -106,10 +178,10 @@ document.getElementById("formPath").addEventListener("input", function(event) {
 	}
 });
 
-document.getElementById("exportButton").addEventListener("click", function() {
+document.getElementById("exportButton").addEventListener("click", (event) => {
 	var link = document.createElement("a");
-	link.download = "project.json";
-	link.href = "data/project.json";
+	link.download = event.target.value;
+	link.href = "data/" + event.target.value;
 
 	document.body.appendChild(link);
 	link.click();

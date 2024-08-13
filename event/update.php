@@ -29,8 +29,8 @@ if (isset($_POST["update"])) {
 			"badge" => explode(" ", $_POST["badge"])
 		));
 
-	deleteProject($file, $_POST["update"]);
-	$file = json_decode(file_get_contents("data/project.json"), true);
-	addProject($file, $temp);
+	deleteProject($file, $_POST["update"], $selectedFile);
+	$file = json_decode(file_get_contents("data/" . $selectedFile), true);
+	addProject($file, $temp, $selectedFile);
 	header("Refresh: 0");
 }

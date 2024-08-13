@@ -15,4 +15,3 @@ function githubButton($url, $name) {
 function gitlabButton($url, $name) {
 	return '<a class="button gitlab" data-id="' . $name . '" href="' . $url . '" target="_blank"><img src="/public/icon/gitlab.svg"></a>';
 }
-
