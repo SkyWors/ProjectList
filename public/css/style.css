@@ -1,6 +1,9 @@
 :root {
 	--button-color: #ffffff;
 
+	--noscript-background-color: #FF496E;
+	--noscript-border-color: #e63457;
+
 	--delete-hover-color: #c70000;
 	--edit-hover-color: #ffae00;
 	--copy-hover-color: #0066ff;
@@ -143,6 +146,16 @@ button:focus {
 	padding: 20px;
 	text-align: center;
 	box-shadow: #3232641a 0px 2px 4px 0px;
+}
+
+.noscript {
+	background-color: var(--noscript-background-color);
+	border-style: solid;
+	border-width: 2px;
+	border-color: var(--noscript-border-color);
+	z-index: 10;
+	position: sticky;
+	max-width: 50%;
 }
 
 .form {

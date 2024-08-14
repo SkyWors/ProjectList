@@ -98,7 +98,7 @@
 		</div>
 
 		<div class="main">
-			<!-- <div class="backgroundTop"></div> -->
+			<div class="backgroundTop"></div>
 			<div class="column">
 				<div class="row box top">
 					<select id="profilSelect">
@@ -117,6 +117,11 @@
 					</div>
 					<div class="topTitle"><?= htmlspecialchars(str_replace(".json", "", $selectedFile)) ?></div>
 					<button class="simpleButton" id="profilEditButton" title="Ajouter un profil"><i class='ri-pencil-line'></i></button>
+					<noscript>
+						<div class="box noscript">
+							Merci d'activer les scripts pour le bon fonctionnement de l'application.
+						</div>
+					</noscript>	
 					<div class="row topSearch" id="top">
 						<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
 						<form method="POST" id="importForm" enctype="multipart/form-data">
