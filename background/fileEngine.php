@@ -12,3 +12,9 @@ if (isset($_GET["profil"]) && file_exists("data/" . $_GET["profil"] . ".json")) 
 
 $file = json_decode(file_get_contents("data/$selectedFile"), true);
 ksort($file);
+
+$tempList = array_diff(scandir("data/"), array('.', '..'));
+$projectList = array();
+foreach ($tempList as $project) {
+	array_push($projectList, $project);
+}

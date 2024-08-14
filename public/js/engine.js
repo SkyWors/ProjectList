@@ -25,6 +25,7 @@ document.getElementById("addFormButton").addEventListener("click", () => {
 
 document.getElementById("profilEditButton").addEventListener("click", () => {
 	document.getElementById("profilForm").style.display = "flex";
+	document.getElementById("profilAdd").focus();
 })
 
 document.getElementById("addForm").addEventListener("click", (event) => {
@@ -51,6 +52,18 @@ document.getElementById("addProfilField").addEventListener("click", () => {
 	if (value != "") {
 		createForm("profilAddName", value);
 	}
+})
+
+let switchProfil = document.querySelectorAll("#switchProfil");
+switchProfil.forEach((element) => {
+	element.addEventListener("click", () => {
+		url = new URL(window.location.origin);
+		params = url.searchParams;
+
+		params.set("profil", element.value);
+
+		window.location.href = url;
+	})
 })
 
 function createForm(name, value, name2 = "", value2 = "") {

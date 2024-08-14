@@ -11,6 +11,7 @@
 	--badge-text-color: #e4f0f2;
 	--language-text-color: #e4f0f2;
 
+	--switch-profil-hover-color: #a4a4a4;
 	--add-color: #00c400;
 	--add-hover-color: #01df01;
 	--close-color: #c20000;
@@ -420,6 +421,16 @@ td {
 	font-size: 20px;
 	transition: 200ms;
 	cursor: pointer;
+}
+
+.arrowButton {
+	font-size: 30px;
+	height: min-content;
+}
+
+.arrowButton:hover {
+	color: var(--switch-profil-hover-color);
+	transition: 200ms;
 }
 
 .copyButton, .editButton, .lastUpdateDate {

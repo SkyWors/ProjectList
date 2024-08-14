@@ -16,7 +16,7 @@ function createTagList($badgeList, $languageList, $filter, $languages) {
 	}
 	$list .= "</div>";
 
-	$list .= "<a class='tagListTitle'><i class='ri-global-line'></i> Languages</a><div class='languageList'>";
+	$list .= "<a class='tagListTitle'><i class='ri-global-line'></i> Langages</a><div class='languageList'>";
 
 	foreach($languageList as $language) {
 		$list .= "<div id='language'>";

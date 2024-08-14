@@ -9,6 +9,7 @@
 	require("function/createItem.php");
 	require("function/createTagList.php");
 	require("function/getLastUpdated.php");
+	require("function/getArrowProfil.php");
 
 	require("background/fileEngine.php");
 	require("background/tagList.php");
@@ -97,12 +98,12 @@
 		</div>
 
 		<div class="main">
-			<div class="backgroundTop"></div>
+			<!-- <div class="backgroundTop"></div> -->
 			<div class="column">
 				<div class="row box top">
 					<select id="profilSelect">
 						<?php
-							foreach (array_diff(scandir("data/"), array('.', '..')) as $projects) {
+							foreach ($projectList as $projects) {
 								if ($projects == $selectedFile) {
 									echo "<option selected>" . htmlspecialchars(str_replace(".json", "", $projects)) . "</option>";
 								} else {
@@ -111,6 +112,9 @@
 							}
 						?>
 					</select>
+					<div>
+						<?= getArrowProfil($projectList, $selectedFile) ?>
+					</div>
 					<div class="topTitle"><?= htmlspecialchars(str_replace(".json", "", $selectedFile)) ?></div>
 					<button class="simpleButton" id="profilEditButton" title="Ajouter un profil"><i class='ri-pencil-line'></i></button>
 					<div class="row topSearch" id="top">

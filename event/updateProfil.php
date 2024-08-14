@@ -5,4 +5,7 @@ if (isset($_POST["profilUpdateName"])) {
 	if (file_exists($updateFile)) {
 		rename("data/" . $_POST["profilUpdateName"] . ".json", "data/" . $_POST["profilUpdateNewName"] . ".json");
 	}
+	if ($_GET["profil"] == $_POST["profilUpdateName"]) {
+		header("Location: /?profil=" . $_POST["profilUpdateNewName"]);
+	}
 }
