@@ -19,8 +19,11 @@ function updateURL() {
 	window.location.href = url;
 }
 
-document.getElementById("addFormButton").addEventListener("click", () => {
-	document.getElementById("addForm").style.display = "flex";
+var addButtons = document.querySelectorAll("#addFOrmButton");
+addButtons.forEach((element) => {
+	element.addEventListener("click", () => {
+		document.getElementById("addForm").style.display = "flex";
+	})
 })
 
 document.getElementById("profilEditButton").addEventListener("click", () => {
@@ -47,12 +50,19 @@ document.addEventListener("keydown", function (event) {
 	}
 })
 
-document.getElementById("addProfilField").addEventListener("click", () => {
+var addProfilField = document.getElementById("addProfilField");
+addProfilField.addEventListener("click", () => {
 	let value = document.getElementById("profilAdd").value;
 	if (value != "") {
 		createForm("profilAddName", value);
 	}
 })
+
+document.getElementById("profilAdd").addEventListener("keydown", (event) => {
+	if (event.key === "Enter") {
+		addProfilField.click();
+	}
+});
 
 let switchProfil = document.querySelectorAll("#switchProfil");
 switchProfil.forEach((element) => {
@@ -145,6 +155,11 @@ profilSelect.addEventListener("change", () => {
 
 // document.getElementById("statsSelectProject").textContent = document.querySelectorAll('#itemName').length;
 
+let currentListItems = document.querySelectorAll('#itemName');
+if (currentListItems.length <= 0) {
+	document.getElementById("noItem").style.display = "flex";
+}
+
 document.getElementById("search").addEventListener("input", function (event) {
 	var searchTerm = event.target.value.toLowerCase();
 	var listItems = document.querySelectorAll('#itemName');
@@ -159,8 +174,15 @@ document.getElementById("search").addEventListener("input", function (event) {
 		} else {
 			item.parentElement.parentElement.style.display = "none";
 		}
-	});
-	document.getElementById("statsSelectProject").textContent = count;
+	})
+
+	if (count <= 0) {
+		document.getElementById("noItem").style.display = "flex";
+	} else {
+		document.getElementById("noItem").style.display = "none";
+	}
+
+	// document.getElementById("statsSelectProject").textContent = count;
 });
 
 let list = document.querySelectorAll("#itemName");
@@ -193,8 +215,12 @@ document.getElementById("formPath").addEventListener("input", function(event) {
 
 document.getElementById("exportButton").addEventListener("click", (event) => {
 	var link = document.createElement("a");
-	link.download = event.target.value;
-	link.href = "data/" + event.target.value;
+	eventElement = event.target.value;
+	if (event.target.id != "exportButton") {
+		eventElement = event.target.parentElement.value;
+	}
+	link.download = eventElement;
+	link.href = "data/" + eventElement;
 
 	document.body.appendChild(link);
 	link.click();

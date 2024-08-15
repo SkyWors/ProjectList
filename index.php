@@ -28,7 +28,7 @@
 		<meta charset="UTF-8">
 		<title>Project List</title>
 		<link rel="stylesheet" href="/public/css/style.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+		<link rel="stylesheet" href="/public/css/import/remixicon.css">
 	</head>
 	<body>
 		<div class="formContainer" id="addForm" style="display: none">
@@ -61,6 +61,7 @@
 				<button type="input" name="add" id="add">Ajouter</button>
 			</form>
 		</div>
+
 		<div class="formContainer" id="profilForm" style="display: none">
 			<div class="box form column profilForm" id="form">
 				<a>Ajouter un profil</a>
@@ -112,16 +113,15 @@
 							}
 						?>
 					</select>
-					<div>
+					<div class="profilActionButton">
 						<?= getArrowProfil($projectList, $selectedFile) ?>
+						<button class="simpleButton arrowButton editProfilButton" id="profilEditButton" title="Ajouter un profil"><i class='ri-pencil-line'></i></button>
 					</div>
-					<div class="topTitle"><?= htmlspecialchars(str_replace(".json", "", $selectedFile)) ?></div>
-					<button class="simpleButton" id="profilEditButton" title="Ajouter un profil"><i class='ri-pencil-line'></i></button>
 					<noscript>
 						<div class="box noscript">
 							Merci d'activer les scripts pour le bon fonctionnement de l'application.
 						</div>
-					</noscript>	
+					</noscript>
 					<div class="row topSearch" id="top">
 						<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
 						<form method="POST" id="importForm" enctype="multipart/form-data">
@@ -140,6 +140,12 @@
 							echo createTagList($badgeList, $languageList, $filter, $languages);
 						}
 					?>
+
+					<div class="noItemContainer" id="noItem" style="display: none">
+						<div class="box noItem">
+							<a>Il n'y a aucun projets ici.</a>
+						</div>
+					</div>
 
 					<div class="column">
 						<!-- <div class="box statsBox">

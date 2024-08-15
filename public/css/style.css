@@ -1,12 +1,10 @@
 :root {
 	--button-color: #ffffff;
 
-	--noscript-background-color: #FF496E;
-	--noscript-border-color: #e63457;
-
 	--delete-hover-color: #c70000;
 	--edit-hover-color: #ffae00;
 	--copy-hover-color: #0066ff;
+	--last-update-hover-color: #ffda5f;
 
 	--badge-color: linear-gradient(45deg, #b30000, #ff0000);
 	--language-color: linear-gradient(45deg, #0054b3, #0f7fff);
@@ -28,6 +26,9 @@
 [data-theme="dark"] {
 	--text-color: #e4f0f2;
 
+	--error-background-color: #FF496E;
+	--error-border-color: #e63457;
+
 	--background-color: #16181c;
 	--case-background-color: #26292e;
 	--case-border-color: #313030;
@@ -45,6 +46,9 @@
 [data-theme="light"] {
 	--text-color: #1a202c;
 
+	--error-background-color: #FF496E;
+	--error-border-color: #e63457;
+
 	--background-color: #e5e7eb;
 	--case-background-color: #ffffff;
 	--case-border-color: #ffffff00;
@@ -59,9 +63,14 @@
 	--theme-hover-color: #0064e7;
 }
 
+@font-face {
+	font-family: "Inter";
+	src: url("/public/css/import/inter.ttf");
+}
+
 * {
 	margin: 0;
-	font-family: Arial;
+	font-family: "inter", sans-serif;
 }
 
 body {
@@ -149,10 +158,10 @@ button:focus {
 }
 
 .noscript {
-	background-color: var(--noscript-background-color);
+	background-color: var(--error-background-color);
 	border-style: solid;
 	border-width: 2px;
-	border-color: var(--noscript-border-color);
+	border-color: var(--error-border-color);
 	z-index: 10;
 	position: sticky;
 	max-width: 50%;
@@ -357,6 +366,16 @@ label {
 	font-size: 20px;
 }
 
+.editProfilButton {
+	margin-left: 8px;
+	font-size: 23px !important;
+}
+
+.editProfilButton:hover {
+	color: var(--edit-hover-color) !important;
+	transition: 200ms;
+}
+
 td {
 	text-align: center;
 	height: 50px;
@@ -436,6 +455,12 @@ td {
 	cursor: pointer;
 }
 
+.profilActionButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .arrowButton {
 	font-size: 30px;
 	height: min-content;
@@ -452,6 +477,11 @@ td {
 
 .lastUpdateDate {
 	cursor: help;
+}
+
+.lastUpdateDate:hover {
+	color: var(--last-update-hover-color);
+	transition: 200ms;
 }
 
 .deleteButton:hover, .profilDeleteButton:hover {
@@ -472,6 +502,24 @@ td {
 .profilAddButton:hover {
 	color: var(--add-color);
 	transition: 200ms;
+}
+
+.noItemContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.noItem {
+	font-size: 20px;
+	display: flex;
+	gap: 22px;
+	align-items: center;
+	background-color: var(--error-background-color);
+	border-style: solid;
+	border-width: 2px;
+	border-color: var(--error-border-color);
 }
 
 .top {
@@ -529,6 +577,10 @@ select {
 	background: var(--language-color);
 	color: var(--language-text-color);
 	border-radius: 6px;
+}
+
+.badge:hover, .language:hover {
+	cursor: help;
 }
 
 .vscode {
