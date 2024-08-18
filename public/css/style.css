@@ -32,6 +32,7 @@
 	--background-color: #16181c;
 	--case-background-color: #26292e;
 	--case-border-color: #313030;
+	--case-border-hover-color: #3d3c3c;
 
 	--button-background-hover-color: #434956;
 	--button-background-color: #505661;
@@ -52,6 +53,7 @@
 	--background-color: #e5e7eb;
 	--case-background-color: #ffffff;
 	--case-border-color: #ffffff00;
+	--case-border-hover-color: #ececec;
 
 	--button-background-hover-color: #e5e7eb;
 	--button-background-color: #d8d8d8;
@@ -91,9 +93,10 @@ button:focus {
 
 .statsBox {
 	height: 37px;
+	margin-right: 30px;
 }
 
-@media only screen and (max-width: 1430px) {
+@media only screen and (max-width: 1500px) {
 	.statsBox {
 		display: none;
 	}
@@ -255,14 +258,20 @@ input:focus, select:focus {
 }
 
 .listContainer {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: left;
+	width: 100%;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	height: min-content;
 }
 
 .item {
-	width: 279px;
 	height: 100px;
+}
+
+.item:hover {
+	border-color: var(--case-border-hover-color);
+	transition: 200ms;
 }
 
 .actionForm {
@@ -570,6 +579,7 @@ select {
 	white-space: nowrap;
 	overflow-x: clip;
 	text-overflow: ellipsis;
+	user-select: text;
 }
 
 .language {

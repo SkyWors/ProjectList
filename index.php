@@ -123,6 +123,34 @@
 						</div>
 					</noscript>
 					<div class="row topSearch" id="top">
+						<div class="statsBox">
+							<div class="column stats">
+								<a class="title"><i class="ri-archive-line"></i> Projets</a>
+								<a class="number"><?= count($file) ?></a>
+							</div>
+						</div>
+
+						<div class="statsBox">
+							<div class="column stats">
+								<a class="title"><i class="ri-eye-line"></i> Affichés</a>
+								<a id="statsSelectProject" class="number"></a>
+							</div>
+						</div>
+
+						<div class="statsBox">
+							<div class="column stats">
+								<a class="title"><i class="ri-global-line"></i> Languages</a>
+								<a id="statsSelectProject" class="number"><?= count($languageList) ?></a>
+							</div>
+						</div>
+
+						<div class="statsBox">
+							<div class="column stats">
+								<a class="title"><i class="ri-bookmark-line"></i> Badges</a>
+								<a id="statsSelectProject" class="number"><?= count($badgeList) ?></a>
+							</div>
+						</div>
+
 						<button class="actionButton addFormButton" id="addFormButton" title="Ajouter"><i class="ri-add-line"></i></button>
 						<form method="POST" id="importForm" enctype="multipart/form-data">
 							<input id="importField" type="file" accept="application/JSON" style="display: none" name="import">
@@ -147,42 +175,12 @@
 						</div>
 					</div>
 
-					<div class="column">
-						<!-- <div class="box statsBox">
-							<div class="column stats">
-								<a class="title"><i class="ri-archive-line"></i> Projets</a>
-								<a class="number"><?= count($file) ?></a>
-							</div>
-						</div>
-
-						<div class="box statsBox">
-							<div class="column stats">
-								<a class="title"><i class="ri-eye-line"></i> Affichés</a>
-								<a id="statsSelectProject" class="number"></a>
-							</div>
-						</div>
-
-						<div class="box statsBox">
-							<div class="column stats">
-								<a class="title"><i class="ri-global-line"></i> Languages</a>
-								<a id="statsSelectProject" class="number"><?= count($languageList) ?></a>
-							</div>
-						</div>
-
-						<div class="box statsBox">
-							<div class="column stats">
-								<a class="title"><i class="ri-bookmark-line"></i> Badges</a>
-								<a id="statsSelectProject" class="number"><?= count($badgeList) ?></a>
-							</div>
-						</div> -->
-
-						<div class="listContainer row" id="listContainer">
-							<?php
-								foreach($file as $name => $properties) {
-									echo createItem($name, $properties, $languages, $filter);
-								}
-							?>
-						</div>
+					<div class="listContainer" id="listContainer">
+						<?php
+							foreach($file as $name => $properties) {
+								echo createItem($name, $properties, $languages, $filter);
+							}
+						?>
 					</div>
 				</div>
 			</div>

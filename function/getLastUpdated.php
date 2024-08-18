@@ -14,11 +14,14 @@ function getLastUpdated($path) {
 }
 
 function getAllFiles($path, $array) {
-	foreach (array_diff(scandir($path . "/"), array('.', '..')) as $element) {
-		if (is_file($path . "/" . $element)) {
-			array_push($array, $path . "/" . $element);
-		} elseif (is_dir($path . "/" . $element)) {
-			$array = getAllFiles($path . "/" . $element, $array);
+	$pathFiles = @scandir($path . "/");
+	if ($pathFiles) {
+		foreach (array_diff($pathFiles, array('.', '..')) as $element) {
+			if (is_file($path . "/" . $element)) {
+				array_push($array, $path . "/" . $element);
+			} elseif (is_dir($path . "/" . $element)) {
+				$array = getAllFiles($path . "/" . $element, $array);
+			}
 		}
 	}
 	return $array;

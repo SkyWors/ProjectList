@@ -153,7 +153,7 @@ profilSelect.addEventListener("change", () => {
 	window.location.href = url;
 })
 
-// document.getElementById("statsSelectProject").textContent = document.querySelectorAll('#itemName').length;
+document.getElementById("statsSelectProject").textContent = document.querySelectorAll('#itemName').length;
 
 let currentListItems = document.querySelectorAll('#itemName');
 if (currentListItems.length <= 0) {
@@ -182,7 +182,7 @@ document.getElementById("search").addEventListener("input", function (event) {
 		document.getElementById("noItem").style.display = "none";
 	}
 
-	// document.getElementById("statsSelectProject").textContent = count;
+	document.getElementById("statsSelectProject").textContent = count;
 });
 
 let list = document.querySelectorAll("#itemName");
