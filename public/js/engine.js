@@ -165,14 +165,23 @@ document.getElementById("search").addEventListener("input", function (event) {
 	var listItems = document.querySelectorAll('#itemName');
 	let count = 0;
 
+	console.log(event.target.value);
+
 	listItems.forEach(function (item) {
 		var itemText = item.textContent.toLowerCase();
 
 		if (itemText.includes(searchTerm)) {
+			let width = item.parentElement.parentElement.offsetWidth;
+			item.parentElement.parentElement.setAttribute("style", `max-width: ${width-44}px;`);
+			console.log(width)
 			item.parentElement.parentElement.style.display = "flex";
 			count++;
 		} else {
 			item.parentElement.parentElement.style.display = "none";
+		}
+
+		if (event.target.value == "") {
+			item.parentElement.parentElement.removeAttribute("style");
 		}
 	})
 

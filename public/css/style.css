@@ -516,8 +516,8 @@ td {
 .noItemContainer {
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	width: 100%;
+	height: min-content;
 }
 
 .noItem {
@@ -526,8 +526,6 @@ td {
 	gap: 22px;
 	align-items: center;
 	background-color: var(--error-background-color);
-	border-style: solid;
-	border-width: 2px;
 	border-color: var(--error-border-color);
 }
 
