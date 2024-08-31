@@ -2,13 +2,13 @@ let url = new URL(window.location.href);
 let params = url.searchParams;
 
 var languages = params.get("language")?.split(",") ?? [];
-var filters = params.get("filter")?.split(",") ?? [];
+var filters = params.get("tag")?.split(",") ?? [];
 
 function updateURL() {
 	if (filters.length > 0) {
-		params.set("filter", filters.join(","));
+		params.set("tag", filters.join(","));
 	} else {
-		params.delete("filter");
+		params.delete("tag");
 	}
 	if (languages.length > 0) {
 		params.set("language", languages.join(","));
@@ -70,7 +70,7 @@ switchProfil.forEach((element) => {
 		url = new URL(window.location.origin);
 		params = url.searchParams;
 
-		params.set("profil", element.value);
+		params.set("profile", element.value);
 
 		window.location.href = url;
 	})
@@ -148,7 +148,7 @@ profilSelect.addEventListener("change", () => {
 	url = new URL(window.location.origin);
 	params = url.searchParams;
 
-	params.set("profil", profilSelect.value);
+	params.set("profile", profilSelect.value);
 
 	window.location.href = url;
 })
@@ -214,10 +214,10 @@ document.getElementById("formName").addEventListener("input", function(event) {
 
 document.getElementById("formPath").addEventListener("input", function(event) {
 	if (event.target.value == "") {
-		document.getElementById("edit").setAttribute("disabled", "true");
+		document.getElementById("vscode").setAttribute("disabled", "true");
 		document.getElementById("idea").setAttribute("disabled", "true");
 	} else {
-		document.getElementById("edit").removeAttribute("disabled");
+		document.getElementById("vscode").removeAttribute("disabled");
 		document.getElementById("idea").removeAttribute("disabled");
 	}
 });
@@ -277,13 +277,13 @@ document.querySelectorAll("#editButton").forEach(function (element) {
 		document.getElementById("formBadge").value = document.querySelector(`a.badge[data-id=${name}]`).title;
 
 		if (document.getElementById("formPath").value == "") {
-			document.getElementById("edit").setAttribute("disabled", "true");
+			document.getElementById("vscode").setAttribute("disabled", "true");
 			document.getElementById("idea").setAttribute("disabled", "true");
 		} else {
-			document.getElementById("edit").removeAttribute("disabled");
+			document.getElementById("vscode").removeAttribute("disabled");
 			document.getElementById("idea").removeAttribute("disabled");
 
-			!document.querySelector(`a.vscode[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("edit").removeAttribute("checked") : document.getElementById("edit").setAttribute("checked", "true");
+			!document.querySelector(`a.vscode[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("vscode").removeAttribute("checked") : document.getElementById("vscode").setAttribute("checked", "true");
 			!document.querySelector(`a.idea[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("idea").removeAttribute("checked") : document.getElementById("idea").setAttribute("checked", "true");
 		}
 

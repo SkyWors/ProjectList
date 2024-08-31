@@ -1,26 +1,71 @@
 <?php
-	ini_set('display_startup_errors',1);
-	ini_set('display_errors',1);
-	error_reporting(-1);
+	require_once __DIR__ . "/../start.php";
 
-	require("function/createButton.php");
-	require("function/addProject.php");
-	require("function/deleteProject.php");
-	require("function/createItem.php");
-	require("function/createTagList.php");
-	require("function/getLastUpdated.php");
-	require("function/getArrowProfil.php");
+	if (!isset($_SESSION["token"])) {
+		header("Location: /login");
+	}
 
-	require("background/fileEngine.php");
-	require("background/tagList.php");
+	use
+		ProjectList\Project;
 
-	require("event/add.php");
-	require("event/delete.php");
-	require("event/update.php");
-	require("event/import.php");
-	require("event/addProfil.php");
-	require("event/deleteProfil.php");
-	require("event/updateProfil.php");
+	// require "background/fileEngine.php";
+	// require "background/tagList.php";
+
+	$project = new Project;
+	$profiles = $project->getProfiles($_SESSION["userData"]["oauth_uid"]);
+	$profilesName = array();
+	$projects = array();
+	$languageList = array();
+	$tagList = array();
+
+	// Get profiles name
+	foreach ($profiles as $element) {
+		array_push($profilesName, $element["name"]);
+	}
+
+	// Get selected profile page
+	if (isset($_GET["profile"]) && in_array($_GET["profile"], $profilesName)) {
+		$selectedProfile = $_GET["profile"];
+	} else {
+		$selectedProfile = $profilesName[0];
+	}
+
+	// Get projects from selected profile page
+	$projectsId = $project->getProjects($_SESSION["userData"]["oauth_uid"], $selectedProfile);
+	if (!empty($projectsId)) {
+		foreach ($projectsId as $id) {
+			array_push($projects, $project->getProperties($id["id"]));
+		}
+	}
+
+	// Get languages from projects
+	foreach ($projects as $element) {
+		foreach (explode(" ", $element["language"]) as $language) {
+			if (!in_array($language, $languageList)) {
+				array_push($languageList, $language);
+			}
+		}
+	}
+
+	// Get tags from projects
+	foreach ($projects as $element) {
+		foreach (explode(" ", $element["tag"]) as $tag) {
+			if (!in_array($tag, $tagList)) {
+				array_push($tagList, $tag);
+			}
+		}
+	}
+
+	isset($_GET["language"]) ? $selectedLanguages = explode(",", $_GET["language"]) : $selectedLanguages = null;
+	isset($_GET["tag"]) ? $selectedTags = explode(",", $_GET["tag"]) : $selectedTags = null;
+
+	require "event/add.php";
+	require "event/delete.php";
+	require "event/update.php";
+	require "event/import.php";
+	require "event/addProfil.php";
+	require "event/deleteProfil.php";
+	require "event/updateProfil.php";
 ?>
 
 <html lang="fr" data-theme="dark">
@@ -49,8 +94,8 @@
 						<input id="formLang" type="text" name="language" placeholder="Langages*" required>
 						<input id="formBadge" type="text" name="badge" placeholder="Tags*" required>
 						<div>
-							<input type="checkbox" name="edit" id="edit" disabled>
-							<label for="edit">Activer VSCode ?</label>
+							<input type="checkbox" name="vscode" id="vscode" disabled>
+							<label for="vscode">Activer VSCode ?</label>
 						</div>
 						<div>
 							<input type="checkbox" name="idea" id="idea" disabled>
@@ -67,18 +112,17 @@
 				<a>Ajouter un profil</a>
 				<table>
 					<?php
-						foreach (array_diff(scandir("data/"), array('.', '..')) as $projects) {
-							$name = htmlspecialchars(str_replace(".json", "", $projects));
+						foreach ($profilesName as $element) {
 							echo "
 					<tr>
 						<td>
-							<input type='text' data-id='" . $name . "' value='" . $name . "' id='profil'>
+							<input type='text' data-id='" . $element . "' value='" . $element . "' id='profil'>
 						</td>";
 							echo "
 						<td>
 							<div class='profilButtonContainer'>
-								<button class='simpleButton profilSaveButton' id='saveProfil' value='" . $name . "' title='Enregistrer'><i class='ri-save-2-line'></i></button>
-								<button class='simpleButton profilDeleteButton' id='deleteProfil' value='" . $name . "' onclick='return confirmForm()' title='Retirer'><i class='ri-delete-bin-line'></i></button>
+								<button class='simpleButton profilSaveButton' id='saveProfil' value='" . $element . "' title='Enregistrer'><i class='ri-save-2-line'></i></button>
+								<button class='simpleButton profilDeleteButton' id='deleteProfil' value='" . $element . "' onclick='return confirmForm()' title='Retirer'><i class='ri-delete-bin-line'></i></button>
 							</div>
 						</td>
 					</tr>";
@@ -104,17 +148,17 @@
 				<div class="row box top">
 					<select id="profilSelect">
 						<?php
-							foreach ($projectList as $projects) {
-								if ($projects == $selectedFile) {
-									echo "<option selected>" . htmlspecialchars(str_replace(".json", "", $projects)) . "</option>";
+							foreach ($profilesName as $element) {
+								if ($element == $selectedProfile) {
+									echo "<option selected>" . htmlspecialchars($element) . "</option>";
 								} else {
-									echo "<option>" . htmlspecialchars(str_replace(".json", "", $projects)) . "</option>";
+									echo "<option>" . htmlspecialchars($element) . "</option>";
 								}
 							}
 						?>
 					</select>
 					<div class="profilActionButton">
-						<?= getArrowProfil($projectList, $selectedFile) ?>
+						<?= getArrowProfil($profilesName, $selectedProfile) ?>
 						<button class="simpleButton arrowButton editProfilButton" id="profilEditButton" title="Ajouter un profil"><i class='ri-pencil-line'></i></button>
 					</div>
 					<noscript>
@@ -126,7 +170,7 @@
 						<div class="statsBox">
 							<div class="column stats">
 								<a class="title"><i class="ri-archive-line"></i> Projets</a>
-								<a class="number"><?= count($file) ?></a>
+								<a class="number"><?= !empty($projectsId) ? count($projectsId) : 0 ?></a>
 							</div>
 						</div>
 
@@ -147,7 +191,7 @@
 						<div class="statsBox">
 							<div class="column stats">
 								<a class="title"><i class="ri-bookmark-line"></i> Badges</a>
-								<a id="statsSelectProject" class="number"><?= count($badgeList) ?></a>
+								<a id="statsSelectProject" class="number"><?= count($tagList) ?></a>
 							</div>
 						</div>
 
@@ -159,26 +203,49 @@
 						<button class="actionButton exportButton" id="exportButton" value="<?= $selectedFile ?>" title="Exporter"><i class="ri-upload-2-line"></i></button>
 						<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
 						<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
+						<a class="simpleButton" href="logout"><i class="ri-logout-box-r-line"></i></a>
 					</div>
 				</div>
 
 				<div class="row">
 					<?php
-						if (!empty($badgeList)) {
-							echo createTagList($badgeList, $languageList, $filter, $languages);
+						if (!empty($tagList)) {
+							echo createFilterList($languageList, $tagList, $selectedLanguages, $selectedTags);
 						}
 					?>
 
 					<div class="noItemContainer" id="noItem" style="display: none">
 						<div class="box noItem">
-							<a>Il n'y a aucun projets ici.</a>
+							<a>Aucun projets trouvés.</a>
 						</div>
 					</div>
 
 					<div class="listContainer" id="listContainer">
 						<?php
-							foreach($file as $name => $properties) {
-								echo createItem($name, $properties, $languages, $filter);
+							foreach($projects as $element) {
+								$projectFilters = array_merge(explode(" ", $element["language"]), explode(" ", $element["tag"]));
+
+								if ($selectedLanguages != null && $selectedTags != null) {
+									$getFilters = array_merge($selectedLanguages, $selectedTags);
+								} else {
+									if ($selectedLanguages != null) {
+										$getFilters = $selectedLanguages;
+									} else {
+										$getFilters = $selectedTags;
+									}
+								}
+
+								if ($getFilters) {
+									if (array_intersect($getFilters, $projectFilters) == $getFilters) {
+										echo createItem($element);
+									} else {
+										if (isset($selectedLanguages) && isset($selectedTags)) {
+											echo createItem($element);
+										}
+									}
+								} else {
+									echo createItem($element);
+								}
 							}
 						?>
 					</div>

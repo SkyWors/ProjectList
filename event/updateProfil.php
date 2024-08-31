@@ -1,12 +1,10 @@
 <?php
 
 if (isset($_POST["profilUpdateName"])) {
-	$updateFile = "data/" . $_POST["profilUpdateName"] . ".json";
-	if (file_exists($updateFile)) {
-		rename("data/" . $_POST["profilUpdateName"] . ".json", "data/" . $_POST["profilUpdateNewName"] . ".json");
-	}
-	if (isset($_GET["profil"]) && $_GET["profil"] == $_POST["profilUpdateName"]) {
-		header("Location: /?profil=" . $_POST["profilUpdateNewName"]);
+	$project->updateProfile($_SESSION["userData"]["oauth_uid"], $_POST["profilUpdateName"], $_POST["profilUpdateNewName"]);
+
+	if (isset($_GET["profile"]) && $_GET["profile"] == $_POST["profilUpdateName"]) {
+		header("Location: /?profile=" . $_POST["profilUpdateNewName"]);
 	} else {
 		header("Location: /");
 	}

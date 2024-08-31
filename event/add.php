@@ -6,7 +6,7 @@ if (isset($_POST["add"])) {
 	$url = $_POST["url"] ?? "";
 	$github = $_POST["github"] ?? "";
 	$gitlab = $_POST["gitlab"] ?? "";
-	$checkbox = $_POST["edit"] ?? false;
+	$vscode = $_POST["vscode"] ?? false;
 	$idea = $_POST["idea"] ?? false;
 
 	while (substr($_POST["language"], -1) == " ") {
@@ -16,19 +16,19 @@ if (isset($_POST["add"])) {
 		$_POST["badge"] = substr($_POST["badge"], 0, -1);
 	}
 
-	$temp = array(str_replace(" ", "", $_POST["name"])
-		=> array(
-			"path" => $path,
-			"edit" => $checkbox,
-			"description" => $description,
-			"url" => $url,
-			"idea" => $idea,
-			"github" => $github,
-			"gitlab" => $gitlab,
-			"language" => explode(" ", $_POST["language"]),
-			"badge" => explode(" ", $_POST["badge"])
-		));
+	$properties = array(
+		"name" => str_replace(" ", "", $_POST["name"]),
+		"path" => $path,
+		"description" => $description,
+		"url" => $url,
+		"language" => $_POST["language"],
+		"tag" => $_POST["badge"],
+		"github" => $github,
+		"gitlab" => $gitlab,
+		"vscode" => $vscode,
+		"idea" => $idea
+	);
 
-	addProject($file, $temp, $selectedFile);
+	$project->addProject($_SESSION["userData"]["oauth_uid"], $selectedProfile, $properties);
 	header("Refresh: 0");
 }

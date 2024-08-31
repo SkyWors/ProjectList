@@ -6,8 +6,8 @@ if (isset($_POST["update"])) {
 	$url = $_POST["url"] ?? "";
 	$github = $_POST["github"] ?? "";
 	$gitlab = $_POST["gitlab"] ?? "";
-	$checkbox = $_POST["edit"] ?? false;
-	$idea = $_POST["idea"] ?? false;
+	isset($_POST["vscode"]) && $_POST["vscode"] == true ? $vscode = true : $vscode = false;
+	isset($_POST["idea"]) && $_POST["idea"] == true ? $idea = true : $idea = false;
 
 	while (substr($_POST["language"], -1) == " ") {
 		$_POST["language"] = substr($_POST["language"], 0, -1);
@@ -16,21 +16,20 @@ if (isset($_POST["update"])) {
 		$_POST["badge"] = substr($_POST["badge"], 0, -1);
 	}
 
-	$temp = array(str_replace(" ", "", $_POST["name"])
-		=> array(
-			"path" => $path,
-			"edit" => $checkbox,
-			"description" => $description,
-			"url" => $url,
-			"idea" => $idea,
-			"github" => $github,
-			"gitlab" => $gitlab,
-			"language" => explode(" ", $_POST["language"]),
-			"badge" => explode(" ", $_POST["badge"])
-		));
+	$properties = array(
+		"oldname" => str_replace(" ", "", $_POST["update"]),
+		"name" => str_replace(" ", "", $_POST["name"]),
+		"path" => $path,
+		"description" => $description,
+		"url" => $url,
+		"language" => $_POST["language"],
+		"tag" => $_POST["badge"],
+		"github" => $github,
+		"gitlab" => $gitlab,
+		"vscode" => $vscode,
+		"idea" => $idea
+	);
 
-	deleteProject($file, $_POST["update"], $selectedFile);
-	$file = json_decode(file_get_contents("data/" . $selectedFile), true);
-	addProject($file, $temp, $selectedFile);
+	$project->updateProject($_SESSION["userData"]["oauth_uid"], $selectedProfile, $properties);
 	header("Refresh: 0");
 }

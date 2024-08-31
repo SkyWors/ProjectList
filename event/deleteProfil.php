@@ -1,9 +1,6 @@
 <?php
 
 if (isset($_POST["profilDeleteName"])) {
-	$updateFile = "data/" . $_POST["profilDeleteName"] . ".json";
-	if (file_exists($updateFile)) {
-		unlink($updateFile);
-	}
+	$project->deleteProfile($_SESSION["userData"]["oauth_uid"], $_POST["profilDeleteName"]);
 	header("Location: /");
 }
