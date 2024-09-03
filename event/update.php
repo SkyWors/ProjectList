@@ -30,6 +30,6 @@ if (isset($_POST["update"])) {
 		"idea" => $idea
 	);
 
-	$project->updateProject($_SESSION["userData"]["oauth_uid"], $selectedProfile, $properties);
+	$project->updateProject($_SESSION["userUID"], $selectedProfile, $properties);
 	header("Refresh: 0");
 }

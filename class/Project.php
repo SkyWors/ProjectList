@@ -12,7 +12,7 @@ class Project {
 	private $applicationTable = "Application";
 
 	public function getProjects($uid, $profilName) {
-		$query = "SELECT id FROM " . $this->profilTable . " p WHERE id_User = " . $uid . " AND name = '" . $profilName . "'";
+		$query = "SELECT id FROM " . $this->profilTable . " p WHERE id_User = '" . $uid . "' AND name = '" . $profilName . "'";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->execute();
 		$profilId = $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? null;
@@ -33,21 +33,21 @@ class Project {
 	}
 
 	public function getProject($uid, $profileName, $projectName) {
-		$query = "SELECT project.id FROM " . $this->projectTable . " project, " . $this->profilTable . " profile, " . $this->profileProjectTable . " profilep WHERE profilep.id_Project = project.id AND profile.id = profilep.id_Profile AND profile.name = '" . $profileName . "' AND project.id_User = " . $uid . " AND project.name = '" . $projectName . "'";
+		$query = "SELECT project.id FROM " . $this->projectTable . " project, " . $this->profilTable . " profile, " . $this->profileProjectTable . " profilep WHERE profilep.id_Project = project.id AND profile.id = profilep.id_Profile AND profile.name = '" . $profileName . "' AND project.id_User = '" . $uid . "' AND project.name = '" . $projectName . "'";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0];
 	}
 
 	public function getProfile($uid, $profilName) {
-		$query = "SELECT id FROM " . $this->profilTable . " WHERE id_User = " . $uid . " AND name = '" . $profilName . "'";
+		$query = "SELECT id FROM " . $this->profilTable . " WHERE id_User = '" . $uid . "' AND name = '" . $profilName . "'";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0];
 	}
 
 	public function getProfiles($uid) {
-		$query = "SELECT * FROM " . $this->profilTable . " WHERE id_User = " . $uid;
+		$query = "SELECT * FROM " . $this->profilTable . " WHERE id_User = '" . $uid . "'";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_ASSOC);
@@ -73,7 +73,7 @@ class Project {
 		$queryPrep->bindParam(":tag", $properties["tag"]);
 		$queryPrep->execute();
 
-		$projectId = $this->getProject($uid, $profilName, $properties["name"]);
+		$projectId = DATABASE->lastInsertId();
 		$profilId = $this->getProfile($uid, $profilName);
 
 		$vscode = (int)$properties["vscode"];

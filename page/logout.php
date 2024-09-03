@@ -2,9 +2,6 @@
 
 require_once __DIR__ . "/../start.php";
 
-unset($_SESSION["token"]);
-unset($_SESSION['userData']);
-
-GCLIENT->revokeToken();
+unset($_SESSION["userUID"]);
 
 header("Location: /login");

@@ -21,10 +21,3 @@ foreach (array_diff(scandir(__DIR__ . "/function"), array(".", "..", "include.ph
 
 $db = new Database;
 define("DATABASE", $db->getConnection());
-
-define("GCLIENT", new Google_Client());
-GCLIENT->setApplicationName('Login to ProjectList');
-GCLIENT->setClientId($_ENV["GOOGLE_CLIENT_ID"]);
-GCLIENT->setClientSecret($_ENV["GOOGLE_CLIENT_SECRET"]);
-GCLIENT->setRedirectUri("http://projectlist.fr" . $_ENV["GOOGLE_REDIRECT_URL"]);
-GCLIENT->addScope(['https://www.googleapis.com/auth/userinfo.email']);

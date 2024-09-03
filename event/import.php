@@ -20,7 +20,7 @@ if (isset($_FILES["import"]) && $_FILES["import"]['error'] == 0) {
 				"idea" => $element["idea"],
 			);
 
-			$project->addProject($_SESSION["userData"]["oauth_uid"], $selectedProfile, $properties);
+			$project->addProject($_SESSION["userUID"], $selectedProfile, $properties);
 		}
 	}
 	header("Refresh: 0");

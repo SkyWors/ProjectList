@@ -1,18 +1,15 @@
 <?php
 	require_once __DIR__ . "/../start.php";
 
-	if (!isset($_SESSION["token"])) {
+	if (!isset($_SESSION["userUID"])) {
 		header("Location: /login");
 	}
 
 	use
 		ProjectList\Project;
 
-	// require "background/fileEngine.php";
-	// require "background/tagList.php";
-
 	$project = new Project;
-	$profiles = $project->getProfiles($_SESSION["userData"]["oauth_uid"]);
+	$profiles = $project->getProfiles($_SESSION["userUID"]);
 	$profilesName = array();
 	$projects = array();
 	$languageList = array();
@@ -31,7 +28,7 @@
 	}
 
 	// Get projects from selected profile page
-	$projectsId = $project->getProjects($_SESSION["userData"]["oauth_uid"], $selectedProfile);
+	$projectsId = $project->getProjects($_SESSION["userUID"], $selectedProfile);
 	if (!empty($projectsId)) {
 		foreach ($projectsId as $id) {
 			array_push($projects, $project->getProperties($id["id"]));
@@ -203,7 +200,7 @@
 						<button class="actionButton exportButton" id="exportButton" value="<?= $selectedFile ?>" title="Exporter"><i class="ri-upload-2-line"></i></button>
 						<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
 						<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
-						<a class="simpleButton" href="logout"><i class="ri-logout-box-r-line"></i></a>
+						<a class="simpleButton logoutButton" href="logout" title="Se déconnecter"><i class="ri-logout-box-r-line"></i></a>
 					</div>
 				</div>
 
@@ -252,6 +249,10 @@
 				</div>
 			</div>
 		</div>
+
+		<footer>
+			<i class="ri-archive-line"></i> ProjectList - Développé avec 🧡 par <a class="footerLink" href="https://github.com/SkyWors" target="_blank">SkyWors</a> <i class="ri-external-link-line"></i>
+		</footer>
 
 		<script src="/public/js/theme.js"></script>
 		<script src="/public/js/engine.js"></script>

@@ -29,6 +29,6 @@ if (isset($_POST["add"])) {
 		"idea" => $idea
 	);
 
-	$project->addProject($_SESSION["userData"]["oauth_uid"], $selectedProfile, $properties);
+	$project->addProject($_SESSION["userUID"], $selectedProfile, $properties);
 	header("Refresh: 0");
 }

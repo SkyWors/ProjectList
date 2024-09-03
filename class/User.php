@@ -8,29 +8,36 @@ use
 class User {
 	private $table = "User";
 
-	function checkUser($data = array()) {
-		if (!empty($data)) {
-			$whereSql = " WHERE oauth_uid = '" . $data['oauth_uid'] . "'";
-			$checkQuery = "SELECT * FROM " . $this->table . $whereSql;
-			$queryPrep = DATABASE->prepare($checkQuery);
-			$queryPrep->execute();
-			$result = $queryPrep->fetchAll(PDO::FETCH_ASSOC);
+	function create($email, $password) {
+		$uid = uidGen();
+		$passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-			if ($result != null) {
-				$query = "UPDATE " . $this->table . " SET oauth_uid = " . $data['oauth_uid'] . $whereSql;
-				DATABASE->query($query);
-			} else {
-				$query = "INSERT INTO " . $this->table . " (oauth_uid, email) VALUES (:oauth_uid, :email)";
-				$queryPrep = DATABASE->prepare($query);
-				$queryPrep->bindParam(':oauth_uid', $data["oauth_uid"]);
-				$queryPrep->bindParam(':email', $data["email"]);
-				$queryPrep->execute();
-			}
+		$query = "INSERT INTO " . $this->table . " (oauth_uid, email, password) VALUES (:uid, :email, :password)";
+		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":uid", $uid);
+		$queryPrep->bindParam(":email", $email);
+		$queryPrep->bindParam(":password", $passwordHash);
+		$queryPrep->execute();
 
-			$result = DATABASE->query($checkQuery);
-			$userData = $result->fetchAll(PDO::FETCH_ASSOC)[0];
-		}
+		$project = new Project();
+		$project->addProfile($uid, "Projets");
 
-		return !empty($userData) ? $userData : false;
+		return $uid;
+	}
+
+	function getUID($email) {
+		$query = "SELECT oauth_uid FROM " . $this->table . " WHERE email = '" . $email . "'";
+		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->execute();
+		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? NULL;
+	}
+
+	function verifyPassword($email, $password) {
+		$query = "SELECT password FROM " . $this->table . " WHERE email = '" . $email . "'";
+		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->execute();
+		$passwordHash = $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? "";
+
+		return password_verify($password, $passwordHash) ?? NULL;
 	}
 }
