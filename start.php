@@ -6,8 +6,7 @@ error_reporting(-1);
 
 use
 	Dotenv\Dotenv,
-	ProjectList\Database,
-	Google_Client;
+	ProjectList\Database;
 
 session_start();
 

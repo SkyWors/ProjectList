@@ -17,8 +17,8 @@ if (isset($_POST["update"])) {
 	}
 
 	$properties = array(
-		"oldname" => str_replace(" ", "", $_POST["update"]),
-		"name" => str_replace(" ", "", $_POST["name"]),
+		"oldname" => $_POST["update"],
+		"name" => $_POST["name"],
 		"path" => $path,
 		"description" => $description,
 		"url" => $url,

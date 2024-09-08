@@ -1,6 +1,4 @@
 <?php
-	require_once __DIR__ . "/../start.php";
-
 	if (!isset($_SESSION["userUID"])) {
 		header("Location: /login");
 	}
@@ -30,8 +28,8 @@
 	// Get projects from selected profile page
 	$projectsId = $project->getProjects($_SESSION["userUID"], $selectedProfile);
 	if (!empty($projectsId)) {
-		foreach ($projectsId as $id) {
-			array_push($projects, $project->getProperties($id["id"]));
+		foreach ($projectsId as $uid) {
+			array_push($projects, $project->getProperties($uid["uid"]));
 		}
 	}
 
@@ -43,6 +41,7 @@
 			}
 		}
 	}
+	sort($languageList);
 
 	// Get tags from projects
 	foreach ($projects as $element) {
@@ -52,6 +51,7 @@
 			}
 		}
 	}
+	sort($tagList);
 
 	isset($_GET["language"]) ? $selectedLanguages = explode(",", $_GET["language"]) : $selectedLanguages = null;
 	isset($_GET["tag"]) ? $selectedTags = explode(",", $_GET["tag"]) : $selectedTags = null;
@@ -66,12 +66,9 @@
 ?>
 
 <html lang="fr" data-theme="dark">
-	<head>
-		<meta charset="UTF-8">
-		<title>Project List</title>
-		<link rel="stylesheet" href="/public/css/style.css">
-		<link rel="stylesheet" href="/public/css/import/remixicon.css">
-	</head>
+
+	<?php include "template/header.php" ?>
+
 	<body>
 		<div class="formContainer" id="addForm" style="display: none">
 			<form class="box form column" id="form" method="POST">
@@ -108,23 +105,21 @@
 			<div class="box form column profilForm" id="form">
 				<a>Ajouter un profil</a>
 				<table>
-					<?php
-						foreach ($profilesName as $element) {
-							echo "
-					<tr>
-						<td>
-							<input type='text' data-id='" . $element . "' value='" . $element . "' id='profil'>
-						</td>";
-							echo "
-						<td>
-							<div class='profilButtonContainer'>
-								<button class='simpleButton profilSaveButton' id='saveProfil' value='" . $element . "' title='Enregistrer'><i class='ri-save-2-line'></i></button>
-								<button class='simpleButton profilDeleteButton' id='deleteProfil' value='" . $element . "' onclick='return confirmForm()' title='Retirer'><i class='ri-delete-bin-line'></i></button>
-							</div>
-						</td>
-					</tr>";
-						}
-					?>
+					<?php foreach ($profilesName as $element) { ?>
+						<tr>
+							<td>
+								<input type='text' data-id='<?= htmlspecialchars($element) ?>' value='<?= htmlspecialchars($element) ?>' id='profil'>
+							</td>
+							<td>
+								<div class='profilButtonContainer'>
+									<button class='simpleButton profilSaveButton' id='saveProfil' value='<?= htmlspecialchars($element) ?>' title='Enregistrer'><i class='ri-save-2-line'></i></button>
+									<?php if (count($profilesName) > 1) { ?>
+										<button class='simpleButton profilDeleteButton' id='deleteProfil' value='<?= htmlspecialchars($element) ?>' onclick='return confirmForm()' title='Retirer'><i class='ri-delete-bin-line'></i></button>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 					<tr>
 						<td>
 							<input type="text" id="profilAdd" placeholder="Nom">
@@ -146,11 +141,11 @@
 					<select id="profilSelect">
 						<?php
 							foreach ($profilesName as $element) {
-								if ($element == $selectedProfile) {
-									echo "<option selected>" . htmlspecialchars($element) . "</option>";
-								} else {
-									echo "<option>" . htmlspecialchars($element) . "</option>";
-								}
+								if ($element == $selectedProfile) { ?>
+									<option selected><?= htmlspecialchars($element) ?></option>
+								<?php } else { ?>
+									<option><?= htmlspecialchars($element) ?></option>
+								<?php }
 							}
 						?>
 					</select>
@@ -197,7 +192,7 @@
 							<input id="importField" type="file" accept="application/JSON" style="display: none" name="import">
 							<label class="actionButton importButton" for="importField" title="Importer"><i class="ri-download-2-line"></i></label>
 						</form>
-						<button class="actionButton exportButton" id="exportButton" value="<?= $selectedFile ?>" title="Exporter"><i class="ri-upload-2-line"></i></button>
+						<button class="actionButton exportButton" id="exportButton" value="<?= $selectedProfile ?>" title="Exporter"><i class="ri-upload-2-line"></i></button>
 						<button class="actionButton themeButton" id="themeButton"><i class="ri-sun-line"></i></button>
 						<input class="search" type="text" id="search" placeholder="Rechercher" autocomplete="off" autofocus>
 						<a class="simpleButton logoutButton" href="logout" title="Se déconnecter"><i class="ri-logout-box-r-line"></i></a>
@@ -207,7 +202,7 @@
 				<div class="row">
 					<?php
 						if (!empty($tagList)) {
-							echo createFilterList($languageList, $tagList, $selectedLanguages, $selectedTags);
+							include "template/taglist.php";
 						}
 					?>
 
@@ -234,14 +229,14 @@
 
 								if ($getFilters) {
 									if (array_intersect($getFilters, $projectFilters) == $getFilters) {
-										echo createItem($element);
+										include "template/item.php";
 									} else {
 										if (isset($selectedLanguages) && isset($selectedTags)) {
-											echo createItem($element);
+											include "template/item.php";
 										}
 									}
 								} else {
-									echo createItem($element);
+									include "template/item.php";
 								}
 							}
 						?>
@@ -250,10 +245,9 @@
 			</div>
 		</div>
 
-		<footer>
-			<i class="ri-archive-line"></i> ProjectList - Développé avec 🧡 par <a class="footerLink" href="https://github.com/SkyWors" target="_blank">SkyWors</a> <i class="ri-external-link-line"></i>
-		</footer>
+		<?php include "template/footer.php" ?>
 
+		<script> var projectList = <?= json_encode($projects) ?>; </script>
 		<script src="/public/js/theme.js"></script>
 		<script src="/public/js/engine.js"></script>
 	</body>

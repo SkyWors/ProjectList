@@ -727,3 +727,11 @@ footer {
 	text-decoration: underline;
 	color: var(--text-color);
 }
+
+.notfoundContainer {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	margin-top: 10%;
+	width: 300px;
+}

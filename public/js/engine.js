@@ -120,7 +120,7 @@ deleteProfil.forEach((element) => {
 var language = document.querySelectorAll('#language');
 language.forEach((element) => {
 	element.addEventListener("click", () => {
-		let language = element.textContent.toString();
+		let language = element.getAttribute("value");
 		if (languages.includes(language)) {
 			languages.splice(languages.indexOf(language), 1);
 		} else {
@@ -133,7 +133,7 @@ language.forEach((element) => {
 var filter = document.querySelectorAll('#filter');
 filter.forEach(function (element) {
 	element.addEventListener("click", () => {
-		let badge = element.textContent.toString();
+		let badge = element.getAttribute("value")
 		if (filters.includes(badge)) {
 			filters.splice(filters.indexOf(badge), 1);
 		} else {
@@ -198,7 +198,7 @@ let list = document.querySelectorAll("#itemName");
 document.getElementById("formName").addEventListener("input", function(event) {
 	try {
 		list.forEach(function(item) {
-			if (item.textContent.toLowerCase().replace(" ", "") == event.target.value.toLowerCase() && event.target.value != "") {
+			if (item.textContent == event.target.value && event.target.value != "") {
 				document.getElementById("add").setAttribute("disabled", "true");
 				event.target.style = "box-shadow: inset 0 0 0 2px #c20000";
 				event.target.title = "Ce projet existe déjà.";
@@ -223,17 +223,11 @@ document.getElementById("formPath").addEventListener("input", function(event) {
 });
 
 document.getElementById("exportButton").addEventListener("click", (event) => {
-	var link = document.createElement("a");
-	eventElement = event.target.value;
+	eventElement = event.target;
 	if (event.target.id != "exportButton") {
-		eventElement = event.target.parentElement.value;
+		eventElement = event.target.parentElement;
 	}
-	link.download = eventElement;
-	link.href = "data/" + eventElement;
-
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	window.location.href = "export?profile=" + eventElement.value;
 });
 
 function confirmForm() {
@@ -256,25 +250,32 @@ document.querySelectorAll("#copyButton").forEach(function (element) {
 
 document.querySelectorAll("#editButton").forEach(function (element) {
 	element.addEventListener("click", (event) => {
-		let eventElement = event.target.parentElement.parentElement.parentElement;
-		if (event.target.id == "editButton") {
-			eventElement = eventElement.children[0];
+		let eventElement = event.target;
+		if (event.target.id != "editButton") {
+			eventElement = eventElement.parentElement;
 		}
 
-		let name = eventElement.children[0].textContent.replace(" ", "");
+		let i = 0;
+		let project = "";
+		projectList.forEach(element => {
+			if (element.uid == eventElement.value) {
+				project = projectList[i];
+			}
+			i++;
+		});
 
 		document.getElementById("addFormButton").click();
 
 		document.getElementById("form").children[0].textContent = "Modifier un projet";
 
-		document.getElementById("formName").value = name;
-		document.getElementById("formPath").value = document.querySelector(`button.copyButton[data-id=${name}]`)?.value ?? null;
-		document.getElementById("formDesc").value = document.querySelector(`div.description[data-id=${name}]`).textContent;
-		document.getElementById("formURL").value = document.querySelector(`a.itemName[data-id=${name}]`)?.href ?? null;
-		document.getElementById("formGitHub").value = document.querySelector(`a.github[data-id=${name}]`)?.href ?? null;
-		document.getElementById("formGitLab").value = document.querySelector(`a.gitlab[data-id=${name}]`)?.href ?? null;
-		document.getElementById("formLang").value = document.querySelector(`a.language[data-id=${name}]`).title;
-		document.getElementById("formBadge").value = document.querySelector(`a.badge[data-id=${name}]`).title;
+		document.getElementById("formName").value = project["name"];
+		document.getElementById("formPath").value = project["path"];
+		document.getElementById("formDesc").value = project["description"];
+		document.getElementById("formURL").value = project["url"];
+		document.getElementById("formGitHub").value = project["github"];
+		document.getElementById("formGitLab").value = project["gitlab"];
+		document.getElementById("formLang").value = project["language"];
+		document.getElementById("formBadge").value = project["tag"];
 
 		if (document.getElementById("formPath").value == "") {
 			document.getElementById("vscode").setAttribute("disabled", "true");
@@ -283,13 +284,13 @@ document.querySelectorAll("#editButton").forEach(function (element) {
 			document.getElementById("vscode").removeAttribute("disabled");
 			document.getElementById("idea").removeAttribute("disabled");
 
-			!document.querySelector(`a.vscode[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("vscode").removeAttribute("checked") : document.getElementById("vscode").setAttribute("checked", "true");
-			!document.querySelector(`a.idea[data-id=${name}]`) || document.getElementById("formPath").value == "" ? document.getElementById("idea").removeAttribute("checked") : document.getElementById("idea").setAttribute("checked", "true");
+			!project["vscode"] || document.getElementById("formPath").value == "" ? document.getElementById("vscode").removeAttribute("checked") : document.getElementById("vscode").setAttribute("checked", "true");
+			!project["idea"] || document.getElementById("formPath").value == "" ? document.getElementById("idea").removeAttribute("checked") : document.getElementById("idea").setAttribute("checked", "true");
 		}
 
 		document.getElementById("add").textContent = "Modifier";
 		document.getElementById("add").name = "update";
-		document.getElementById("add").value = name;
+		document.getElementById("add").value = project["name"];
 	});
 });
 

@@ -10,9 +10,13 @@ class User {
 
 	function create($email, $password) {
 		$uid = uidGen();
+		while (Utils::isUID($uid, $this->table) != null) {
+			$uid = uidGen();
+		}
+
 		$passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-		$query = "INSERT INTO " . $this->table . " (oauth_uid, email, password) VALUES (:uid, :email, :password)";
+		$query = "INSERT INTO " . $this->table . " (uid, email, password) VALUES (:uid, :email, :password)";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->bindParam(":uid", $uid);
 		$queryPrep->bindParam(":email", $email);
@@ -26,7 +30,7 @@ class User {
 	}
 
 	function getUID($email) {
-		$query = "SELECT oauth_uid FROM " . $this->table . " WHERE email = '" . $email . "'";
+		$query = "SELECT uid FROM " . $this->table . " WHERE email = '" . $email . "'";
 		$queryPrep = DATABASE->prepare($query);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? NULL;

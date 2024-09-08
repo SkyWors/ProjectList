@@ -6,8 +6,8 @@ if (isset($_POST["add"])) {
 	$url = $_POST["url"] ?? "";
 	$github = $_POST["github"] ?? "";
 	$gitlab = $_POST["gitlab"] ?? "";
-	$vscode = $_POST["vscode"] ?? false;
-	$idea = $_POST["idea"] ?? false;
+	$vscode = isset($_POST["vscode"]) && $_POST["vscode"] == "on" ? true : false;
+	$idea = isset($_POST["idea"]) && $_POST["idea"] == "on" ? true : false;
 
 	while (substr($_POST["language"], -1) == " ") {
 		$_POST["language"] = substr($_POST["language"], 0, -1);
@@ -17,7 +17,7 @@ if (isset($_POST["add"])) {
 	}
 
 	$properties = array(
-		"name" => str_replace(" ", "", $_POST["name"]),
+		"name" => $_POST["name"],
 		"path" => $path,
 		"description" => $description,
 		"url" => $url,
