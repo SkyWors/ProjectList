@@ -24,7 +24,7 @@
 		setcookie("profile", $selectedProfile, time() + 60*60*24*30);
 	} else {
 		$selectedProfile = $profilesName[0];
-		if (isset($_COOKIE["profile"])) {
+		if (isset($_COOKIE["profile"]) && in_array($_COOKIE["profile"], $profilesName)) {
 			$selectedProfile = $_COOKIE["profile"];
 		}
 	}
