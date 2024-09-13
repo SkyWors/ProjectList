@@ -1,25 +1,25 @@
 <div class="box item column">
 	<div class="row">
 		<?php if ($element["url"] != "") { ?>
-			<a class="itemName" id="itemName" title="<?= $element["name"] ?>" data-id="<?= $element["name"] ?>" href="<?= $element["url"] ?>" target="_blank">
-				<i class="ri-external-link-line"></i> <?= $element["name"] ?>
+			<a class="itemName" id="itemName" title="<?= htmlspecialchars($element["name"]) ?>" data-id="<?= htmlspecialchars($element["name"]) ?>" href="<?= htmlspecialchars($element["url"]) ?>" target="_blank">
+				<i class="ri-external-link-line"></i> <?= htmlspecialchars($element["name"]) ?>
 			</a>
 		<?php } else { ?>
-			<a class="itemName" title="<?= $element["name"] ?>" id="itemName"><?= $element["name"] ?></a>
+			<a class="itemName" title="<?= htmlspecialchars($element["name"]) ?>" id="itemName"><?= htmlspecialchars($element["name"]) ?></a>
 		<?php } ?>
 
 		<div class="badgeContainer">
-			<a class="language" data-id="<?= $element["name"] ?>" title="<?= $element["language"] ?>">
+			<a class="language" data-id="<?= htmlspecialchars($element["name"]) ?>" title="<?= htmlspecialchars($element["language"]) ?>">
 				<i class="ri-global-line"></i>
 			</a>
-			<a class="badge" data-id="<?= $element["name"] ?>" title="<?= $element["tag"] ?>">
+			<a class="badge" data-id="<?= htmlspecialchars($element["name"]) ?>" title="<?= htmlspecialchars($element["tag"]) ?>">
 				<i class="ri-bookmark-line"></i>
 			</a>
 		</div>
 	</div>
 
-	<div class="description" data-id="<?= $element["name"] ?>" title="<?= $element["description"] ?>">
-		<a><?= $element["description"] ?></a>
+	<div class="description" data-id="<?= htmlspecialchars($element["name"]) ?>" title="<?= htmlspecialchars($element["description"]) ?>">
+		<a><?= htmlspecialchars($element["description"]) ?></a>
 	</div>
 
 	<div class="buttonContainer row">
@@ -46,17 +46,17 @@
 		</button>
 
 		<?php if ($element["path"]) { ?>
-			<button class="simpleButton copyButton" data-id="<?= $element["name"] ?>" id="copyButton" value="<?= $element["path"] ?>" title="Copier le chemin">
+			<button class="simpleButton copyButton" data-id="<?= htmlspecialchars($element["name"]) ?>" id="copyButton" value="<?= htmlspecialchars($element["path"]) ?>" title="Copier le chemin">
 				<i class="ri-link"></i>
 			</button>
 		<?php } ?>
 
-		<button class="simpleButton editButton" id="editButton" value="<?= $element["uid"] ?>" title="Modifier">
+		<button class="simpleButton editButton" id="editButton" value="<?= htmlspecialchars($element["uid"]) ?>" title="Modifier">
 			<i class="ri-pencil-line"></i>
 		</button>
 
 		<form method="POST" class="actionForm row">
-			<button class="simpleButton deleteButton" type="submit" name="deleteItem" value="<?= $element["name"] ?>" onclick="return confirmForm()" title="Supprimer">
+			<button class="simpleButton deleteButton" type="submit" name="deleteItem" value="<?= htmlspecialchars($element["name"]) ?>" onclick="return confirmForm()" title="Supprimer">
 				<i class="ri-delete-bin-line"></i>
 			</button>
 		</form>

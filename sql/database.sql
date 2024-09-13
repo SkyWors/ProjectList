@@ -11,7 +11,7 @@ CREATE TABLE `Project` (
 	`uid` varchar(50) NOT NULL,
 	`uid_User` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
 	`name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-	`description` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+	`description` text COLLATE utf8mb4_general_ci NOT NULL,
 	`path` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
 	`url` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
 	`language` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,

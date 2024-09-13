@@ -21,8 +21,12 @@
 	// Get selected profile page
 	if (isset($_GET["profile"]) && in_array($_GET["profile"], $profilesName)) {
 		$selectedProfile = $_GET["profile"];
+		setcookie("profile", $selectedProfile, time() + 60*60*24*30);
 	} else {
 		$selectedProfile = $profilesName[0];
+		if (isset($_COOKIE["profile"])) {
+			$selectedProfile = $_COOKIE["profile"];
+		}
 	}
 
 	// Get projects from selected profile page
@@ -75,18 +79,18 @@
 				<a>Ajouter un projet</a>
 				<div class="row">
 					<div class="column">
-						<input id="formName" type="text" name="name" placeholder="Nom*" required>
-						<input id="formPath" type="text" name="path" placeholder="Chemin">
+						<input id="formName" type="text" name="name" placeholder="Nom*" maxlength="50" required>
+						<input id="formPath" type="text" name="path" placeholder="Chemin" maxlength="100">
 						<input id="formDesc" type="text" name="description" placeholder="Description*" required>
 					</div>
 					<div class="column">
-						<input id="formURL" type="url" name="url" placeholder="URL">
-						<input id="formGitHub" type="url" name="github" placeholder="GitHub">
-						<input id="formGitLab" type="url" name="gitlab" placeholder="GitLab">
+						<input id="formURL" type="url" name="url" placeholder="URL"  maxlength="100">
+						<input id="formGitHub" type="url" name="github" placeholder="GitHub" maxlength="100">
+						<input id="formGitLab" type="url" name="gitlab" placeholder="GitLab" maxlength="100">
 					</div>
 					<div class="column">
-						<input id="formLang" type="text" name="language" placeholder="Langages*" required>
-						<input id="formBadge" type="text" name="badge" placeholder="Tags*" required>
+						<input id="formLang" type="text" name="language" placeholder="Langages*" maxlength="100" required>
+						<input id="formBadge" type="text" name="badge" placeholder="Tags*" maxlength="100" required>
 						<div>
 							<input type="checkbox" name="vscode" id="vscode" disabled>
 							<label for="vscode">Activer VSCode ?</label>

@@ -2,3 +2,4 @@ data/*.json
 .env
 /vendor/
 .vscode
+log/

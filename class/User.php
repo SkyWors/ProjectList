@@ -9,9 +9,9 @@ class User {
 	private $table = "User";
 
 	function create($email, $password) {
-		$uid = uidGen();
+		$uid = Utils::uidGen(16);
 		while (Utils::isUID($uid, $this->table) != null) {
-			$uid = uidGen();
+			$uid = Utils::uidGen(16);
 		}
 
 		$passwordHash = password_hash($password, PASSWORD_BCRYPT);

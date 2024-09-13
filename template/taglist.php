@@ -8,7 +8,7 @@
 				<?php } else { ?>
 					<input type="checkbox">
 				<?php } ?>
-				<label><?= $element ?></label>
+				<label><?= htmlspecialchars($element) ?></label>
 			</div>
 		<?php } ?>
 	</div>
@@ -22,7 +22,7 @@
 				<?php } else { ?>
 					<input type="checkbox">
 				<?php } ?>
-				<label><?= $element ?></label>
+				<label><?= htmlspecialchars($element) ?></label>
 			</div>
 		<?php } ?>
 	</div>

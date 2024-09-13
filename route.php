@@ -15,6 +15,9 @@ switch (explode("?", $_SERVER["REQUEST_URI"])[0]) {
 	case "/logout":
 		include "page/logout.php";
 		break;
+	case "/error":
+		include "page/error.php";
+		break;
 	default:
 		include "page/notfound.php";
 		break;

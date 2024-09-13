@@ -59,9 +59,9 @@ class Project {
 	}
 
 	public function addProject($userUID, $profilName, $properties) {
-		$projectUID = uidGen();
+		$projectUID = Utils::uidGen(16);
 		while (Utils::isUID($projectUID, $this->projectTable) != null) {
-			$projectUID = uidGen();
+			$projectUID = Utils::uidGen(16);
 		}
 
 		$query = "INSERT INTO " . $this->projectTable . " (uid, uid_User, name, description, path, url, language, tag) VALUES (:uid, :uid_User, :name, :description, :path, :url, :language, :tag)";
@@ -130,9 +130,9 @@ class Project {
 	}
 
 	public function addProfile($userUID, $profileName) {
-		$uid = uidGen();
+		$uid = Utils::uidGen(16);
 		while (Utils::isUID($uid, $this->profileTable) != null) {
-			$uid = uidGen();
+			$uid = Utils::uidGen(16);
 		}
 
 		$query = "INSERT INTO " . $this->profileTable . " (uid, uid_User, name) VALUES (:uid, :uid_User, :name)";
