@@ -5,6 +5,7 @@
 
 	if (isset($_SESSION['userUID'])) {
 		header("Location: /");
+		exit();
 	}
 
 	$user = new User();

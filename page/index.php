@@ -1,6 +1,7 @@
 <?php
 	if (!isset($_SESSION["userUID"])) {
 		header("Location: /login");
+		exit();
 	}
 
 	use
