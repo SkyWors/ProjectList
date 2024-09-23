@@ -728,6 +728,11 @@ footer {
 	color: var(--text-color);
 }
 
+.footerGit {
+	margin-left: 15px;
+	text-decoration: none;
+}
+
 .notfoundContainer {
 	display: flex;
 	flex-direction: column;
