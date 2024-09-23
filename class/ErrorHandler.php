@@ -12,14 +12,14 @@ class ErrorHandler {
 		$logFile = $errorFolder . "/" . date("Y-m-d") . ".log";
 
 		if (!file_exists($errorFolder . "/"))
-			mkdir($errorFolder, 0777, true);
+			mkdir($errorFolder, 0770, true);
 
-        $errorMessage = "[" . date('Y-m-d H:i:s') . "] ";
-        $errorMessage .= "Uncaught Exception: " . $exception->getMessage() . "\n";
-        $errorMessage .= "File: " . $exception->getFile() . " (Line " . $exception->getLine() . ")\n";
-        $errorMessage .= "Stack trace:\n" . $exception->getTraceAsString() . "\n\n";
+		$errorMessage = "[" . date('Y-m-d H:i:s') . "] ";
+		$errorMessage .= "Uncaught Exception: " . $exception->getMessage() . "\n";
+		$errorMessage .= "File: " . $exception->getFile() . " (Line " . $exception->getLine() . ")\n";
+		$errorMessage .= "Stack trace:\n" . $exception->getTraceAsString() . "\n\n";
 
-        file_put_contents($logFile, $errorMessage, FILE_APPEND);
+		file_put_contents($logFile, $errorMessage, FILE_APPEND);
 
 		header("Location: /error");
 	}

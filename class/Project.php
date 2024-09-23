@@ -18,8 +18,9 @@ class Project {
 			return null;
 		}
 
-		$query = "SELECT p.uid FROM " . $this->projectTable . " p, " . $this->profileProjectTable . " pp WHERE pp.uid_Profile = '" . $profileUID . "' AND pp.uid_Project = p.uid ORDER BY p.name";
+		$query = "SELECT p.uid FROM " . $this->projectTable . " p, " . $this->profileProjectTable . " pp WHERE pp.uid_Profile = :profileUID AND pp.uid_Project = p.uid ORDER BY p.name";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":profileUID", $profileUID);
 		$queryPrep->execute();
 		$projects = $queryPrep->fetchAll(PDO::FETCH_ASSOC) ?? null;
 
@@ -30,22 +31,28 @@ class Project {
 	}
 
 	public function getProject($userUID, $profileName, $projectName) {
-		$query = "SELECT project.uid FROM " . $this->projectTable . " project, " . $this->profileTable . " profile, " . $this->profileProjectTable . " profilep WHERE profilep.uid_Project = project.uid AND profile.uid = profilep.uid_Profile AND profile.name = '" . $profileName . "' AND project.uid_User = '" . $userUID . "' AND project.name = '" . $projectName . "'";
+		$query = "SELECT project.uid FROM " . $this->projectTable . " project, " . $this->profileTable . " profile, " . $this->profileProjectTable . " profilep WHERE profilep.uid_Project = project.uid AND profile.uid = profilep.uid_Profile AND profile.name = :profileName AND project.uid_User = :uid AND project.name = :projectName";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":uid", $userUID);
+		$queryPrep->bindParam(":profileName", $profileName);
+		$queryPrep->bindParam(":projectName", $projectName);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0];
 	}
 
-	public function getProfile($userUID, $profilName) {
-		$query = "SELECT uid FROM " . $this->profileTable . " WHERE uid_User = '" . $userUID . "' AND name = '" . $profilName . "'";
+	public function getProfile($userUID, $profileName) {
+		$query = "SELECT uid FROM " . $this->profileTable . " WHERE uid_User = :uid AND name = :profileName";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":uid", $userUID);
+		$queryPrep->bindParam(":profileName", $profileName);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0];
 	}
 
 	public function getProfiles($userUID) {
-		$query = "SELECT * FROM " . $this->profileTable . " WHERE uid_User = '" . $userUID . "'";
+		$query = "SELECT * FROM " . $this->profileTable . " WHERE uid_User = :uid";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":uid", $userUID);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -90,8 +97,10 @@ class Project {
 		$queryPrep->bindParam(":idea", $idea);
 		$queryPrep->execute();
 
-		$query = "INSERT INTO " . $this->profileProjectTable . " (uid_Project, uid_Profile) VALUES ('" . $projectUID . "', '" . $profileUID . "')";
+		$query = "INSERT INTO " . $this->profileProjectTable . " (uid_Project, uid_Profile) VALUES (:projectUID, :profileUID)";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":projectUID", $projectUID);
+		$queryPrep->bindParam(":profileUID", $profileUID);
 		$queryPrep->execute();
 	}
 
@@ -124,8 +133,9 @@ class Project {
 	}
 
 	public function deleteProject($projectUID) {
-		$query = "DELETE FROM " . $this->projectTable . " WHERE uid = '" . $projectUID . "'";
+		$query = "DELETE FROM " . $this->projectTable . " WHERE uid = :projectUID";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":projectUID", $projectUID);
 		$queryPrep->execute();
 	}
 

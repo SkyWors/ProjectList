@@ -30,15 +30,17 @@ class User {
 	}
 
 	function getUID($email) {
-		$query = "SELECT uid FROM " . $this->table . " WHERE email = '" . $email . "'";
+		$query = "SELECT uid FROM " . $this->table . " WHERE email = :email";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":email", $email);
 		$queryPrep->execute();
 		return $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? NULL;
 	}
 
 	function verifyPassword($email, $password) {
-		$query = "SELECT password FROM " . $this->table . " WHERE email = '" . $email . "'";
+		$query = "SELECT password FROM " . $this->table . " WHERE email = :email";
 		$queryPrep = DATABASE->prepare($query);
+		$queryPrep->bindParam(":email", $email);
 		$queryPrep->execute();
 		$passwordHash = $queryPrep->fetchAll(PDO::FETCH_COLUMN)[0] ?? "";
 
