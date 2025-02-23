@@ -1,52 +1,93 @@
-CREATE TABLE `User` (
-	`uid` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-	`email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-	`password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-	`update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`uid`)
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `uid` varchar(32) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `date_update` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `date_create` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `users_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `Project` (
-	`uid` varchar(50) NOT NULL,
-	`uid_User` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-	`name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-	`description` text COLLATE utf8mb4_general_ci NOT NULL,
-	`path` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-	`url` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-	`language` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-	`tag` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-	`update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`uid`),
-	KEY `Project_User_FK` (`uid_User`),
-	CONSTRAINT `Project_User_FK` FOREIGN KEY (`uid_User`) REFERENCES `User` (`uid`) ON DELETE CASCADE ON UPDATE RESTRICT
+--
+-- Trigger for table `users`
+--
+
+CREATE OR REPLACE TRIGGER add_role
+AFTER INSERT
+ON users FOR EACH ROW
+BEGIN
+	INSERT INTO user_role (uid_user) VALUES (NEW.uid);
+END
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `Application` (
-	`uid_Project` varchar(50) NOT NULL,
-	`github` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-	`gitlab` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-	`vscode` tinyint(1) NOT NULL DEFAULT '0',
-	`idea` tinyint(1) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`uid_Project`),
-	CONSTRAINT `Application_Project_FK` FOREIGN KEY (`uid_Project`) REFERENCES `Project` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+--
+-- Data for table `roles`
+--
+
+INSERT INTO `roles` VALUES
+(1,'user'),
+(10,'administrator');
+
+--
+-- Table structure for table `user_role`
+--
+
+CREATE TABLE `user_role` (
+  `uid_user` varchar(32) NOT NULL,
+  `id_role` int(11) NOT NULL DEFAULT 1,
+  `date_update` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`uid_user`,`id_role`),
+  KEY `user_role_roles_FK` (`id_role`),
+  CONSTRAINT `user_role_roles_FK` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`),
+  CONSTRAINT `user_role_users_FK` FOREIGN KEY (`uid_user`) REFERENCES `users` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `Profile` (
-	`uid` varchar(50) NOT NULL,
-	`uid_User` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-	`name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-	PRIMARY KEY (`uid`),
-	KEY `Profile_User_FK` (`uid_User`),
-	CONSTRAINT `Profile_User_FK` FOREIGN KEY (`uid_User`) REFERENCES `User` (`uid`) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE `projects` (
+  `uid` varchar(32) NOT NULL,
+  `uid_user` varchar(32) NOT NULL,
+  PRIMARY KEY (`uid`),
+  KEY `projects_users_FK` (`uid_user`),
+  CONSTRAINT `projects_users_FK` FOREIGN KEY (`uid_user`) REFERENCES `users` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `ProfileProject` (
-	`uid_Project` varchar(50) NOT NULL,
-	`uid_Profile` varchar(50) NOT NULL,
-	PRIMARY KEY (`uid_Project`),
-	KEY `ProfileProject_Profile_FK` (`uid_Profile`),
-	CONSTRAINT `ProfileProject_Profile_FK` FOREIGN KEY (`uid_Profile`) REFERENCES `Profile` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `ProfileProject_Project_FK` FOREIGN KEY (`uid_Project`) REFERENCES `Project` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `profiles` (
+  `uid` varchar(32) NOT NULL,
+  `uid_creator` varchar(32) NOT NULL,
+  PRIMARY KEY (`uid`),
+  KEY `profiles_users_FK` (`uid_creator`),
+  CONSTRAINT `profiles_users_FK` FOREIGN KEY (`uid_creator`) REFERENCES `users` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `project_profiles` (
+  `uid_project` varchar(32) NOT NULL,
+  `uid_profiles` varchar(32) NOT NULL,
+  `path` text DEFAULT NULL,
+  PRIMARY KEY (`uid_project`,`uid_profiles`),
+  KEY `project_profiles_profiles_FK` (`uid_profiles`),
+  CONSTRAINT `project_profiles_profiles_FK` FOREIGN KEY (`uid_profiles`) REFERENCES `profiles` (`uid`),
+  CONSTRAINT `project_profiles_projects_FK` FOREIGN KEY (`uid_project`) REFERENCES `projects` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `profile_access` (
+  `uid_profile` varchar(32) NOT NULL,
+  `uid_user` varchar(32) NOT NULL,
+  PRIMARY KEY (`uid_user`,`uid_profile`),
+  KEY `profile_access_profiles_FK` (`uid_profile`),
+  CONSTRAINT `profile_access_profiles_FK` FOREIGN KEY (`uid_profile`) REFERENCES `profiles` (`uid`),
+  CONSTRAINT `profile_access_users_FK` FOREIGN KEY (`uid_user`) REFERENCES `users` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

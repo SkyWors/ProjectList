@@ -1,5 +1,7 @@
-data/*.json
-.env
-/vendor/
 .vscode
-log/
+.idea
+
+vendor
+.env
+logs/*
+!.gitkeep
