@@ -2,22 +2,35 @@
 
 namespace App\Controllers;
 
-use App\Configs\Path;
-use App\Factories\NavbarFactory;
+use App\Enums\Path;
+use Tempora\Attributes\RouteAttribute;
+use Tempora\Controllers\Controller;
 
-class IndexController {
-	public function render() : void {
-		$scripts = [
-			"/scripts/engine.js",
-			"/scripts/theme.js"
-		];
+class IndexController extends Controller {
+	#[RouteAttribute(
+		path: "",
+		name: "app_index_get",
+		method: "GET",
+		description: "Index page",
+	)]
 
-		require Path::LAYOUT . "/header.php";
+	public function __invoke(): void {
+		$pageData = $this->getPageData();
 
-		(new NavbarFactory())->render();
+		$this->setStyles(styles: [
+			"/assets/styles/main.css",
+			"/assets/styles/remixicon.css"
+		]);
 
-		require Path::LAYOUT . "/index/index.php";
+		$this->setScripts(scripts: [
+			"/assets/scripts/engine.js",
+			"/assets/scripts/theme.js",
+		]);
 
-		include Path::LAYOUT . "/footer.php";
+		require Path::LAYOUT->value . "/header.php";
+
+		require Path::LAYOUT->value . "/index/index.php";
+
+		include Path::LAYOUT->value . "/footer.php";
 	}
 }

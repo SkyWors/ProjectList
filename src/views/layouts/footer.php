@@ -1,10 +1,10 @@
 <?php
-	use App\Utils\GitHub;
+	use Tempora\Utils\Git;
 ?>
 
-	</main>
 	<footer>
-		<a href="https://github.com/SkyWors/PHP-MVC-Template/tree/<?= GitHub::getCommit() ?>" target="_blank"><i class="ri-github-fill"></i> <?= GitHub::getBranch() . " #" . substr(string: GitHub::getCommit(), offset: 0, length: 7) ?></a>
+		<i class="ri-archive-line"></i> ProjectList - Développé avec 🧡 par <a class="link" href="https://github.com/SkyWors" target="_blank">SkyWors</a> <i class="ri-external-link-line"></i>
+		<a class="footerLink git" href="<?= Git::getRepoUrl() ?>/tree/<?= Git::getCommit() ?>" target="_blank"><i class="ri-github-fill"></i> <?= Git::getBranch() . " #" . substr(string: Git::getCommit(), offset: 0, length: 7) ?></a>
 	</footer>
 </body>
 </html>

@@ -1,8 +1,10 @@
 <?php
 
-use App\Factories\RouterFactory;
+// Path
+define(constant_name: "APP_DIR", value: $_SERVER["DOCUMENT_ROOT"] . "/..");
 
-require $_SERVER["DOCUMENT_ROOT"] . "/../src/Configs/index.php";
+// Composer
+require APP_DIR . "/vendor/autoload.php";
 
-$url = strtok(string: $_SERVER["REQUEST_URI"], token: "?");
-(new RouterFactory())->render(url: $url);
+// Tempora's kernel
+new Tempora\Tempora;

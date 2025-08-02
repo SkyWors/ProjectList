@@ -2,21 +2,29 @@
 
 namespace App\Controllers;
 
-use App\Configs\Path;
-use App\Utils\Lang;
+use App\Enums\Path;
+use Tempora\Controllers\Controller;
 
-class ErrorController {
-	public function render(int $errorCode = 500, string $message = null) : void {
-		$GLOBALS["title"] = APP_NAME . " - " . Lang::translate(key: "MAIN_ERROR");
-		define(constant_name: "ERROR_CODE", value: $errorCode);
-		define(constant_name: "EXCEPTION", value: isset($message) ? $message : Lang::translate(key: "ERROR_SERVER"));
+class ErrorController extends Controller {
+	public function __invoke(): void {
+		$pageData = $this->getPageData();
 
-		http_response_code(response_code: ERROR_CODE);
+		http_response_code(response_code: $pageData["error_code"]);
 
-		require Path::LAYOUT . "/header.php";
+		$this->setStyles(styles: [
+			"/assets/styles/main.css",
+			"/assets/styles/remixicon.css"
+		]);
 
-		require Path::LAYOUT . "/error/error.php";
+		$this->setScripts(scripts: [
+			"/assets/scripts/engine.js",
+			"/assets/scripts/theme.js"
+		]);
 
-		include Path::LAYOUT . "/footer.php";
+		require Path::LAYOUT->value . "/header.php";
+
+		require Path::LAYOUT->value . "/error/index.php";
+
+		include Path::LAYOUT->value . "/footer.php";
 	}
 }

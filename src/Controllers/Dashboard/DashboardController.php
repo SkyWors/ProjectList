@@ -2,22 +2,42 @@
 
 namespace App\Controllers\Dashboard;
 
-use App\Configs\Path;
-use App\Factories\NavbarFactory;
+use App\Enums\Path;
+use App\Enums\Role;
+use Tempora\Attributes\RouteAttribute;
+use Tempora\Controllers\Controller;
 
-class DashboardController {
-	public function render() : void {
-		$scripts = [
-			"/scripts/engine.js",
-			"/scripts/theme.js"
-		];
+class DashboardController extends Controller{
+	#[RouteAttribute(
+		path: "/dashboard",
+		name: "app_dashboard_get",
+		method: "GET",
+		description: "Dashboard page",
+		title: "DASHBOARD_TITLE",
+		needLoginToBe: true,
+		accessRoles: [
+			Role::USER,
+		]
+	)]
 
-		require Path::LAYOUT . "/header.php";
+	public function __invoke(): void {
+		$pageData = $this->getPageData();
 
-		(new NavbarFactory())->render();
+		$this->setStyles(styles: [
+			"/assets/styles/dashboard.css",
+			"/assets/styles/remixicon.css"
+		]);
 
-		require Path::LAYOUT . "/dashboard/index.php";
+		$this->setScripts(scripts: [
+			"/assets/scripts/engine.js",
+			"/assets/scripts/theme.js",
+			"/assets/scripts/drawer.js",
+		]);
 
-		include Path::LAYOUT . "/footer.php";
+		require Path::LAYOUT->value . "/header.php";
+
+		require Path::LAYOUT->value . "/dashboard/index.php";
+
+		include Path::LAYOUT->value . "/footer.php";
 	}
 }

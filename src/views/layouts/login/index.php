@@ -1,25 +1,15 @@
 <?php
-	use App\Utils\Lang;
+	use App\Enums\Path;
+	use Tempora\Utils\Lang;
 ?>
 
-<form class="login" method="POST">
-	<h1><?= Lang::translate("LOGIN_TITLE") ?></h1>
+<?php include Path::COMPONENT_NAVBARS->value . "/navbar.php"; ?>
 
-	<input
-		type="text"
-		name="email"
-		value="<?= isset($_POST["email"]) ? $_POST["email"] : "" ?>"
-		placeholder="<?= Lang::translate(key: "MAIN_EMAIL") ?>"
-		require
-		autofocus
-	>
-	<input
-		type="password"
-		name="password"
-		value="<?= isset($_POST["password"]) ? $_POST["password"] : "" ?>"
-		placeholder="<?= Lang::translate(key: "MAIN_PASSWORD") ?>"
-		require
-	>
+<main>
+	<div class="login_container">
+		<h1><?= Lang::translate(key: "LOGIN_TITLE") ?></h1>
 
-	<button type="submit"><?= Lang::translate(key: "LOGIN_SUBMIT") ?></button>
-</form>
+		<?php include Path::COMPONENT_FORMS->value . "/login_form.php"; ?>
+		<?php include Path::COMPONENT_ACTIONS->value . "/reset_password_button.php"; ?>
+	</div>
+</main>

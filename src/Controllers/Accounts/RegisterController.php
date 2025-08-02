@@ -2,25 +2,37 @@
 
 namespace App\Controllers\Accounts;
 
-use App\Configs\Path;
-use App\Events\RegisterEvent;
-use App\Factories\NavbarFactory;
+use App\Enums\Path;
+use Tempora\Attributes\RouteAttribute;
+use Tempora\Controllers\Controller;
 
-class RegisterController {
-	public function render() : void {
-		RegisterEvent::implement();
+class RegisterController extends Controller {
+	#[RouteAttribute(
+		path: "/register",
+		name: "app_account_register_get",
+		method: "GET",
+		description: "Register page",
+		title: "REGISTER_TITLE",
+		needLoginToBe: false
+	)]
 
-		$scripts = [
-			"/scripts/engine.js",
-			"/scripts/theme.js"
-		];
+	public function __invoke(): void {
+		$pageData = $this->getPageData();
 
-		require Path::LAYOUT . "/header.php";
+		$this->setStyles(styles: [
+			"/assets/styles/main.css",
+			"/assets/styles/remixicon.css"
+		]);
 
-		(new NavbarFactory())->render();
+		$this->setScripts(scripts: [
+			"/assets/scripts/engine.js",
+			"/assets/scripts/theme.js"
+		]);
 
-		require Path::LAYOUT . "/register/index.php";
+		require Path::LAYOUT->value . "/header.php";
 
-		include Path::LAYOUT . "/footer.php";
+		require Path::LAYOUT->value . "/register/index.php";
+
+		include Path::LAYOUT->value . "/footer.php";
 	}
 }

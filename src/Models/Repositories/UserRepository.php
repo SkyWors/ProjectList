@@ -2,50 +2,61 @@
 
 namespace App\Models\Repositories;
 
-use App\Configs\Database;
 use App\Models\Entities\User;
-use App\Utils\ApplicationData;
-use App\Utils\System;
 use Exception;
 use PDO;
+use Tempora\Enums\Table;
+use Tempora\Traits\UserTrait;
+use Tempora\Utils\ApplicationData;
+use Tempora\Utils\System;
 
-class UserRepository {
-	private $user;
+class UserRepository extends User {
 
-	/**
-	 * User construct
-	 *
-	 * @param User $user
-	 */
-	public function __construct(User $user) {
-		$this->user = $user;
-	}
+	use UserTrait;
 
 	/**
 	 * Create user
 	 *
 	 * @return Exception | string
 	 */
-	public function create() : Exception | string {
-		$this->user->uid = System::uidGen(size: 16, table: Database::USERS);
-		$this->user->password = password_hash(password: $this->user->password, algo: PASSWORD_BCRYPT);
+	public function create(): Exception | string {
+		$this->setUid(uid: System::uidGen(size: 16, table: Table::USERS->value));
+		$passwordHash = password_hash(password: $this->getPassword(), algo: PASSWORD_BCRYPT);
 
 		try {
 			ApplicationData::request(
-				query: "INSERT INTO " . Database::USERS . " (uid, name, surname, email, password) VALUES (:uid, :name, :surname, :email, :password)",
+				query: "INSERT INTO " . Table::USERS->value . " (uid, name, surname, email, password, to_modify) VALUES (:uid, :name, :surname, :email, :password, :toModify)",
 				data: [
-					"uid" => $this->user->uid,
-					"name" => $this->user->name,
-					"surname" => $this->user->surname,
-					"email" => $this->user->email,
-					"password" => $this->user->password
+					"uid" => $this->getUid(),
+					"name" => $this->getName(),
+					"surname" => $this->getSurname(),
+					"email" => $this->getEmail(),
+					"password" => $passwordHash,
+					"toModify" => (int)$this->isToModify()
 				]
 			);
 		} catch (Exception $exception) {
 			return $exception;
 		}
 
-		return $this->user->uid;
+		return $this->getUid();
+	}
+
+	/**
+	 * Set password
+	 *
+	 * @return void
+	 */
+	public function savePassword(): void {
+		$passwordHash = password_hash(password: $this->getPassword(), algo: PASSWORD_BCRYPT);
+
+		ApplicationData::request(
+			query: "UPDATE " . Table::USERS->value . " SET password = :password, to_modify = false WHERE uid = :uid",
+			data: [
+				"uid" => $this->getUid(),
+				"password" => $passwordHash
+			]
+		);
 	}
 
 	/**
@@ -53,18 +64,18 @@ class UserRepository {
 	 *
 	 * @return Exception | string
 	 */
-	public function verifyPassword() : Exception | string {
+	public function verifyPassword(): Exception | string {
 		$userData = ApplicationData::request(
-			query: "SELECT uid, password FROM " . Database::USERS . " WHERE email = :email",
+			query: "SELECT uid, password FROM " . Table::USERS->value . " WHERE email = :email",
 			data: [
-				"email" => $this->user->email
+				"email" => $this->getEmail()
 			],
 			returnType: PDO::FETCH_ASSOC,
 			singleValue: true
 		);
 
 		if ($userData != null) {
-			if (password_verify(password: $this->user->password, hash: $userData["password"])) {
+			if (password_verify(password: $this->getPassword(), hash: $userData["password"])) {
 				return $userData["uid"];
 			} else {
 				return new Exception(message: "Wrong password");
@@ -75,19 +86,20 @@ class UserRepository {
 	}
 
 	/**
-	 * Get user's role(s)
+	 * Get uid with email
 	 *
-	 * @param string $uid User's UID
+	 * @param string $email
 	 *
-	 * @return array
+	 * @return null | string
 	 */
-	public static function getRoles(string $uid) : array {
+	public static function getUidByEmail(string $email): null | string {
 		return ApplicationData::request(
-			query: "SELECT id_role FROM " . Database::USER_ROLE . " WHERE uid_user = :uid",
+			query: "SELECT uid FROM " . Table::USERS->value . " WHERE email = :email",
 			data: [
-				"uid" => $uid
+				"email" => $email
 			],
-			returnType: PDO::FETCH_COLUMN
+			returnType: PDO::FETCH_COLUMN,
+			singleValue: true
 		);
 	}
 }

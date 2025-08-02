@@ -2,25 +2,43 @@
 
 namespace App\Controllers\Accounts;
 
-use App\Configs\Path;
-use App\Events\LoginEvent;
-use App\Factories\NavbarFactory;
+use App\Enums\Path;
+use Tempora\Attributes\RouteAttribute;
+use Tempora\Controllers\Controller;
 
-class LoginController {
-	public function render() : void {
-		LoginEvent::implement();
+class LoginController extends Controller {
+	#[RouteAttribute(
+		path: "/login",
+		name: "app_account_login_get",
+		method: "GET",
+		description: "Login page",
+		title: "LOGIN_TITLE",
+		needLoginToBe: false
+	)]
 
-		$scripts = [
-			"/scripts/engine.js",
-			"/scripts/theme.js"
-		];
+	public function __invoke(): void {
+		$pageData = $this->getPageData();
 
-		require Path::LAYOUT . "/header.php";
+		if (isset($pageData["form_email"])) {
+			$_SESSION["page_data"] = [
+				"form_email" => $pageData["form_email"]
+			];
+		}
 
-		(new NavbarFactory())->render();
+		$this->setStyles(styles: [
+			"/assets/styles/main.css",
+			"/assets/styles/remixicon.css"
+		]);
 
-		require Path::LAYOUT . "/login/index.php";
+		$this->setScripts(scripts: [
+			"/assets/scripts/engine.js",
+			"/assets/scripts/theme.js"
+		]);
 
-		include Path::LAYOUT . "/footer.php";
+		require Path::LAYOUT->value . "/header.php";
+
+		require Path::LAYOUT->value . "/login/index.php";
+
+		include Path::LAYOUT->value . "/footer.php";
 	}
 }
