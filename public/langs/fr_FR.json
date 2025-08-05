@@ -19,6 +19,9 @@
 	"MAIN_ADD": "Ajouter",
 	"MAIN_TAGS": "Tags",
 	"MAIN_LANGUAGES": "Langues",
+	"MAIN_EXPORT": "Exporter",
+	"MAIN_IMPORT": "Importer",
+	"MAIN_THEME_TITLE": "Thème",
 
 	"NAVBAR_HOME": "Accueil",
 	"NAVBAR_LOGIN": "Connexion",
@@ -47,7 +50,13 @@
 	"REGISTER_UNIDENTICAL_PASSWORD": "Les mots de passe saisis ne correspondent pas.",
 	"REGISTER_ALREADY_EXIST": "Le compte \"$[email]\" existe déjà.",
 
+	"ACCOUNT_TITLE": "Compte",
+
+	"DISCONNECT_TITLE": "Déconnexion",
+
 	"DASHBOARD_TITLE": "Tableau de bord",
+	"DASHBOARD_PROFILE_SELECT": "Sélectionner un profil",
+	"DASHBOARD_SEARCH_PLACEHOLDER": "Rechercher des projets",
 
 	"ACCESSIBILITY_LANG": "Langues",
 

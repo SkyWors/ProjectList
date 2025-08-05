@@ -19,6 +19,9 @@
 	"MAIN_ADD": "Add",
 	"MAIN_TAGS": "Tags",
 	"MAIN_LANGUAGES": "Languages",
+	"MAIN_EXPORT": "Exporter",
+	"MAIN_IMPORT": "Importer",
+	"MAIN_THEME_TITLE": "Theme",
 
 	"NAVBAR_HOME": "Home",
 	"NAVBAR_LOGIN": "Login",
@@ -47,7 +50,13 @@
 	"REGISTER_UNIDENTICAL_PASSWORD": "The passwords you entered do not match.",
 	"REGISTER_ALREADY_EXIST": "Account \"$[email]\" already exist.",
 
+	"ACCOUNT_TITLE": "Account",
+
+	"DISCONNECT_TITLE": "Logout",
+
 	"DASHBOARD_TITLE": "Dashboard",
+	"DASHBOARD_PROFILE_SELECT": "Select a profile",
+	"DASHBOARD_SEARCH_PLACEHOLDER": "Search projects",
 
 	"ACCESSIBILITY_LANG": "Languages",
 

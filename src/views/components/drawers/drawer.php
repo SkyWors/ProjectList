@@ -159,8 +159,8 @@
 					attributs: [
 						"class" => "button",
 						"id" => "theme_button",
-						"title" => Lang::translate(key: "THEME_TITLE"),
-						"aria-label" => Lang::translate(key: "THEME_TITLE"),
+						"title" => Lang::translate(key: "MAIN_THEME_TITLE"),
+						"aria-label" => Lang::translate(key: "MAIN_THEME_TITLE"),
 					]
 				)
 				->setContent(content: "<i class=\"ri-sun-line\"></i>")

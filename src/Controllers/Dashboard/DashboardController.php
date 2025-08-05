@@ -32,6 +32,7 @@ class DashboardController extends Controller{
 			"/assets/scripts/engine.js",
 			"/assets/scripts/theme.js",
 			"/assets/scripts/drawer.js",
+			"/assets/scripts/project.js",
 		]);
 
 		require Path::LAYOUT->value . "/header.php";

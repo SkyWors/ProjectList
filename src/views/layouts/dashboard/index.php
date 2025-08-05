@@ -1,8 +1,10 @@
 <?php
 	use App\Enums\Path;
+	use App\Models\Entities\Project;
 	use Tempora\Utils\ElementBuilder\ElementBuilder;
 	use Tempora\Utils\ElementBuilder\Select;
 	use Tempora\Utils\Lang;
+	use Tempora\Utils\System;
 
 	$action = new ElementBuilder;
 	$action->setElement(element: "button");
@@ -21,7 +23,7 @@
 						"title" => Lang::translate(key: "MAIN_EXPORT"),
 					]
 				)
-				->setContent(content: "<i class=\"ri-download-2-line\"></i>")
+				->setContent(content: "<i class=\"ri-upload-2-line\"></i>")
 				->build()
 		?>
 
@@ -34,7 +36,7 @@
 						"title" => Lang::translate(key: "MAIN_IMPORT"),
 					]
 				)
-				->setContent(content: "<i class=\"ri-upload-2-line\"></i>")
+				->setContent(content: "<i class=\"ri-download-2-line\"></i>")
 				->build()
 		?>
 
@@ -44,8 +46,8 @@
 					attributs: [
 						"id" => "profile_select",
 						"class" => "element",
-						"aria-label" => Lang::translate(key: "PROFILE_SELECT"),
-						"title" => Lang::translate(key: "PROFILE_SELECT"),
+						"aria-label" => Lang::translate(key: "DASHBOARD_PROFILE_SELECT"),
+						"title" => Lang::translate(key: "DASHBOARD_PROFILE_SELECT"),
 					]
 				)
 				->setOptions(options: ["Home", "Work", "Move", "Modding"])
@@ -63,7 +65,7 @@
 						"class" => "element",
 						"id" => "search",
 						"type" => "text",
-						"placeholder" => Lang::translate(key: "SEARCH_PLACEHOLDER"),
+						"placeholder" => Lang::translate(key: "DASHBOARD_SEARCH_PLACEHOLDER"),
 						"autofocus" => true,
 					]
 				)
@@ -73,5 +75,33 @@
 		</div>
 	</header>
 
-	<h1><?= Lang::translate(key: "DASHBOARD_TITLE") ?></h1>
+	<div class="projects_container">
+		<?php
+			$project = new Project;
+			$project
+				->setUid(uid: System::uidGen())
+				->setName(name: "ProjectList - Tempora Project Management")
+				->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
+				->setIllustration(illustration: "projectlist.png")
+			;
+
+			include Path::COMPONENT_TILES->value . "/project.php";
+			include Path::COMPONENT_TILES->value . "/project.php";
+			include Path::COMPONENT_TILES->value . "/project.php";
+		?>
+
+		<?php
+			$project = new Project;
+			$project
+				->setUid(uid: System::uidGen())
+				->setName(name: "Tempora Project")
+				->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
+			;
+
+			include Path::COMPONENT_TILES->value . "/project.php";
+			include Path::COMPONENT_TILES->value . "/project.php";
+			include Path::COMPONENT_TILES->value . "/project.php";
+			include Path::COMPONENT_TILES->value . "/project.php";
+		?>
+	</div>
 </main>

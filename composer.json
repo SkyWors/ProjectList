@@ -1,6 +1,13 @@
 {
 	"name": "projectlist/projectlist",
 
+	"authors": [
+		{
+			"name": "Erick Paoletti",
+			"email": "erick.paoletti@gmail.com"
+		}
+	],
+
 	"repositories":  [
 		{
 			"type": "path",
