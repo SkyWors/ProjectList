@@ -13,6 +13,7 @@ class LoginResetController extends Controller {
 		method: "GET",
 		description: "Login reset page",
 		title: "LOGIN_RESET_TITLE",
+		translateTitle: true,
 		needLoginToBe: false
 	)]
 

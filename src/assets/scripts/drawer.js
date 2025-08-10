@@ -8,16 +8,7 @@ const filters = document.querySelector(".filters");
 const drawerWidth = "260px";
 const collapsedDrawerWidth = "60px";
 
-let drawer_state = true;
-
-(async () => {
-	let options = await getCookie("OPTIONS");
-	if (options) {
-		drawer_state = JSON.parse(options).drawer_state;
-	}
-})();
-
-setDrawerState(drawer_state);
+setDrawerState(drawerState);
 
 drophover.forEach((element) => {
 	element.addEventListener("click", () => {
@@ -38,14 +29,14 @@ drophover.forEach((element) => {
 	});
 });
 
-state.addEventListener("click", async () => {
+state.addEventListener("click", () => {
 	let icon = state.querySelector("i");
 	if (icon.className == "ri-arrow-right-s-line") {
 		setDrawerState(true);
-		await setCookie("OPTIONS", 60 * 60 * 24 * 30, JSON.stringify({"drawer_state": true}));
+		localStorage.setItem("drawer", true);
 	} else {
 		setDrawerState(false);
-		await setCookie("OPTIONS", 60 * 60 * 24 * 30, JSON.stringify({"drawer_state": false}));
+		localStorage.setItem("drawer", false);
 	}
 });
 

@@ -13,6 +13,7 @@ class RegisterController extends Controller {
 		method: "GET",
 		description: "Register page",
 		title: "REGISTER_TITLE",
+		translateTitle: true,
 		needLoginToBe: false
 	)]
 

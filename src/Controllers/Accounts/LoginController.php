@@ -13,6 +13,7 @@ class LoginController extends Controller {
 		method: "GET",
 		description: "Login page",
 		title: "LOGIN_TITLE",
+		translateTitle: true,
 		needLoginToBe: false
 	)]
 

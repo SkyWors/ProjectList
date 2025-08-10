@@ -4,9 +4,10 @@ namespace App\Models\Entities;
 
 class Project {
 	private string $uid;
+	private ?User $user = null;
 	private string $name;
 	private ?string $description = null;
-	private ?string $illustration = null;
+	private ?string $illustrationBlob = null;
 
 	/**
 	 * Get the value of uid
@@ -31,12 +32,34 @@ class Project {
 	}
 
 	/**
+	 * Get the value of user
+	 *
+	 * @return User
+	 */
+	public function getUser(): User {
+		return $this->user;
+	}
+
+	/**
+	 * Set the value of user
+	 *
+	 * @param User $user
+	 *
+	 * @return self
+	 */
+	public function setUser(User $user): self {
+		$this->user = $user;
+
+		return $this;
+	}
+	
+	/**
 	 * Get the value of name
 	 *
 	 * @return string
 	 */
 	public function getName(): string {
-		return $this->name;
+		return htmlspecialchars(string: $this->name);
 	}
 
 	/**
@@ -58,7 +81,7 @@ class Project {
 	 * @return string | null
 	 */
 	public function getDescription(): string | null {
-		return $this->description;
+		return htmlspecialchars(string: $this->description);
 	}
 
 	/**
@@ -68,7 +91,7 @@ class Project {
 	 *
 	 * @return self
 	 */
-	public function setDescription(string $description): self {
+	public function setDescription(?string $description): self {
 		$this->description = $description;
 
 		return $this;
@@ -79,19 +102,19 @@ class Project {
 	 *
 	 * @return string | null
 	 */
-	public function getIllustration(): string | null {
-		return $this->illustration;
+	public function getIllustrationBlob(): string | null {
+		return $this->illustrationBlob;
 	}
 
 	/**
-	 * Set the value of illustration
+	 * Set the value of illustrationBlob
 	 *
-	 * @param string $illustration
+	 * @param string $illustrationBlob
 	 *
 	 * @return self
 	 */
-	public function setIllustration(string $illustration): self {
-		$this->illustration = $illustration;
+	public function setIllustrationBlob(?string $illustrationBlob): self {
+		$this->illustrationBlob = $illustrationBlob;
 
 		return $this;
 	}

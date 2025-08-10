@@ -11,7 +11,7 @@
 		<meta name="description" content="<?= $pageData["page_description"] ?>">
 	<?php } ?>
 
-	<title><?= $pageData["page_title"] ?? APP_NAME . " - " . Lang::translate(key: "MAIN_ERROR") ?></title>
+	<title><?= $pageData["page_title"] ?? APP_NAME ?></title>
 
 	<?php $this->includeAssets(); ?>
 	<?php $this->includePayloads(); ?>

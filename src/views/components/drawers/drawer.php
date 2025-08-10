@@ -13,7 +13,7 @@
 			->setAttributs(
 				attributs: [
 					"class" => "logo",
-					"href" => Route::getPath(name: "app_home_get"),
+					"href" => Route::getPath(name: "app_dashboard_get"),
 					"title" => APP_NAME,
 					"aria-label" => APP_NAME,
 				]

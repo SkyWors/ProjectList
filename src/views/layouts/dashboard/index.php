@@ -1,6 +1,7 @@
 <?php
 	use App\Enums\Path;
 	use App\Models\Entities\Project;
+	use App\Models\Repositories\ProjectRepository;
 	use Tempora\Utils\ElementBuilder\ElementBuilder;
 	use Tempora\Utils\ElementBuilder\Select;
 	use Tempora\Utils\Lang;
@@ -77,31 +78,57 @@
 
 	<div class="projects_container">
 		<?php
-			$project = new Project;
-			$project
-				->setUid(uid: System::uidGen())
-				->setName(name: "ProjectList - Tempora Project Management")
-				->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
-				->setIllustration(illustration: "projectlist.png")
-			;
+			foreach ($projectsUid as $projectUid) {
+				$project = new ProjectRepository;
+				$project
+					->setUid(uid: $projectUid)
+					->hydrate()
+				;
 
-			include Path::COMPONENT_TILES->value . "/project.php";
-			include Path::COMPONENT_TILES->value . "/project.php";
-			include Path::COMPONENT_TILES->value . "/project.php";
+				include Path::COMPONENT_TILES->value . "/project.php";
+			}
+		?>
+		<?php
+			// $project = new Project;
+			// $project
+			// 	->setUid(uid: System::uidGen())
+			// 	->setName(name: "ProjectList - Tempora Project Management")
+			// 	->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
+			// 	->setIllustrationBlob(illustrationBlob: "projectlist.png")
+			// ;
+
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
 		?>
 
 		<?php
-			$project = new Project;
-			$project
-				->setUid(uid: System::uidGen())
-				->setName(name: "Tempora Project")
-				->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
-			;
+			// $project = new Project;
+			// $project
+			// 	->setUid(uid: System::uidGen())
+			// 	->setName(name: "Tempora Project")
+			// 	->setDescription(description: "A simple project management tool to keep track of your projects and tasks.")
+			// ;
 
-			include Path::COMPONENT_TILES->value . "/project.php";
-			include Path::COMPONENT_TILES->value . "/project.php";
-			include Path::COMPONENT_TILES->value . "/project.php";
-			include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
+			// include Path::COMPONENT_TILES->value . "/project.php";
 		?>
 	</div>
 </main>

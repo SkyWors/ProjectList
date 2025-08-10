@@ -58,6 +58,8 @@
 	"DASHBOARD_PROFILE_SELECT": "Select a profile",
 	"DASHBOARD_SEARCH_PLACEHOLDER": "Search projects",
 
+	"PROJECT_ADD_TITLE": "Add project",
+
 	"ACCESSIBILITY_LANG": "Languages",
 
 	"ERROR_SERVER": "Server error.",

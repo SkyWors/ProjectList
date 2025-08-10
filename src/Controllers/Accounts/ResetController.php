@@ -15,6 +15,7 @@ class ResetController extends Controller {
 		method: "GET",
 		description: "Reset password page",
 		title: "RESET_TITLE",
+		translateTitle: true,
 		needLoginToBe: false
 	)]
 

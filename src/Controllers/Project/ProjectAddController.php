@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Controllers\Dashboard;
+namespace App\Controllers\Project;
 
 use App\Enums\Path;
 use App\Enums\Role;
-use App\Models\Entities\Profile;
-use App\Models\Repositories\ProfileRepository;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
 
-class DashboardController extends Controller {
+class ProjectAddController extends Controller {
 	#[RouteAttribute(
-		path: "/dashboard",
-		name: "app_dashboard_get",
+		path: '/project/add',
+		name: "app_project_add_get",
 		method: "GET",
-		description: "Dashboard page",
-		title: "DASHBOARD_TITLE",
+		description: "Project configuration page",
+		title: "PROJECT_ADD_TITLE",
 		translateTitle: true,
 		needLoginToBe: true,
 		accessRoles: [
@@ -26,11 +24,9 @@ class DashboardController extends Controller {
 	public function __invoke(): void {
 		$pageData = $this->getPageData();
 
-		$profile = (new ProfileRepository())->setUid(uid: "abc");
-		$projectsUid = $profile->getProjects();
-
 		$this->setStyles(styles: [
 			"/assets/styles/dashboard.css",
+			"/assets/styles/project.css",
 			"/assets/styles/remixicon.css"
 		]);
 
@@ -43,7 +39,7 @@ class DashboardController extends Controller {
 
 		require Path::LAYOUT->value . "/header.php";
 
-		require Path::LAYOUT->value . "/dashboard/index.php";
+		require Path::LAYOUT->value . "/project/index.php";
 
 		include Path::LAYOUT->value . "/footer.php";
 	}

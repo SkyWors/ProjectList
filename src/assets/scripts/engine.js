@@ -1,13 +1,10 @@
 let dataLang = [];
 let isDataLangLoaded = false;
+const drawerState = JSON.parse(localStorage.getItem("drawer") || true);
 
 (async () => {
 	dataLang = await callApi("/langs/" + getCookie("LANG") + ".json");
 	isDataLangLoaded = true;
-
-	setCookie("OPTIONS", 60 * 60 * 24 * 30, JSON.stringify({
-		drawer_state: JSON.parse(await getCookie("OPTIONS")).drawer_state || true
-	}));
 })();
 
 /**
