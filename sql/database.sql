@@ -89,31 +89,72 @@ CREATE TABLE `user_reset_password` (
 	CONSTRAINT `user_reset_password_users_FK` FOREIGN KEY (`uid_user`) REFERENCES `users` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Table structure for table `profiles`
+--
+
 CREATE TABLE IF NOT EXISTS profiles (
 	uid varchar(32) NOT NULL PRIMARY KEY,
 	uid_creator varchar(32) NOT NULL,
+	name varchar(64) NOT NULL,
+	date_update datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL ON UPDATE CURRENT_TIMESTAMP(),
+	date_create datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL,
 	CONSTRAINT profiles_users_FK FOREIGN KEY (uid_creator) REFERENCES users (uid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
 
-CREATE TABLE IF NOT EXISTS profile_access (
-	uid_profile varchar(32) NOT NULL,
-	uid_user varchar(32) NOT NULL,
-	PRIMARY KEY (uid_user, uid_profile),
-	CONSTRAINT profile_access_profiles_FK FOREIGN KEY (uid_profile) REFERENCES profiles (uid),
-	CONSTRAINT profile_access_users_FK FOREIGN KEY (uid_user) REFERENCES users (uid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- Table structure for table `projects`
+--
 
 CREATE TABLE IF NOT EXISTS projects (
 	uid varchar(32) NOT NULL PRIMARY KEY,
 	uid_user varchar(32) NOT NULL,
+	name varchar(128) NOT NULL,
+	description varchar(1024) NULL,
+	illustration_blob blob NULL,
+	date_update datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL ON UPDATE CURRENT_TIMESTAMP(),
+	date_create datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL,
 	CONSTRAINT projects_users_FK FOREIGN KEY (uid_user) REFERENCES users (uid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
+
+--
+-- Table structure for table `project_profiles`
+--
 
 CREATE TABLE IF NOT EXISTS project_profiles (
 	uid_project varchar(32) NOT NULL,
-	uid_profiles varchar(32) NOT NULL,
+	uid_profile varchar(32) NOT NULL,
 	path text NULL,
-	PRIMARY KEY (uid_project, uid_profiles),
-	CONSTRAINT project_profiles_profiles_FK FOREIGN KEY (uid_profiles) REFERENCES profiles (uid),
+	date_create datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL,
+	PRIMARY KEY (uid_project, uid_profile),
+	CONSTRAINT project_profiles_profiles_FK FOREIGN KEY (uid_profile) REFERENCES profiles (uid),
 	CONSTRAINT project_profiles_projects_FK FOREIGN KEY (uid_project) REFERENCES projects (uid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
+
+--
+-- Table structure for table `links`
+--
+
+CREATE TABLE IF NOT EXISTS links (
+	uid varchar(32) NOT NULL PRIMARY KEY,
+	uid_project varchar(32) NOT NULL,
+	link varchar(256) NOT NULL,
+	icon varchar(256) NULL,
+	color varchar(7) NULL,
+	date_update datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL ON UPDATE CURRENT_TIMESTAMP(),
+	date_create datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL,
+	CONSTRAINT links_projects_FK FOREIGN KEY (uid_project) REFERENCES projects (uid)
+);
+
+--
+-- Table structure for table `profile_access`
+--
+
+CREATE TABLE IF NOT EXISTS profile_access (
+	uid_profile varchar(32) NOT NULL,
+	uid_user varchar(32) NOT NULL,
+	date_create datetime DEFAULT CURRENT_TIMESTAMP() NOT NULL,
+	PRIMARY KEY (uid_user, uid_profile),
+	CONSTRAINT profile_access_profiles_FK FOREIGN KEY (uid_profile) REFERENCES profiles (uid),
+	CONSTRAINT profile_access_users_FK FOREIGN KEY (uid_user) REFERENCES users (uid)
+);

@@ -4,14 +4,14 @@
 
 <div class="project_container">
 	<?php if ($project->getIllustrationBlob() !== null) { ?>
-		<img class="illustration" src="data:image/jpeg;base64,<?= base64_encode(string: $project->getIllustrationBlob()) ?>">
+		<img class="illustration" src="data:image/png;base64,<?= base64_encode(string: $project->getIllustrationBlob()) ?>">
 	<?php } else { ?>
 		<img class="illustration" src="<?= Image::import(image: "noimage.png") ?>">
 	<?php } ?>
 
 	<div class="content">
 		<i class="info ri-information-line"></i>
-		<h3 class="name" title="<?= $project->getName() ?>"><?= $project->getName() ?></h3>
+		<h3 class="name" id="project_name" title="<?= $project->getName() ?>"><?= $project->getName() ?></h3>
 		<p class="description" title="<?= $project->getDescription() ?>"><?= $project->getDescription() ?></p>
 
 		<?php //if (count(value: $links) > 0) { ?>

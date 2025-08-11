@@ -7,6 +7,7 @@ use App\Models\Entities\Profile;
 use Exception;
 use PDO;
 use Tempora\Utils\ApplicationData;
+use Tempora\Utils\System;
 
 class ProfileRepository extends Profile {
 
@@ -16,7 +17,7 @@ class ProfileRepository extends Profile {
 	 * @return Exception | ProfileRepository
 	 */
 	public function create(): Exception | ProfileRepository {
-		$this->setUid(uid: uniqid(prefix: 'profile_', more_entropy: true));
+		$this->setUid(uid: System::uidGen(size: 16, table: Table::PROFILES->value));
 
 		try {
 			ApplicationData::request(
