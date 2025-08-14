@@ -1,3 +1,3 @@
 User-agent: *
 
-Sitemap: http://projectlist.local/sitemap.xml
+Sitemap: http://projectile.local/sitemap.xml

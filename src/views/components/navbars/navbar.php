@@ -32,7 +32,7 @@
 					->setElement(element: "img")
 					->setAttributs(
 						attributs: [
-							"src" => Image::import(image: "projectlist.png"),
+							"src" => Image::import(image: "projectile.png"),
 							"width" => "18",
 							"alt" => APP_NAME,
 						]

@@ -6,7 +6,7 @@
 <?php include Path::COMPONENT_DRAWERS->value . "/drawer.php"; ?>
 
 <main>
-	<?php include Path::COMPONENT_ACTIONS->value . "/header.php"; ?>
+	<?php include Path::COMPONENT_ACTIONS->value . "/dashboard_header.php"; ?>
 
 	<div class="projects_container">
 		<?php

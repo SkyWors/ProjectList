@@ -1,4 +1,4 @@
-# 📋 ProjectList
+# 📋 Projectile
 
 > [!NOTE]
 > A simple website to store all your projects's paths

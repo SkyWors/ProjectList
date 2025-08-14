@@ -4,7 +4,6 @@ namespace App\Controllers\Dashboard;
 
 use App\Enums\Path;
 use App\Enums\Role;
-use App\Models\Entities\Profile;
 use App\Models\Repositories\ProfileRepository;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;

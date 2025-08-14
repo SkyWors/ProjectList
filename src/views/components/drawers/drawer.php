@@ -23,7 +23,7 @@
 					->setElement(element: "img")
 					->setAttributs(
 						attributs: [
-							"src" => Image::import(image: "projectlist.png")
+							"src" => Image::import(image: "projectile.png")
 						]
 					)
 					->build()

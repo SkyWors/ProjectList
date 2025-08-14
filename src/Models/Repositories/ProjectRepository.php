@@ -38,6 +38,13 @@ class ProjectRepository extends Project {
 		return $this;
 	}
 
+	/**
+	 * Hydrate the project entity with data from the database
+	 *
+	 * @return void
+	 *
+	 * @throws Exception
+	 */
 	public function hydrate(): void {
 		try {
 			$data = ApplicationData::request(
@@ -49,13 +56,58 @@ class ProjectRepository extends Project {
 				singleValue: true
 			);
 
+			$links = ApplicationData::request(
+				query: "SELECT * FROM " . Table::PROJECT_LINKS->value . " WHERE uid_project = :uid_project",
+				data: [
+					"uid_project" => $this->getUid(),
+				],
+				returnType: PDO::FETCH_ASSOC
+			);
+
 			$this
 				->setUser(user: (new User())->setUid(uid: $data["uid_user"]))
 				->setName(name: $data["name"])
 				->setDescription(description: $data["description"])
-				->setIllustrationBlob(illustrationBlob: $data["illustration_blob"]);
+				->setIllustrationBlob(illustrationBlob: $data["illustration_blob"])
+				->setLinks(links: $links)
+			;
 		} catch (Exception $exception) {
 			throw $exception;
+		}
+	}
+
+	/**
+	 * Save links to the database
+	 *
+	 * @return void
+	 */
+	public function saveLinks(): void {
+		try {
+			ApplicationData::request(
+				query: "DELETE FROM " . Table::PROJECT_LINKS->value . " WHERE uid_project = :uid_project",
+				data: [
+					"uid_project" => $this->getUid(),
+				]
+			);
+		} catch (Exception $exception) {
+			throw $exception;
+		}
+
+		foreach ($this->getLinks() as $link) {
+			try {
+				ApplicationData::request(
+					query: "INSERT INTO " . Table::PROJECT_LINKS->value . " (uid, uid_project, link, color, icon) VALUES (:uid, :uid_project, :link, :color, :icon)",
+					data: [
+						"uid" => System::uidGen(size: 16, table: Table::PROJECT_LINKS->value),
+						"uid_project" => $this->getUid(),
+						"link" => $link["link"],
+						"color" => $link["color"] ?? null,
+						"icon" => $link["icon"] ?? null,
+					]
+				);
+			} catch (Exception $exception) {
+				throw $exception;
+			}
 		}
 	}
 }

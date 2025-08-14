@@ -3,18 +3,19 @@
 namespace App\Models\Entities;
 
 class Project {
-	private string $uid;
+	private ?string $uid = null;
 	private ?User $user = null;
-	private string $name;
+	private string $name = "Project's name";
 	private ?string $description = null;
 	private ?string $illustrationBlob = null;
+	private array $links = [];
 
 	/**
 	 * Get the value of uid
 	 *
-	 * @return string
+	 * @return string | null
 	 */
-	public function getUid(): string {
+	public function getUid(): string | null {
 		return $this->uid;
 	}
 
@@ -52,7 +53,7 @@ class Project {
 
 		return $this;
 	}
-	
+
 	/**
 	 * Get the value of name
 	 *
@@ -78,10 +79,10 @@ class Project {
 	/**
 	 * Get the value of description
 	 *
-	 * @return string | null
+	 * @return string
 	 */
-	public function getDescription(): string | null {
-		return htmlspecialchars(string: $this->description);
+	public function getDescription(): string {
+		return htmlspecialchars(string: $this->description ?? "");
 	}
 
 	/**
@@ -115,6 +116,28 @@ class Project {
 	 */
 	public function setIllustrationBlob(?string $illustrationBlob): self {
 		$this->illustrationBlob = $illustrationBlob;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of links
+	 *
+	 * @return array
+	 */
+	public function getLinks(): array {
+		return $this->links;
+	}
+
+	/**
+	 * Set the value of links
+	 *
+	 * @param array $links
+	 *
+	 * @return self
+	 */
+	public function setLinks(array $links): self {
+		$this->links = $links;
 
 		return $this;
 	}

@@ -1,4 +1,13 @@
+header {
+	justify-content: space-between;
+}
+
+.projects_container {
+	margin: 20px auto;
+}
+
 .add_project_form {
+	padding-top: 20px;
 	width: 400px;
 	position: relative;
 

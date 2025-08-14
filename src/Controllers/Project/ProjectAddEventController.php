@@ -80,13 +80,10 @@ class ProjectAddEventController extends Controller {
 					ob_start();
 					imagepng(image: $resizedImage, quality: 9, filters: PNG_ALL_FILTERS);
 					$imageBlob = ob_get_clean();
-
-					$_SESSION["page_data"] = [
-						"form_blob" => $imageBlob,
-					];
 				}
 			}
 
+			// Create the project
 			$project = new ProjectRepository();
 			$project
 				->setUser(user: (new User())->setUid(uid: $_SESSION["user"]["uid"]))
@@ -96,10 +93,23 @@ class ProjectAddEventController extends Controller {
 				->create()
 			;
 
-			$profile = (new ProfileRepository)->setUid("abc");
+			// Add the project to the profile
+			$profile = (new ProfileRepository)->setUid(uid: "abc");
 			$profile->addProject(
 				project: $project
 			);
+
+			// Add links
+			$links = [];
+			foreach ($_POST["link"] as $link) {
+				array_push($links, [
+					"link" => $link["link"],
+					"color" => $link["color"] ?? null,
+					"icon" => $link["icon"] ?? null,
+				]);
+			}
+			$project->setLinks(links: $links);
+			$project->saveLinks();
 
 			System::redirect(url: Route::getPath(name: "app_dashboard_get"));
 		}

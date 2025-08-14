@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39e1a9ae15f2db882b630964c2ec47eb",
+    "content-hash": "eacbfd4b256a76dc600131fc5cd2a7e2",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -656,7 +656,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Tempora",
-                "reference": "cf1b0cfc6465e8e1c7ac2e72d160e1462c8b4a32"
+                "reference": "f5a67d4709bc213779181cdc14b6ac61790ef5e8"
             },
             "require": {
                 "firebase/php-jwt": "^6.11",
@@ -796,8 +796,12 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

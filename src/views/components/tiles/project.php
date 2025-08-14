@@ -10,25 +10,26 @@
 	<?php } ?>
 
 	<div class="content">
-		<i class="info ri-information-line"></i>
+		<?php if ($project->getUid()) { ?>
+			<i class="info ri-information-line"></i>
+		<?php } ?>
 		<h3 class="name" id="project_name" title="<?= $project->getName() ?>"><?= $project->getName() ?></h3>
-		<p class="description" title="<?= $project->getDescription() ?>"><?= $project->getDescription() ?></p>
+		<p class="description" id="project_description" title="<?= $project->getDescription() ?>"><?= $project->getDescription() ?></p>
 
-		<?php //if (count(value: $links) > 0) { ?>
+		<?php if (count(value: $project->getLinks()) > 0) { ?>
 			<div class="link">
-				<a href="vscode://" data-color="#F00"><i class="ri-code-line"></i></a>
-				<a href="" data-color="#FFFF00"><i class="ri-github-line"></i></a>
-				<a href=""><i class="ri-github-line"></i></a>
-				<a href="" data-color="#903842"><i class="ri-github-line"></i></a>
-				<a href=""><i class="ri-github-line"></i></a>
-				<a href=""><i class="ri-github-line"></i></a>
+				<?php foreach ($project->getLinks() as $link) { ?>
+					<a href="<?= $link["link"] ?>" <?= $link["color"] ? "data-color=\"" . $link["color"] . "\"" : "" ?>><i class="<?= $link["icon"] ?>"></i></a>
+				<?php } ?>
 			</div>
-		<?php //} ?>
+		<?php } ?>
 	</div>
 
 	<div class="actions">
 		<button class="link clock"><i class="ri-time-line"></i></button>
 		<button class="link"><i class="ri-link"></i></button>
-		<a class="link" href="project/<?= $project->getUid() ?>"><i class="ri-pencil-line"></i></a>
+		<?php if ($project->getUid()) { ?>
+			<a class="link" href="project/<?= $project->getUid() ?>"><i class="ri-pencil-line"></i></a>
+		<?php } ?>
 	</div>
 </div>

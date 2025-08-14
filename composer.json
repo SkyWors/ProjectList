@@ -1,5 +1,5 @@
 {
-	"name": "projectlist/projectlist",
+	"name": "projectile/projectile",
 
 	"authors": [
 		{
@@ -20,6 +20,10 @@
 
 	"require": {
 		"php": "^8.3",
+		"ext-gd": "*",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"ext-pdo": "*",
 		"tempora-framework/tempora": "dev-dev"
 	},
 
