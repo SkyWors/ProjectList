@@ -2,13 +2,19 @@
 
 namespace App\Models\Entities;
 
+use Tempora\Utils\Lang;
+
 class Project {
 	private ?string $uid = null;
 	private ?User $user = null;
-	private string $name = "Project's name";
+	private string $name;
 	private ?string $description = null;
 	private ?string $illustrationBlob = null;
 	private array $links = [];
+
+	public function __construct() {
+		$this->name = Lang::translate(key: "PROJECT_NAME_DEFAULT");
+	}
 
 	/**
 	 * Get the value of uid
@@ -60,7 +66,7 @@ class Project {
 	 * @return string
 	 */
 	public function getName(): string {
-		return htmlspecialchars(string: $this->name);
+		return $this->name;
 	}
 
 	/**
@@ -82,7 +88,7 @@ class Project {
 	 * @return string
 	 */
 	public function getDescription(): string {
-		return htmlspecialchars(string: $this->description ?? "");
+		return $this->description ?? "";
 	}
 
 	/**

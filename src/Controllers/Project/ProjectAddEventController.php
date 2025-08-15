@@ -102,11 +102,13 @@ class ProjectAddEventController extends Controller {
 			// Add links
 			$links = [];
 			foreach ($_POST["link"] as $link) {
-				array_push($links, [
-					"link" => $link["link"],
-					"color" => $link["color"] ?? null,
-					"icon" => $link["icon"] ?? null,
-				]);
+				if (!empty($link["link"])) {
+					array_push($links, [
+						"link" => $link["link"],
+						"color" => $link["color"] ?? null,
+						"icon" => $link["icon"] ?? null,
+					]);
+				}
 			}
 			$project->setLinks(links: $links);
 			$project->saveLinks();

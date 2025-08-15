@@ -2,8 +2,18 @@ header {
 	justify-content: space-between;
 }
 
+.project_header {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
 .projects_container {
 	margin: 20px auto;
+
+	&.project_add_container {
+		width: 340px;
+	}
 }
 
 .add_project_form {

@@ -5,9 +5,11 @@ const addLinkFieldButton = document.getElementById("add_link");
 
 const projectTileName = document.getElementById("project_name");
 const projectTileDescription = document.getElementById("project_description");
+const projectTileImage = document.getElementById("project_illustration");
 
 const projectFormName = document.getElementById("add_project_name");
 const projectFormDescription = document.getElementById("add_project_description");
+const projectFormIllustration = document.getElementById("add_project_illustration");
 
 if (isElementExist(searchInput)) {
 	searchInput.addEventListener("input", function(event) {
@@ -34,17 +36,48 @@ link.forEach((action) => {
 });
 
 if (isElementExist(addProjectForm)) {
-	addProjectForm.addEventListener("submit", function(event) {
-		const fileInput = addProjectForm.querySelector('input[name="illustration"]');
+	if (projectFormIllustration) {
+		projectFormIllustration.addEventListener("change", function(event) {
+			const file = event.target.files[0];
 
+			if (file) {
+				if (file.size > 512 * 1024) { // 512 KB
+					alert("The selected file is larger than 512KB.");
+					event.target.value = "";
+					projectTileImage.src = `${window.location.origin}/assets/images/noimage.webp`;
+					return;
+				}
+
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					const img = new Image();
+					img.onload = function() {
+						const canvas = document.createElement("canvas");
+						canvas.width = 80;
+						canvas.height = 80;
+						const ctx = canvas.getContext("2d");
+						ctx.drawImage(img, 0, 0, 80, 80);
+						const resizedDataUrl = canvas.toDataURL("image/png");
+						projectTileImage.src = resizedDataUrl;
+					};
+					img.src = e.target.result;
+					projectTileImage.src = e.target.result;
+				};
+				reader.readAsDataURL(file);
+			}
+		});
+	}
+
+	addProjectForm.addEventListener("submit", function(event) {
 		if (
-			fileInput
-			&& fileInput.files.length > 0
+			projectFormIllustration
+			&& projectFormIllustration.files.length > 0
 		) {
-			const file = fileInput.files[0];
+			const file = projectFormIllustration.files[0];
 
 			if (file.size > 512 * 1024) { // 512 KB
 				event.preventDefault();
+				projectTileImage.src = `${window.location.origin}/assets/images/noimage.webp`;
 				alert("The selected file is larger than 512KB.");
 			}
 		}
@@ -52,41 +85,41 @@ if (isElementExist(addProjectForm)) {
 }
 
 if (isElementExist(addLinkFieldButton)) {
-    addLinkFieldButton.addEventListener("click", function(event) {
-        const linkContainers = document.querySelectorAll(".add_link_container");
-        const nextIndex = linkContainers.length;
+	addLinkFieldButton.addEventListener("click", function(event) {
+		const linkContainers = document.querySelectorAll(".add_link_container");
+		const nextIndex = linkContainers.length;
 
-        const newLinkContainer = document.createElement("div");
-        newLinkContainer.className = "add_link_container";
+		const newLinkContainer = document.createElement("div");
+		newLinkContainer.className = "add_link_container";
 
-        newLinkContainer.innerHTML = `
-            <input class="element" type="text" name="link[${nextIndex}][link]" placeholder="Add a link">
-            <input class="element" type="color" name="link[${nextIndex}][color]">
-            <input class="element" type="text" name="link[${nextIndex}][icon]" placeholder="Add an icon">
-            <button type="button" class="add_link">Add Link</button>
-        `;
+		newLinkContainer.innerHTML = `
+			<input class="element" type="text" name="link[${nextIndex}][link]" placeholder="Add a link">
+			<input class="element" type="color" name="link[${nextIndex}][color]">
+			<input class="element" type="text" name="link[${nextIndex}][icon]" placeholder="Add an icon">
+			<button type="button" class="add_link">Add Link</button>
+		`;
 
-        const newAddButton = newLinkContainer.querySelector(".add_link");
-        newAddButton.addEventListener("click", arguments.callee);
+		const newAddButton = newLinkContainer.querySelector(".add_link");
+		newAddButton.addEventListener("click", arguments.callee);
 
-        const lastContainer = linkContainers[linkContainers.length - 1];
-        lastContainer.parentNode.insertBefore(newLinkContainer, lastContainer.nextSibling);
-    });
+		const lastContainer = linkContainers[linkContainers.length - 1];
+		lastContainer.parentNode.insertBefore(newLinkContainer, lastContainer.nextSibling);
+	});
 }
 
 // Tile updater
 if (isElementExist(projectTileName)) {
 	projectFormName.addEventListener("input", function(event) {
-		if (event.target.value.length > 46) {
-			event.target.value = event.target.value.slice(0, 46);
+		if (event.target.value.length > 38) {
+			event.target.value = event.target.value.slice(0, 38);
 		}
 		projectTileName.textContent = event.target.value;
 	});
 
 	projectFormDescription.addEventListener("input", function(event) {
-		// if (event.target.value.length > 46) {
-		// 	event.target.value = event.target.value.slice(0, 46);
-		// }
+		if (event.target.value.length > 62) {
+			event.target.value = event.target.value.slice(0, 62);
+		}
 		projectTileDescription.textContent = event.target.value;
 	});
 }

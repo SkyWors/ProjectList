@@ -540,32 +540,27 @@ header {
 			position: relative;
 			box-shadow: var(--shadow);
 
-			.info {
-				position: absolute;
-				top: 8px;
-				right: 8px;
-				cursor: pointer;
-				background-color: var(--project-tile-background-color);
-				z-index: 20;
-				font-size: 20px;
-			}
-
 			.name {
 				font-size: 20px;
 				font-weight: bold;
+				font-family: monospace;
 				color: var(--text-color);
 				margin: 0px 15px 0px 86px;
 				position: absolute;
 				top: 10px;
 				user-select: text;
 				overflow-wrap: anywhere;
+				word-break: break-all;
 			}
 
 			.description {
 				margin: 60px 10px 0px 10px;
 				opacity: 0.6;
 				user-select: text;
+				font-size: 16px;
+				font-family: monospace;
 				overflow-wrap: anywhere;
+				word-break: break-all;
 			}
 
 			.link {

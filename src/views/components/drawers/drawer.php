@@ -13,7 +13,7 @@
 			->setAttributs(
 				attributs: [
 					"class" => "logo",
-					"href" => Route::getPath(name: "app_dashboard_get"),
+					"href" => Route::getPath(name: "app_home_get"),
 					"title" => APP_NAME,
 					"aria-label" => APP_NAME,
 				]
@@ -35,21 +35,6 @@
 	<button class="drawer_state"><i class="ri-arrow-left-s-line"></i></button>
 
 	<nav>
-		<?=
-			(new ElementBuilder)
-				->setElement(element: "a")
-				->setAttributs(
-					attributs: [
-						"href" => Route::getPath(name: "app_home_get"),
-						"class" => "action_button",
-						"title" => Lang::translate(key: "INDEX_TITLE"),
-						"aria-label" => Lang::translate(key: "INDEX_TITLE"),
-					]
-				)
-				->setContent(content: "<i class=\"ri-home-2-line\"></i> " . Lang::translate(key: "INDEX_TITLE"))
-				->build()
-		?>
-
 		<?=
 			(new ElementBuilder)
 				->setElement(element: "a")

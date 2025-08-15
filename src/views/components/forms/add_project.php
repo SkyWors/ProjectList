@@ -2,6 +2,7 @@
 
 use Tempora\Utils\ElementBuilder\ElementBuilder;
 use Tempora\Utils\ElementBuilder\Form;
+use Tempora\Utils\Lang;
 
 $form = new Form();
 $form
@@ -26,7 +27,7 @@ $input
 			"type" => "text",
 			"name" => "name",
 			"max" => 36,
-			"value" => "Project's name",
+			"value" => Lang::translate(key: "PROJECT_NAME_DEFAULT"),
 			"placeholder" => "Project Name",
 			"required" => "",
 			"autofocus" => ""
@@ -55,6 +56,7 @@ $input
 	->setAttributs(
 		attributs: [
 			"class" => "element",
+			"id" => "add_project_illustration",
 			"type" => "file",
 			"name" => "illustration",
 			"accept" => "image/*",
