@@ -93,9 +93,12 @@ if (isElementExist(addLinkFieldButton)) {
 		newLinkContainer.className = "add_link_container";
 
 		newLinkContainer.innerHTML = `
+			<div class="information_container">
+				<input class="element" type="text" name="link[${nextIndex}][name]" placeholder="Add a name to the link">
+				<input class="element" type="color" name="link[${nextIndex}][color]">
+				<input class="element number" type="number" name="link[${nextIndex}][icon]">
+			</div>
 			<input class="element" type="text" name="link[${nextIndex}][link]" placeholder="Add a link">
-			<input class="element" type="color" name="link[${nextIndex}][color]">
-			<input class="element" type="text" name="link[${nextIndex}][icon]" placeholder="Add an icon">
 			<button type="button" class="add_link">Add Link</button>
 		`;
 

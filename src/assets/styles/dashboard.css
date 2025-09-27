@@ -105,7 +105,7 @@ h1 {
 main {
 	display: flex;
 	flex-direction: column;
-	min-height: calc(100vh - 80px);
+	min-height: calc(100vh - 65px);
 	margin-left: var(--drawer-width);
 	padding: 10px 20px 10px 30px;
 }
@@ -324,7 +324,7 @@ footer {
 		margin: 10px;
 		font-size: 18px;
 		position: fixed;
-		bottom: 10px;
+		bottom: 0;
 		width: min-content;
 		align-self: center;
 

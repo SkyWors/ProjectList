@@ -22,6 +22,7 @@
 	"MAIN_EXPORT": "Exporter",
 	"MAIN_IMPORT": "Importer",
 	"MAIN_THEME_TITLE": "Thème",
+	"MAIN_TOTAL": "Total",
 
 	"NAVBAR_HOME": "Accueil",
 	"NAVBAR_LOGIN": "Connexion",
@@ -71,6 +72,8 @@
 	"CHRONOS_TITLE": "Chronos",
 	"CHRONOS_LANG_TITLE": "Langues",
 	"CHRONOS_MS_TITLE": "Temps de chargement",
+	"CHRONOS_MINIFIER_MS_TITLE": "Minification",
+	"CHRONOS_IMAGES_MS_TITLE": "Images",
 	"CHRONOS_PAGEDATA_TITLE": "Données de la page",
 	"CHRONOS_SESSION_TITLE": "Session",
 	"CHRONOS_POST_TITLE": "POST",

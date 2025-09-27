@@ -37,9 +37,6 @@
 							->build();
 					}
 				?>
-				<!-- <a href="<?= htmlspecialchars(string: $link["link"]) ?>" <?= $link["color"] ? "data-color=\"" . htmlspecialchars(string: $link["color"]) . "\"" : "" ?> <?= (strpos(haystack: $link["link"], needle: "http") === 0) ? "target=\"_blank\"" : "" ?>>
-						<i class="<?= htmlspecialchars(string: $link["icon"]) ?>"></i>
-					</a> -->
 			</div>
 		<?php } ?>
 	</div>
