@@ -5,6 +5,7 @@ namespace App\Controllers\Accounts;
 use App\Enums\Path;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
+use Tempora\Utils\Lang;
 
 class RegisterController extends Controller {
 	#[RouteAttribute(
@@ -14,11 +15,13 @@ class RegisterController extends Controller {
 		description: "Register page",
 		title: "REGISTER_TITLE",
 		translateTitle: true,
+		translateFile: "pages/register",
 		needLoginToBe: false
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
+		$pageLang = new Lang(filePath: "pages/register");
 
 		$this->setStyles(styles: [
 			"/assets/styles/main.css",

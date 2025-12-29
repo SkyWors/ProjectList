@@ -5,6 +5,7 @@ namespace App\Controllers\Accounts;
 use App\Enums\Path;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
+use Tempora\Utils\Lang;
 
 class LoginController extends Controller {
 	#[RouteAttribute(
@@ -14,11 +15,13 @@ class LoginController extends Controller {
 		description: "Login page",
 		title: "LOGIN_TITLE",
 		translateTitle: true,
+		translateFile: "pages/login",
 		needLoginToBe: false
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
+		$pageLang = new Lang(filePath: "pages/login");
 
 		if (isset($pageData["form_email"])) {
 			$_SESSION["page_data"] = [

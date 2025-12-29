@@ -5,6 +5,7 @@ namespace App\Controllers\Accounts;
 use App\Enums\Path;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
+use Tempora\Utils\Lang;
 
 class LoginResetController extends Controller {
 	#[RouteAttribute(
@@ -14,11 +15,13 @@ class LoginResetController extends Controller {
 		description: "Login reset page",
 		title: "LOGIN_RESET_TITLE",
 		translateTitle: true,
+		translateFile: "pages/login_reset",
 		needLoginToBe: false
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
+		$pageLang = new Lang(filePath: "pages/login_reset");
 
 		$this->setStyles(styles: [
 			"/assets/styles/main.css",

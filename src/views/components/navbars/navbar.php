@@ -6,6 +6,8 @@
 	use Tempora\Utils\Lang;
 	use Tempora\Utils\Minifier\Image;
 
+	$componentNavbarLang = new Lang(filePath: "components/actions/navbar");
+
 	$itemContainer = new ElementBuilder();
 	$itemContainer
 		->setElement(element: "div")
@@ -51,10 +53,10 @@
 						attributs: [
 							"class" => "button button_secondary",
 							"href" => Route::getPath(name: "app_home_get"),
-							"title" => Lang::translate(key: "NAVBAR_HOME"),
+							"title" => $componentNavbarLang->translate(key: "NAVBAR_HOME"),
 						]
 					)
-					->setContent(content: "<i class='ri-home-2-line'></i> " . Lang::translate(key: "NAVBAR_HOME"))
+					->setContent(content: "<i class='ri-home-2-line'></i> " . $componentNavbarLang->translate(key: "NAVBAR_HOME"))
 					->build()
 				)
 			->build()
@@ -69,10 +71,10 @@
 						attributs: [
 							"class" => "button button_secondary",
 							"href" => Route::getPath(name: "app_dashboard_get"),
-							"title" => Lang::translate(key: "NAVBAR_DASHBOARD"),
+							"title" => $componentNavbarLang->translate(key: "NAVBAR_DASHBOARD"),
 						]
 					)
-					->setContent(content: "<i class='ri-speed-up-line'></i> " . Lang::translate(key: "NAVBAR_DASHBOARD"))
+					->setContent(content: "<i class='ri-speed-up-line'></i> " . $componentNavbarLang->translate(key: "NAVBAR_DASHBOARD"))
 					->build()
 			)
 			->setAccessRoles(
@@ -93,7 +95,7 @@
 						attributs: [
 							"class" => "button button_secondary",
 							"href" => Route::getPath(name: "app_account_disconnect_get"),
-							"title" => Lang::translate(key: "NAVBAR_DISCONNECT"),
+							"title" => $componentNavbarLang->translate(key: "NAVBAR_DISCONNECT"),
 						]
 					)
 					->setContent(content: "<i class='ri-logout-box-line'></i>")
@@ -112,10 +114,10 @@
 						attributs: [
 							"class" => "button button_secondary",
 							"href" => Route::getPath(name: "app_account_login_get"),
-							"title" => Lang::translate(key: "NAVBAR_LOGIN"),
+							"title" => $componentNavbarLang->translate(key: "NAVBAR_LOGIN"),
 						]
 					)
-					->setContent(content: "<i class='ri-login-box-line'></i> " . Lang::translate(key: "NAVBAR_LOGIN"))
+					->setContent(content: "<i class='ri-login-box-line'></i> " . $componentNavbarLang->translate(key: "NAVBAR_LOGIN"))
 					->build()
 			)
 			->setAccessRoles(accessRoles: [])
@@ -132,10 +134,10 @@
 						attributs: [
 							"class" => "button button_secondary",
 							"href" => Route::getPath(name: "app_account_register_get"),
-							"title" => Lang::translate(key: "NAVBAR_REGISTER"),
+							"title" => $componentNavbarLang->translate(key: "NAVBAR_REGISTER"),
 						]
 					)
-					->setContent(content: "<i class='ri-user-add-line'></i> " . Lang::translate(key: "NAVBAR_REGISTER"))
+					->setContent(content: "<i class='ri-user-add-line'></i> " . $componentNavbarLang->translate(key: "NAVBAR_REGISTER"))
 					->build()
 			)
 			->setAccessRoles(accessRoles: [])

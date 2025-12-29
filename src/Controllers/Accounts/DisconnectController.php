@@ -16,7 +16,7 @@ class DisconnectController extends Controller {
 		description: "Disconnect page",
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		session_regenerate_id();
 
 		if (isset($_COOKIE["JWT"])) {

@@ -13,7 +13,7 @@ class Project {
 	private array $links = [];
 
 	public function __construct() {
-		$this->name = Lang::translate(key: "PROJECT_NAME_DEFAULT");
+		$this->name = (new Lang(filePath: "projects/main"))->translate(key: "PROJECT_NAME_DEFAULT");
 	}
 
 	/**

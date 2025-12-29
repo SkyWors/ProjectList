@@ -1,0 +1,4 @@
+{
+	"MAIL_RESET_PASSWORD_OBJECT": "Réinitialiser le mot de passe",
+	"MAIL_RESET_PASSWORD_BODY": "Veuillez mettre à jour votre mot de passe en utilisant cette URL : https://$[domain]/reset/$[link]"
+}

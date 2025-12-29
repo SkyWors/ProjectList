@@ -6,6 +6,7 @@ use App\Enums\Path;
 use App\Models\Repositories\ResetPasswordRepository;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
+use Tempora\Utils\Lang;
 use Tempora\Utils\System;
 
 class ResetController extends Controller {
@@ -16,11 +17,13 @@ class ResetController extends Controller {
 		description: "Reset password page",
 		title: "RESET_TITLE",
 		translateTitle: true,
+		translateFile: "pages/reset",
 		needLoginToBe: false
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
+		$pageLang = new Lang(filePath: "pages/reset");
 
 		$resetPasswordRepo = new ResetPasswordRepository;
 		$resetPasswordRepo

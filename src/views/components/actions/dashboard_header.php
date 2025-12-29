@@ -3,6 +3,8 @@
 	use Tempora\Utils\ElementBuilder\Select;
 	use Tempora\Utils\Lang;
 
+	$componentDashboardHeaderLang = new Lang(filePath: "components/actions/dashboard_header");
+
 	$action = new ElementBuilder;
 	$action->setElement(element: "button");
 ?>
@@ -13,8 +15,8 @@
 			->setAttributs(
 				attributs: [
 					"class" => "action export",
-					"aria-label" => Lang::translate(key: "MAIN_EXPORT"),
-					"title" => Lang::translate(key: "MAIN_EXPORT"),
+					"aria-label" => $componentDashboardHeaderLang->translate(key: "EXPORT"),
+					"title" => $componentDashboardHeaderLang->translate(key: "EXPORT"),
 				]
 			)
 			->setContent(content: "<i class=\"ri-upload-2-line\"></i>")
@@ -26,8 +28,8 @@
 			->setAttributs(
 				attributs: [
 					"class" => "action import",
-					"aria-label" => Lang::translate(key: "MAIN_IMPORT"),
-					"title" => Lang::translate(key: "MAIN_IMPORT"),
+					"aria-label" => $componentDashboardHeaderLang->translate(key: "IMPORT"),
+					"title" => $componentDashboardHeaderLang->translate(key: "IMPORT"),
 				]
 			)
 			->setContent(content: "<i class=\"ri-download-2-line\"></i>")
@@ -40,8 +42,8 @@
 				attributs: [
 					"id" => "profile_select",
 					"class" => "element",
-					"aria-label" => Lang::translate(key: "DASHBOARD_PROFILE_SELECT"),
-					"title" => Lang::translate(key: "DASHBOARD_PROFILE_SELECT"),
+					"aria-label" => $componentDashboardHeaderLang->translate(key: "PROFILE_SELECT"),
+					"title" => $componentDashboardHeaderLang->translate(key: "PROFILE_SELECT"),
 				]
 			)
 			->setOptions(options: ["Home", "Work", "Move", "Modding"])
@@ -59,7 +61,7 @@
 					"class" => "element",
 					"id" => "search",
 					"type" => "text",
-					"placeholder" => Lang::translate(key: "DASHBOARD_SEARCH_PLACEHOLDER"),
+					"placeholder" => $componentDashboardHeaderLang->translate(key: "SEARCH_PLACEHOLDER"),
 					"autofocus" => true,
 				]
 			)

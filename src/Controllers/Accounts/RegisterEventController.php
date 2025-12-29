@@ -3,6 +3,7 @@
 namespace App\Controllers\Accounts;
 
 use App\Models\Repositories\UserRepository;
+use PDOException;
 use Tempora\Attributes\RouteAttribute;
 use Tempora\Controllers\Controller;
 use Tempora\Utils\Cookie;
@@ -16,7 +17,9 @@ class RegisterEventController extends Controller {
 		method: "POST"
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
+		$pageLang = new Lang(filePath: "pages/register");
+
 		if (
 			System::checkCSRF()
 			&& isset($_POST["name"])
@@ -39,15 +42,18 @@ class RegisterEventController extends Controller {
 
 				$uid = $userRepo->create();
 
-				if ($uid instanceof Exception) {
-					$notificationCookie->setValue(value: Lang::translate(key: "REGISTER_ALREADY_EXIST", options: ["email" => htmlspecialchars(string: $_POST["email"])]));
+				if (
+					$uid instanceof Exception
+					|| $uid instanceof PDOException
+				) {
+					$notificationCookie->setValue(value: $pageLang->translate(key: "REGISTER_ALREADY_EXIST", data: ["email" => htmlspecialchars(string: $_POST["email"])]));
 					$notificationCookie->send();
 				} else {
 					$_SESSION["user"]["uid"] = $uid;
 					System::redirect(url: "/");
 				}
 			} else {
-				$notificationCookie->setValue(value: Lang::translate(key: "REGISTER_UNIDENTICAL_PASSWORD"));
+				$notificationCookie->setValue(value: $pageLang->translate(key: "REGISTER_UNIDENTICAL_PASSWORD"));
 				$notificationCookie->send();
 			}
 

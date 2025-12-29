@@ -16,13 +16,14 @@ class DashboardController extends Controller {
 		description: "Dashboard page",
 		title: "DASHBOARD_TITLE",
 		translateTitle: true,
+		translateFile: "pages/dashboard",
 		needLoginToBe: true,
 		accessRoles: [
 			Role::USER,
 		]
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
 
 		$profile = (new ProfileRepository())->setUid(uid: "abc");

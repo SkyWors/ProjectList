@@ -17,7 +17,9 @@ class LoginResetEventController extends Controller {
 		method: "POST"
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
+		$pageLang = new Lang(filePath: "pages/login_reset");
+
 		if (
 			System::checkCSRF()
 			&& isset($_POST["email"])
@@ -40,7 +42,7 @@ class LoginResetEventController extends Controller {
 		$notificationCookie = new Cookie;
 		$notificationCookie
 			->setName(name: "NOTIFICATION")
-			->setValue(value: Lang::translate(key: "LOGIN_RESET_SEND"))
+			->setValue(value: $pageLang->translate(key: "LOGIN_RESET_SEND"))
 		;
 		$notificationCookie->send();
 

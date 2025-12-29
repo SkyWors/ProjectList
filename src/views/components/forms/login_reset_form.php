@@ -2,9 +2,9 @@
 	use Tempora\Utils\ElementBuilder\ElementBuilder;
 	use Tempora\Utils\ElementBuilder\Form;
 	use Tempora\Utils\Lang;
-?>
 
-<?php
+	$componentResetLang = new Lang(filePath: "components/forms/login_reset_form");
+
 	$form = new Form;
 	$form
 		->setAttributs(
@@ -24,7 +24,7 @@
 				"type" => "text",
 				"name" => "email",
 				"value" => $pageData["form_email"] ?? "",
-				"placeholder" => Lang::translate(key: "MAIN_EMAIL"),
+				"placeholder" => $componentResetLang->translate(key: "EMAIL"),
 				"required" => "",
 				"autofocus" => ""
 			]
@@ -40,9 +40,8 @@
 				"type" => "submit"
 			]
 		)
-		->setContent(content: Lang::translate(key: "LOGIN_RESET_PASSWORD"))
+		->setContent(content: $componentResetLang->translate(key: "SUBMIT"))
 	;
 	$form->addInput(input: $submit);
 
 	echo $form->build();
-?>

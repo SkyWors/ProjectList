@@ -15,13 +15,14 @@ class ProjectAddController extends Controller {
 		description: "Project configuration page",
 		title: "PROJECT_ADD_TITLE",
 		translateTitle: true,
+		translateFile: "pages/add_project",
 		needLoginToBe: true,
 		accessRoles: [
 			Role::USER,
 		]
 	)]
 
-	public function __invoke(): void {
+	public function render(): void {
 		$pageData = $this->getPageData();
 
 		$this->setStyles(styles: [

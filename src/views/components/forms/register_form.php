@@ -2,9 +2,9 @@
 	use Tempora\Utils\ElementBuilder\ElementBuilder;
 	use Tempora\Utils\ElementBuilder\Form;
 	use Tempora\Utils\Lang;
-?>
 
-<?php
+	$componentRegister = new Lang(filePath: "components/forms/register_form");
+
 	$form = new Form();
 	$form
 		->setAttributs(
@@ -24,7 +24,7 @@
 				"type" => "text",
 				"name" => "name",
 				"value" => $pageData["form_name"] ?? "",
-				"placeholder" => Lang::translate(key: "MAIN_NAME"),
+				"placeholder" => $componentRegister->translate(key: "NAME"),
 				"required" => "",
 				"autofocus" => ""
 			]
@@ -40,7 +40,7 @@
 				"type" => "text",
 				"name" => "surname",
 				"value" => $pageData["form_surname"] ?? "",
-				"placeholder" => Lang::translate(key: "MAIN_SURNAME"),
+				"placeholder" => $componentRegister->translate(key: "SURNAME"),
 				"required" => ""
 			]
 		)
@@ -55,7 +55,7 @@
 				"type" => "text",
 				"name" => "email",
 				"value" => $pageData["form_email"] ?? "",
-				"placeholder" => Lang::translate(key: "MAIN_EMAIL"),
+				"placeholder" => $componentRegister->translate(key: "EMAIL"),
 				"required" => ""
 			]
 		)
@@ -70,7 +70,7 @@
 				"type" => "password",
 				"name" => "password",
 				"value" => $pageData["form_password"] ?? "",
-				"placeholder" => Lang::translate(key: "MAIN_PASSWORD"),
+				"placeholder" => $componentRegister->translate(key: "PASSWORD"),
 				"required" => ""
 			]
 		)
@@ -85,7 +85,7 @@
 				"type" => "password",
 				"name" => "password_confirm",
 				"value" => $pageData["form_password_confirm"] ?? "",
-				"placeholder" => Lang::translate(key: "REGISTER_PASSWORD_CONFIRM"),
+				"placeholder" => $componentRegister->translate(key: "CONFIRM_PASSWORD"),
 				"required" => ""
 			]
 		)
@@ -100,9 +100,8 @@
 				"type" => "submit"
 			]
 		)
-		->setContent(content: Lang::translate(key: "REGISTER_SUBMIT"))
+		->setContent(content: $componentRegister->translate(key: "SUBMIT"))
 	;
 	$form->addInput(input: $submit);
 
 	echo $form->build();
-?>

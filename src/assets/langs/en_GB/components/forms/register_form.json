@@ -1,0 +1,8 @@
+{
+	"NAME": "Name",
+	"SURNAME": "Surname",
+	"EMAIL": "Email",
+	"PASSWORD": "Password",
+	"CONFIRM_PASSWORD": "Confirm password",
+	"SUBMIT": "Login"
+}

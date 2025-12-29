@@ -4,6 +4,8 @@
 	use Tempora\Utils\ElementBuilder\ElementBuilder;
 	use Tempora\Utils\Lang;
 	use Tempora\Utils\Minifier\Image;
+
+	$componentDrawerLang = new Lang(filePath: "components/drawers/drawer");
 ?>
 
 <aside class="action_drawer">
@@ -42,11 +44,11 @@
 					attributs: [
 						"href" => Route::getPath(name: "app_dashboard_get"),
 						"class" => "action_button",
-						"title" => Lang::translate(key: "DASHBOARD_TITLE"),
-						"aria-label" => Lang::translate(key: "DASHBOARD_TITLE"),
+						"title" => $componentDrawerLang->translate(key: "DASHBOARD"),
+						"aria-label" => $componentDrawerLang->translate(key: "DASHBOARD"),
 					]
 				)
-				->setContent(content: "<i class=\"ri-dashboard-line\"></i> " . Lang::translate(key: "DASHBOARD_TITLE"))
+				->setContent(content: "<i class=\"ri-dashboard-line\"></i> " . $componentDrawerLang->translate(key: "DASHBOARD"))
 				->build()
 		?>
 
@@ -57,11 +59,11 @@
 					attributs: [
 						"href" => Route::getPath(name: "app_project_add_get"),
 						"class" => "action_button",
-						"title" => Lang::translate(key: "MAIN_ADD"),
-						"aria-label" => Lang::translate(key: "MAIN_ADD"),
+						"title" => $componentDrawerLang->translate(key: "ADD"),
+						"aria-label" => $componentDrawerLang->translate(key: "ADD"),
 					]
 				)
-				->setContent(content: "<i class=\"ri-add-large-line\"></i> " . Lang::translate(key: "MAIN_ADD"))
+				->setContent(content: "<i class=\"ri-add-large-line\"></i> " . $componentDrawerLang->translate(key: "ADD"))
 				->build()
 		?>
 	</nav>
@@ -69,7 +71,7 @@
 	<div class="filters">
 		<div class="tags">
 			<div class="drophover tags" id="drawer_drophover">
-				<h2><?= Lang::translate(key: "MAIN_TAGS") ?></h2>
+				<h2><?= $componentDrawerLang->translate(key: "TAGS") ?></h2>
 				<i class="ri-arrow-down-s-line"></i>
 			</div>
 			<div class="dropdown">
@@ -93,7 +95,7 @@
 		</div>
 		<div class="languages">
 			<div class="drophover languages" id="drawer_drophover">
-				<h2><?= Lang::translate(key: "MAIN_LANGUAGES") ?></h2>
+				<h2><?= $componentDrawerLang->translate(key: "LANGUAGES") ?></h2>
 				<i class="ri-arrow-down-s-line"></i>
 			</div>
 			<div class="dropdown">
@@ -112,8 +114,8 @@
 					attributs: [
 						"href" => Route::getPath(name: "app_account_get"),
 						"class" => "button",
-						"title" => Lang::translate(key: "ACCOUNT_TITLE"),
-						"aria-label" => Lang::translate(key: "ACCOUNT_TITLE"),
+						"title" => $componentDrawerLang->translate(key: "ACCOUNT"),
+						"aria-label" => $componentDrawerLang->translate(key: "ACCOUNT"),
 					]
 				)
 				->setContent(content: "<i class=\"ri-user-line\"></i>")
@@ -127,8 +129,8 @@
 					attributs: [
 						"href" => Route::getPath(name: "app_account_disconnect_get"),
 						"class" => "button",
-						"title" => Lang::translate(key: "DISCONNECT_TITLE"),
-						"aria-label" => Lang::translate(key: "DISCONNECT_TITLE"),
+						"title" => $componentDrawerLang->translate(key: "DISCONNECT"),
+						"aria-label" => $componentDrawerLang->translate(key: "DISCONNECT"),
 					]
 				)
 				->setContent(content: "<i class=\"ri-logout-box-line\"></i>")
@@ -144,8 +146,8 @@
 					attributs: [
 						"class" => "button",
 						"id" => "theme_button",
-						"title" => Lang::translate(key: "MAIN_THEME_TITLE"),
-						"aria-label" => Lang::translate(key: "MAIN_THEME_TITLE"),
+						"title" => $componentDrawerLang->translate(key: "THEME_TITLE"),
+						"aria-label" => $componentDrawerLang->translate(key: "THEME_TITLE"),
 					]
 				)
 				->setContent(content: "<i class=\"ri-sun-line\"></i>")

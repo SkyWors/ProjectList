@@ -1,0 +1,7 @@
+{
+	"REGISTER_TITLE": "S'inscrire",
+	"REGISTER_PASSWORD_CONFIRM": "Confirmer le mot de passe",
+	"REGISTER_SUBMIT": "S'inscrire",
+	"REGISTER_UNIDENTICAL_PASSWORD": "Les mots de passe ne correspondent pas.",
+	"REGISTER_ALREADY_EXIST": "Le compte \"$[email]\" existe déjà."
+}
