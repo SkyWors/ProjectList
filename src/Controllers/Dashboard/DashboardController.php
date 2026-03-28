@@ -29,17 +29,31 @@ class DashboardController extends Controller {
 		$profile = (new ProfileRepository())->setUid(uid: "abc");
 		$projectsUid = $profile->getProjects();
 
-		$this->setStyles(styles: [
-			"/assets/styles/dashboard.css",
-			"/assets/styles/remixicon.css"
-		]);
-
-		$this->setScripts(scripts: [
-			"/assets/scripts/engine.js",
-			"/assets/scripts/theme.js",
-			"/assets/scripts/drawer.js",
-			"/assets/scripts/project.js",
-		]);
+		$this
+			->setHeaders(headers: [
+				implode(
+					separator: " ",
+					array: [
+						"Content-Security-Policy: default-src 'self' https://cdn.jsdelivr.net/ https://fonts.googleapis.com/ https://fonts.gstatic.com/;",
+						"frame-ancestors 'none';",
+						"base-uri 'self';",
+						"form-action 'self';",
+						"img-src 'self' data:;",
+					]
+				)
+			])
+			->setStyles(styles: [
+				"/assets/styles/dashboard.css",
+				ASSET_ICONS_CSS,
+				ASSET_FONT
+			])
+			->setScripts(scripts: [
+				"/assets/scripts/engine.js",
+				"/assets/scripts/theme.js",
+				"/assets/scripts/drawer.js",
+				"/assets/scripts/project.js",
+			])
+		;
 
 		require Path::LAYOUT->value . "/header.php";
 
